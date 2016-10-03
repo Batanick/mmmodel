@@ -1,0 +1,6 @@
+[package]
+name = "mmmodel"
+version = "0.1.0"
+authors = ["batanick <botanick333@gmail.com>"]
+
+[dependencies]
