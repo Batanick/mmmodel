@@ -1,6 +1,6 @@
 use rand::{thread_rng, Rng};
 
-type UserId = usize;
+pub type UserId = usize;
 
 pub struct UserData {
     id: UserId,
