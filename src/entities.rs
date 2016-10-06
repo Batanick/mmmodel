@@ -23,7 +23,7 @@ pub struct UserPool {
 }
 
 impl UserPool {
-    pub fn new() -> UserPool{
+    pub fn new() -> UserPool {
         UserPool {
             users: Vec::new(),
         }
@@ -41,8 +41,8 @@ impl UserPool {
 }
 
 pub struct Game {
-    team1: Vec<UserId>,
-    team2: Vec<UserId>,
+    pub team1: Vec<UserId>,
+    pub team2: Vec<UserId>,
 }
 
 impl Game {
@@ -57,6 +57,39 @@ impl Game {
 pub enum AlgorithmResult {
     None,
     Found(Game),
+}
+
+pub trait GameDecider {
+    fn decide(&self, game: &Game) -> i32;
+}
+
+pub struct SkillLevelDecider {}
+
+impl GameDecider for SkillLevelDecider {
+    fn decide(&self, game: &Game) -> i32 {
+        let skill1 = game.team1.iter().fold(0, |mut sum, &x| {
+            sum += x;
+            sum
+        });
+        let skill2 = game.team2.iter().fold(0, |mut sum, &x| {
+            sum += x;
+            sum
+        });
+
+        if skill1 == skill2 {
+            if thread_rng().gen() {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+
+        if skill1 > skill2 {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
 }
 
 pub trait Algoritm {
