@@ -20,7 +20,10 @@ fn main() {
         }),
         decider: Box::new(SkillLevelDecider {}),
     };
-    model.run(ticks, users_to_gen);
+
+    let log = model.run(ticks, users_to_gen);
+
+    save_results(log);
 }
 
 struct Model {
@@ -81,5 +84,24 @@ impl Model {
 }
 
 fn save_results(events: Vec<Vec<stats::Event>>) {
+    const REPORT_DIR: &'static str = "reports";
 
+    std::fs::create_dir(REPORT_DIR).ok();
+
+    use std::io::Write;
+    let mut report = std::fs::File::create(REPORT_DIR.to_owned() + "/report.csv").unwrap();
+
+    for tick in 0..events.len() {
+        let ref log = events[tick];
+        for event in log {
+            let event_log = match event {
+                &Event::UserJoinedQueue(id) => format!("user_joined_queue, {}", id),
+                &Event::GameCreated(_) => "game_created".to_owned(),
+                &Event::GamePlayed(_) => "game_played".to_owned(),
+                &Event::UserPlayed(id, won) => format!("user_game_played, {}, {}", id, won),
+            };
+            
+            report.write(format!("{}, {}\n", tick, event_log).as_bytes()).unwrap();
+        }
+    }
 }
