@@ -2,13 +2,20 @@
 <html>
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 </head>
 <body>
 <p>Hello!</p>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="usersInQueue" width="400" height="400"></canvas>
 
 <script>
-    var ctx = document.getElementById("myChart");
+    function loadData() {
+        Papa.parse
+    }
+
+    var data = loadData();
+
+    var ctx = document.getElementById("usersInQueue");
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -45,6 +52,8 @@
             }
         }
     });
+
+
 </script>
 </body>
 </html>

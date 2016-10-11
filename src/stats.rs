@@ -5,4 +5,5 @@ pub enum Event {
     GameCreated(entities::Game),
     GamePlayed(entities::Game),
     UserPlayed(entities::UserId, bool),
+    UsersInQueue(u32),
 }
