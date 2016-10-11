@@ -74,6 +74,9 @@ impl Model {
                     },
                 }
             }
+            
+            log.push(Event::UsersInQueue(self.queue.len() as u32));
+
             events.push(log);
         }
 
