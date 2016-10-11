@@ -5,15 +5,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 </head>
 <body>
+
+
 <p>Hello!</p>
+<input type="file" id="fileSelector" multiple/>
+
+<button id="submit" class="green" onclick="loadReport();">Parse</button>
 <canvas id="usersInQueue" width="400" height="400"></canvas>
 
 <script>
-    function loadData() {
-        Papa.parse
+
+    var loadingConfig = {
+        delimiter: "",	// auto-detect
+        newline: "",	// auto-detect
+        header: false,
+        dynamicTyping: false,
+        preview: 0,
+        encoding: "",
+        worker: false,
+        comments: false,
+        step: undefined,
+        complete: function(data)
+        {
+            loadData(data);
+        },
+        error: undefined,
+        download: false,
+        skipEmptyLines: false,
+        chunk: undefined,
+        fastMode: undefined,
+        beforeFirstChunk: undefined,
+        withCredentials: undefined
+    };
+
+    function loadReport() {
+        var files = document.getElementById('fileSelector').files;
+        if (files.length == 0) {
+            alert("No reports selected");
+            return;
+        }
+
+        for (var i = 0; i < files.length; i++) {
+            Papa.parse(files[i], loadingConfig);
+        }
     }
 
-    var data = loadData();
+    function loadData(data) {
+        console.log("  Row count:", data);
+    }
 
     var ctx = document.getElementById("usersInQueue");
     var myChart = new Chart(ctx, {
@@ -46,7 +85,7 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             }
