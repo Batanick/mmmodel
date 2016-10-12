@@ -101,11 +101,11 @@ fn save_results(events: Vec<Vec<stats::Event>>) {
                 &Event::UserJoinedQueue(id) => format!("user_joined_queue, {}", id),
                 &Event::GameCreated(_) => "game_created".to_owned(),
                 &Event::GamePlayed(_) => "game_played".to_owned(),
-                &Event::UserPlayed(id, won) => format!("user_game_played, {}, {}", id, won),
-                &Event::UsersInQueue(count) => format!("users_in_queue, {}", count),
+                &Event::UserPlayed(id, won) => format!("user_game_played,{},{}", id, won),
+                &Event::UsersInQueue(count) => format!("users_in_queue,{}",count),
             };
 
-            report.write(format!("{}, {}\n", tick, event_log).as_bytes()).unwrap();
+            report.write(format!("{},{}\n", tick, event_log).as_bytes()).unwrap();
         }
     }
 }

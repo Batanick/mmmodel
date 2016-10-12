@@ -1,1210 +1,1210 @@
-0, users_in_queue, 0
-1, users_in_queue, 0
-2, users_in_queue, 0
-3, users_in_queue, 0
-4, users_in_queue, 0
-5, users_in_queue, 0
-6, users_in_queue, 0
-7, users_in_queue, 0
-8, users_in_queue, 0
-9, user_joined_queue, 0
-9, users_in_queue, 1
-10, users_in_queue, 1
-11, users_in_queue, 1
-12, users_in_queue, 1
-13, users_in_queue, 1
-14, users_in_queue, 1
-15, users_in_queue, 1
-16, users_in_queue, 1
-17, users_in_queue, 1
-18, users_in_queue, 1
-19, user_joined_queue, 1
-19, users_in_queue, 2
-20, users_in_queue, 2
-21, users_in_queue, 2
-22, users_in_queue, 2
-23, users_in_queue, 2
-24, users_in_queue, 2
-25, users_in_queue, 2
-26, users_in_queue, 2
-27, users_in_queue, 2
-28, users_in_queue, 2
-29, user_joined_queue, 2
-29, users_in_queue, 3
-30, users_in_queue, 3
-31, users_in_queue, 3
-32, users_in_queue, 3
-33, users_in_queue, 3
-34, users_in_queue, 3
-35, users_in_queue, 3
-36, users_in_queue, 3
-37, users_in_queue, 3
-38, users_in_queue, 3
-39, user_joined_queue, 3
-39, users_in_queue, 4
-40, users_in_queue, 4
-41, users_in_queue, 4
-42, users_in_queue, 4
-43, users_in_queue, 4
-44, users_in_queue, 4
-45, users_in_queue, 4
-46, users_in_queue, 4
-47, users_in_queue, 4
-48, users_in_queue, 4
-49, user_joined_queue, 4
-49, users_in_queue, 5
-50, users_in_queue, 5
-51, users_in_queue, 5
-52, users_in_queue, 5
-53, users_in_queue, 5
-54, users_in_queue, 5
-55, users_in_queue, 5
-56, users_in_queue, 5
-57, users_in_queue, 5
-58, users_in_queue, 5
-59, user_joined_queue, 5
-59, users_in_queue, 6
-60, users_in_queue, 6
-61, users_in_queue, 6
-62, users_in_queue, 6
-63, users_in_queue, 6
-64, users_in_queue, 6
-65, users_in_queue, 6
-66, users_in_queue, 6
-67, users_in_queue, 6
-68, users_in_queue, 6
-69, user_joined_queue, 6
-69, users_in_queue, 7
-70, users_in_queue, 7
-71, users_in_queue, 7
-72, users_in_queue, 7
-73, users_in_queue, 7
-74, users_in_queue, 7
-75, users_in_queue, 7
-76, users_in_queue, 7
-77, users_in_queue, 7
-78, users_in_queue, 7
-79, user_joined_queue, 7
-79, users_in_queue, 8
-80, users_in_queue, 8
-81, users_in_queue, 8
-82, users_in_queue, 8
-83, users_in_queue, 8
-84, users_in_queue, 8
-85, users_in_queue, 8
-86, users_in_queue, 8
-87, users_in_queue, 8
-88, users_in_queue, 8
-89, user_joined_queue, 8
-89, users_in_queue, 9
-90, users_in_queue, 9
-91, users_in_queue, 9
-92, users_in_queue, 9
-93, users_in_queue, 9
-94, users_in_queue, 9
-95, users_in_queue, 9
-96, users_in_queue, 9
-97, users_in_queue, 9
-98, users_in_queue, 9
-99, user_joined_queue, 9
-99, user_game_played, 0, false
-99, user_game_played, 2, false
-99, user_game_played, 4, false
-99, user_game_played, 6, false
-99, user_game_played, 8, false
-99, user_game_played, 1, true
-99, user_game_played, 3, true
-99, user_game_played, 5, true
-99, user_game_played, 7, true
-99, user_game_played, 9, true
-99, game_created
-99, users_in_queue, 0
-100, users_in_queue, 0
-101, users_in_queue, 0
-102, users_in_queue, 0
-103, users_in_queue, 0
-104, users_in_queue, 0
-105, users_in_queue, 0
-106, users_in_queue, 0
-107, users_in_queue, 0
-108, users_in_queue, 0
-109, user_joined_queue, 10
-109, users_in_queue, 1
-110, users_in_queue, 1
-111, users_in_queue, 1
-112, users_in_queue, 1
-113, users_in_queue, 1
-114, users_in_queue, 1
-115, users_in_queue, 1
-116, users_in_queue, 1
-117, users_in_queue, 1
-118, users_in_queue, 1
-119, user_joined_queue, 11
-119, users_in_queue, 2
-120, users_in_queue, 2
-121, users_in_queue, 2
-122, users_in_queue, 2
-123, users_in_queue, 2
-124, users_in_queue, 2
-125, users_in_queue, 2
-126, users_in_queue, 2
-127, users_in_queue, 2
-128, users_in_queue, 2
-129, user_joined_queue, 12
-129, users_in_queue, 3
-130, users_in_queue, 3
-131, users_in_queue, 3
-132, users_in_queue, 3
-133, users_in_queue, 3
-134, users_in_queue, 3
-135, users_in_queue, 3
-136, users_in_queue, 3
-137, users_in_queue, 3
-138, users_in_queue, 3
-139, user_joined_queue, 13
-139, users_in_queue, 4
-140, users_in_queue, 4
-141, users_in_queue, 4
-142, users_in_queue, 4
-143, users_in_queue, 4
-144, users_in_queue, 4
-145, users_in_queue, 4
-146, users_in_queue, 4
-147, users_in_queue, 4
-148, users_in_queue, 4
-149, user_joined_queue, 14
-149, users_in_queue, 5
-150, users_in_queue, 5
-151, users_in_queue, 5
-152, users_in_queue, 5
-153, users_in_queue, 5
-154, users_in_queue, 5
-155, users_in_queue, 5
-156, users_in_queue, 5
-157, users_in_queue, 5
-158, users_in_queue, 5
-159, user_joined_queue, 15
-159, users_in_queue, 6
-160, users_in_queue, 6
-161, users_in_queue, 6
-162, users_in_queue, 6
-163, users_in_queue, 6
-164, users_in_queue, 6
-165, users_in_queue, 6
-166, users_in_queue, 6
-167, users_in_queue, 6
-168, users_in_queue, 6
-169, user_joined_queue, 16
-169, users_in_queue, 7
-170, users_in_queue, 7
-171, users_in_queue, 7
-172, users_in_queue, 7
-173, users_in_queue, 7
-174, users_in_queue, 7
-175, users_in_queue, 7
-176, users_in_queue, 7
-177, users_in_queue, 7
-178, users_in_queue, 7
-179, user_joined_queue, 17
-179, users_in_queue, 8
-180, users_in_queue, 8
-181, users_in_queue, 8
-182, users_in_queue, 8
-183, users_in_queue, 8
-184, users_in_queue, 8
-185, users_in_queue, 8
-186, users_in_queue, 8
-187, users_in_queue, 8
-188, users_in_queue, 8
-189, user_joined_queue, 18
-189, users_in_queue, 9
-190, users_in_queue, 9
-191, users_in_queue, 9
-192, users_in_queue, 9
-193, users_in_queue, 9
-194, users_in_queue, 9
-195, users_in_queue, 9
-196, users_in_queue, 9
-197, users_in_queue, 9
-198, users_in_queue, 9
-199, user_joined_queue, 19
-199, user_game_played, 10, false
-199, user_game_played, 12, false
-199, user_game_played, 14, false
-199, user_game_played, 16, false
-199, user_game_played, 18, false
-199, user_game_played, 11, true
-199, user_game_played, 13, true
-199, user_game_played, 15, true
-199, user_game_played, 17, true
-199, user_game_played, 19, true
-199, game_created
-199, users_in_queue, 0
-200, users_in_queue, 0
-201, users_in_queue, 0
-202, users_in_queue, 0
-203, users_in_queue, 0
-204, users_in_queue, 0
-205, users_in_queue, 0
-206, users_in_queue, 0
-207, users_in_queue, 0
-208, users_in_queue, 0
-209, user_joined_queue, 20
-209, users_in_queue, 1
-210, users_in_queue, 1
-211, users_in_queue, 1
-212, users_in_queue, 1
-213, users_in_queue, 1
-214, users_in_queue, 1
-215, users_in_queue, 1
-216, users_in_queue, 1
-217, users_in_queue, 1
-218, users_in_queue, 1
-219, user_joined_queue, 21
-219, users_in_queue, 2
-220, users_in_queue, 2
-221, users_in_queue, 2
-222, users_in_queue, 2
-223, users_in_queue, 2
-224, users_in_queue, 2
-225, users_in_queue, 2
-226, users_in_queue, 2
-227, users_in_queue, 2
-228, users_in_queue, 2
-229, user_joined_queue, 22
-229, users_in_queue, 3
-230, users_in_queue, 3
-231, users_in_queue, 3
-232, users_in_queue, 3
-233, users_in_queue, 3
-234, users_in_queue, 3
-235, users_in_queue, 3
-236, users_in_queue, 3
-237, users_in_queue, 3
-238, users_in_queue, 3
-239, user_joined_queue, 23
-239, users_in_queue, 4
-240, users_in_queue, 4
-241, users_in_queue, 4
-242, users_in_queue, 4
-243, users_in_queue, 4
-244, users_in_queue, 4
-245, users_in_queue, 4
-246, users_in_queue, 4
-247, users_in_queue, 4
-248, users_in_queue, 4
-249, user_joined_queue, 24
-249, users_in_queue, 5
-250, users_in_queue, 5
-251, users_in_queue, 5
-252, users_in_queue, 5
-253, users_in_queue, 5
-254, users_in_queue, 5
-255, users_in_queue, 5
-256, users_in_queue, 5
-257, users_in_queue, 5
-258, users_in_queue, 5
-259, user_joined_queue, 25
-259, users_in_queue, 6
-260, users_in_queue, 6
-261, users_in_queue, 6
-262, users_in_queue, 6
-263, users_in_queue, 6
-264, users_in_queue, 6
-265, users_in_queue, 6
-266, users_in_queue, 6
-267, users_in_queue, 6
-268, users_in_queue, 6
-269, user_joined_queue, 26
-269, users_in_queue, 7
-270, users_in_queue, 7
-271, users_in_queue, 7
-272, users_in_queue, 7
-273, users_in_queue, 7
-274, users_in_queue, 7
-275, users_in_queue, 7
-276, users_in_queue, 7
-277, users_in_queue, 7
-278, users_in_queue, 7
-279, user_joined_queue, 27
-279, users_in_queue, 8
-280, users_in_queue, 8
-281, users_in_queue, 8
-282, users_in_queue, 8
-283, users_in_queue, 8
-284, users_in_queue, 8
-285, users_in_queue, 8
-286, users_in_queue, 8
-287, users_in_queue, 8
-288, users_in_queue, 8
-289, user_joined_queue, 28
-289, users_in_queue, 9
-290, users_in_queue, 9
-291, users_in_queue, 9
-292, users_in_queue, 9
-293, users_in_queue, 9
-294, users_in_queue, 9
-295, users_in_queue, 9
-296, users_in_queue, 9
-297, users_in_queue, 9
-298, users_in_queue, 9
-299, user_joined_queue, 29
-299, user_game_played, 20, false
-299, user_game_played, 22, false
-299, user_game_played, 24, false
-299, user_game_played, 26, false
-299, user_game_played, 28, false
-299, user_game_played, 21, true
-299, user_game_played, 23, true
-299, user_game_played, 25, true
-299, user_game_played, 27, true
-299, user_game_played, 29, true
-299, game_created
-299, users_in_queue, 0
-300, users_in_queue, 0
-301, users_in_queue, 0
-302, users_in_queue, 0
-303, users_in_queue, 0
-304, users_in_queue, 0
-305, users_in_queue, 0
-306, users_in_queue, 0
-307, users_in_queue, 0
-308, users_in_queue, 0
-309, user_joined_queue, 30
-309, users_in_queue, 1
-310, users_in_queue, 1
-311, users_in_queue, 1
-312, users_in_queue, 1
-313, users_in_queue, 1
-314, users_in_queue, 1
-315, users_in_queue, 1
-316, users_in_queue, 1
-317, users_in_queue, 1
-318, users_in_queue, 1
-319, user_joined_queue, 31
-319, users_in_queue, 2
-320, users_in_queue, 2
-321, users_in_queue, 2
-322, users_in_queue, 2
-323, users_in_queue, 2
-324, users_in_queue, 2
-325, users_in_queue, 2
-326, users_in_queue, 2
-327, users_in_queue, 2
-328, users_in_queue, 2
-329, user_joined_queue, 32
-329, users_in_queue, 3
-330, users_in_queue, 3
-331, users_in_queue, 3
-332, users_in_queue, 3
-333, users_in_queue, 3
-334, users_in_queue, 3
-335, users_in_queue, 3
-336, users_in_queue, 3
-337, users_in_queue, 3
-338, users_in_queue, 3
-339, user_joined_queue, 33
-339, users_in_queue, 4
-340, users_in_queue, 4
-341, users_in_queue, 4
-342, users_in_queue, 4
-343, users_in_queue, 4
-344, users_in_queue, 4
-345, users_in_queue, 4
-346, users_in_queue, 4
-347, users_in_queue, 4
-348, users_in_queue, 4
-349, user_joined_queue, 34
-349, users_in_queue, 5
-350, users_in_queue, 5
-351, users_in_queue, 5
-352, users_in_queue, 5
-353, users_in_queue, 5
-354, users_in_queue, 5
-355, users_in_queue, 5
-356, users_in_queue, 5
-357, users_in_queue, 5
-358, users_in_queue, 5
-359, user_joined_queue, 35
-359, users_in_queue, 6
-360, users_in_queue, 6
-361, users_in_queue, 6
-362, users_in_queue, 6
-363, users_in_queue, 6
-364, users_in_queue, 6
-365, users_in_queue, 6
-366, users_in_queue, 6
-367, users_in_queue, 6
-368, users_in_queue, 6
-369, user_joined_queue, 36
-369, users_in_queue, 7
-370, users_in_queue, 7
-371, users_in_queue, 7
-372, users_in_queue, 7
-373, users_in_queue, 7
-374, users_in_queue, 7
-375, users_in_queue, 7
-376, users_in_queue, 7
-377, users_in_queue, 7
-378, users_in_queue, 7
-379, user_joined_queue, 37
-379, users_in_queue, 8
-380, users_in_queue, 8
-381, users_in_queue, 8
-382, users_in_queue, 8
-383, users_in_queue, 8
-384, users_in_queue, 8
-385, users_in_queue, 8
-386, users_in_queue, 8
-387, users_in_queue, 8
-388, users_in_queue, 8
-389, user_joined_queue, 38
-389, users_in_queue, 9
-390, users_in_queue, 9
-391, users_in_queue, 9
-392, users_in_queue, 9
-393, users_in_queue, 9
-394, users_in_queue, 9
-395, users_in_queue, 9
-396, users_in_queue, 9
-397, users_in_queue, 9
-398, users_in_queue, 9
-399, user_joined_queue, 39
-399, user_game_played, 30, false
-399, user_game_played, 32, false
-399, user_game_played, 34, false
-399, user_game_played, 36, false
-399, user_game_played, 38, false
-399, user_game_played, 31, true
-399, user_game_played, 33, true
-399, user_game_played, 35, true
-399, user_game_played, 37, true
-399, user_game_played, 39, true
-399, game_created
-399, users_in_queue, 0
-400, users_in_queue, 0
-401, users_in_queue, 0
-402, users_in_queue, 0
-403, users_in_queue, 0
-404, users_in_queue, 0
-405, users_in_queue, 0
-406, users_in_queue, 0
-407, users_in_queue, 0
-408, users_in_queue, 0
-409, user_joined_queue, 40
-409, users_in_queue, 1
-410, users_in_queue, 1
-411, users_in_queue, 1
-412, users_in_queue, 1
-413, users_in_queue, 1
-414, users_in_queue, 1
-415, users_in_queue, 1
-416, users_in_queue, 1
-417, users_in_queue, 1
-418, users_in_queue, 1
-419, user_joined_queue, 41
-419, users_in_queue, 2
-420, users_in_queue, 2
-421, users_in_queue, 2
-422, users_in_queue, 2
-423, users_in_queue, 2
-424, users_in_queue, 2
-425, users_in_queue, 2
-426, users_in_queue, 2
-427, users_in_queue, 2
-428, users_in_queue, 2
-429, user_joined_queue, 42
-429, users_in_queue, 3
-430, users_in_queue, 3
-431, users_in_queue, 3
-432, users_in_queue, 3
-433, users_in_queue, 3
-434, users_in_queue, 3
-435, users_in_queue, 3
-436, users_in_queue, 3
-437, users_in_queue, 3
-438, users_in_queue, 3
-439, user_joined_queue, 43
-439, users_in_queue, 4
-440, users_in_queue, 4
-441, users_in_queue, 4
-442, users_in_queue, 4
-443, users_in_queue, 4
-444, users_in_queue, 4
-445, users_in_queue, 4
-446, users_in_queue, 4
-447, users_in_queue, 4
-448, users_in_queue, 4
-449, user_joined_queue, 44
-449, users_in_queue, 5
-450, users_in_queue, 5
-451, users_in_queue, 5
-452, users_in_queue, 5
-453, users_in_queue, 5
-454, users_in_queue, 5
-455, users_in_queue, 5
-456, users_in_queue, 5
-457, users_in_queue, 5
-458, users_in_queue, 5
-459, user_joined_queue, 45
-459, users_in_queue, 6
-460, users_in_queue, 6
-461, users_in_queue, 6
-462, users_in_queue, 6
-463, users_in_queue, 6
-464, users_in_queue, 6
-465, users_in_queue, 6
-466, users_in_queue, 6
-467, users_in_queue, 6
-468, users_in_queue, 6
-469, user_joined_queue, 46
-469, users_in_queue, 7
-470, users_in_queue, 7
-471, users_in_queue, 7
-472, users_in_queue, 7
-473, users_in_queue, 7
-474, users_in_queue, 7
-475, users_in_queue, 7
-476, users_in_queue, 7
-477, users_in_queue, 7
-478, users_in_queue, 7
-479, user_joined_queue, 47
-479, users_in_queue, 8
-480, users_in_queue, 8
-481, users_in_queue, 8
-482, users_in_queue, 8
-483, users_in_queue, 8
-484, users_in_queue, 8
-485, users_in_queue, 8
-486, users_in_queue, 8
-487, users_in_queue, 8
-488, users_in_queue, 8
-489, user_joined_queue, 48
-489, users_in_queue, 9
-490, users_in_queue, 9
-491, users_in_queue, 9
-492, users_in_queue, 9
-493, users_in_queue, 9
-494, users_in_queue, 9
-495, users_in_queue, 9
-496, users_in_queue, 9
-497, users_in_queue, 9
-498, users_in_queue, 9
-499, user_joined_queue, 49
-499, user_game_played, 40, false
-499, user_game_played, 42, false
-499, user_game_played, 44, false
-499, user_game_played, 46, false
-499, user_game_played, 48, false
-499, user_game_played, 41, true
-499, user_game_played, 43, true
-499, user_game_played, 45, true
-499, user_game_played, 47, true
-499, user_game_played, 49, true
-499, game_created
-499, users_in_queue, 0
-500, users_in_queue, 0
-501, users_in_queue, 0
-502, users_in_queue, 0
-503, users_in_queue, 0
-504, users_in_queue, 0
-505, users_in_queue, 0
-506, users_in_queue, 0
-507, users_in_queue, 0
-508, users_in_queue, 0
-509, user_joined_queue, 50
-509, users_in_queue, 1
-510, users_in_queue, 1
-511, users_in_queue, 1
-512, users_in_queue, 1
-513, users_in_queue, 1
-514, users_in_queue, 1
-515, users_in_queue, 1
-516, users_in_queue, 1
-517, users_in_queue, 1
-518, users_in_queue, 1
-519, user_joined_queue, 51
-519, users_in_queue, 2
-520, users_in_queue, 2
-521, users_in_queue, 2
-522, users_in_queue, 2
-523, users_in_queue, 2
-524, users_in_queue, 2
-525, users_in_queue, 2
-526, users_in_queue, 2
-527, users_in_queue, 2
-528, users_in_queue, 2
-529, user_joined_queue, 52
-529, users_in_queue, 3
-530, users_in_queue, 3
-531, users_in_queue, 3
-532, users_in_queue, 3
-533, users_in_queue, 3
-534, users_in_queue, 3
-535, users_in_queue, 3
-536, users_in_queue, 3
-537, users_in_queue, 3
-538, users_in_queue, 3
-539, user_joined_queue, 53
-539, users_in_queue, 4
-540, users_in_queue, 4
-541, users_in_queue, 4
-542, users_in_queue, 4
-543, users_in_queue, 4
-544, users_in_queue, 4
-545, users_in_queue, 4
-546, users_in_queue, 4
-547, users_in_queue, 4
-548, users_in_queue, 4
-549, user_joined_queue, 54
-549, users_in_queue, 5
-550, users_in_queue, 5
-551, users_in_queue, 5
-552, users_in_queue, 5
-553, users_in_queue, 5
-554, users_in_queue, 5
-555, users_in_queue, 5
-556, users_in_queue, 5
-557, users_in_queue, 5
-558, users_in_queue, 5
-559, user_joined_queue, 55
-559, users_in_queue, 6
-560, users_in_queue, 6
-561, users_in_queue, 6
-562, users_in_queue, 6
-563, users_in_queue, 6
-564, users_in_queue, 6
-565, users_in_queue, 6
-566, users_in_queue, 6
-567, users_in_queue, 6
-568, users_in_queue, 6
-569, user_joined_queue, 56
-569, users_in_queue, 7
-570, users_in_queue, 7
-571, users_in_queue, 7
-572, users_in_queue, 7
-573, users_in_queue, 7
-574, users_in_queue, 7
-575, users_in_queue, 7
-576, users_in_queue, 7
-577, users_in_queue, 7
-578, users_in_queue, 7
-579, user_joined_queue, 57
-579, users_in_queue, 8
-580, users_in_queue, 8
-581, users_in_queue, 8
-582, users_in_queue, 8
-583, users_in_queue, 8
-584, users_in_queue, 8
-585, users_in_queue, 8
-586, users_in_queue, 8
-587, users_in_queue, 8
-588, users_in_queue, 8
-589, user_joined_queue, 58
-589, users_in_queue, 9
-590, users_in_queue, 9
-591, users_in_queue, 9
-592, users_in_queue, 9
-593, users_in_queue, 9
-594, users_in_queue, 9
-595, users_in_queue, 9
-596, users_in_queue, 9
-597, users_in_queue, 9
-598, users_in_queue, 9
-599, user_joined_queue, 59
-599, user_game_played, 50, false
-599, user_game_played, 52, false
-599, user_game_played, 54, false
-599, user_game_played, 56, false
-599, user_game_played, 58, false
-599, user_game_played, 51, true
-599, user_game_played, 53, true
-599, user_game_played, 55, true
-599, user_game_played, 57, true
-599, user_game_played, 59, true
-599, game_created
-599, users_in_queue, 0
-600, users_in_queue, 0
-601, users_in_queue, 0
-602, users_in_queue, 0
-603, users_in_queue, 0
-604, users_in_queue, 0
-605, users_in_queue, 0
-606, users_in_queue, 0
-607, users_in_queue, 0
-608, users_in_queue, 0
-609, user_joined_queue, 60
-609, users_in_queue, 1
-610, users_in_queue, 1
-611, users_in_queue, 1
-612, users_in_queue, 1
-613, users_in_queue, 1
-614, users_in_queue, 1
-615, users_in_queue, 1
-616, users_in_queue, 1
-617, users_in_queue, 1
-618, users_in_queue, 1
-619, user_joined_queue, 61
-619, users_in_queue, 2
-620, users_in_queue, 2
-621, users_in_queue, 2
-622, users_in_queue, 2
-623, users_in_queue, 2
-624, users_in_queue, 2
-625, users_in_queue, 2
-626, users_in_queue, 2
-627, users_in_queue, 2
-628, users_in_queue, 2
-629, user_joined_queue, 62
-629, users_in_queue, 3
-630, users_in_queue, 3
-631, users_in_queue, 3
-632, users_in_queue, 3
-633, users_in_queue, 3
-634, users_in_queue, 3
-635, users_in_queue, 3
-636, users_in_queue, 3
-637, users_in_queue, 3
-638, users_in_queue, 3
-639, user_joined_queue, 63
-639, users_in_queue, 4
-640, users_in_queue, 4
-641, users_in_queue, 4
-642, users_in_queue, 4
-643, users_in_queue, 4
-644, users_in_queue, 4
-645, users_in_queue, 4
-646, users_in_queue, 4
-647, users_in_queue, 4
-648, users_in_queue, 4
-649, user_joined_queue, 64
-649, users_in_queue, 5
-650, users_in_queue, 5
-651, users_in_queue, 5
-652, users_in_queue, 5
-653, users_in_queue, 5
-654, users_in_queue, 5
-655, users_in_queue, 5
-656, users_in_queue, 5
-657, users_in_queue, 5
-658, users_in_queue, 5
-659, user_joined_queue, 65
-659, users_in_queue, 6
-660, users_in_queue, 6
-661, users_in_queue, 6
-662, users_in_queue, 6
-663, users_in_queue, 6
-664, users_in_queue, 6
-665, users_in_queue, 6
-666, users_in_queue, 6
-667, users_in_queue, 6
-668, users_in_queue, 6
-669, user_joined_queue, 66
-669, users_in_queue, 7
-670, users_in_queue, 7
-671, users_in_queue, 7
-672, users_in_queue, 7
-673, users_in_queue, 7
-674, users_in_queue, 7
-675, users_in_queue, 7
-676, users_in_queue, 7
-677, users_in_queue, 7
-678, users_in_queue, 7
-679, user_joined_queue, 67
-679, users_in_queue, 8
-680, users_in_queue, 8
-681, users_in_queue, 8
-682, users_in_queue, 8
-683, users_in_queue, 8
-684, users_in_queue, 8
-685, users_in_queue, 8
-686, users_in_queue, 8
-687, users_in_queue, 8
-688, users_in_queue, 8
-689, user_joined_queue, 68
-689, users_in_queue, 9
-690, users_in_queue, 9
-691, users_in_queue, 9
-692, users_in_queue, 9
-693, users_in_queue, 9
-694, users_in_queue, 9
-695, users_in_queue, 9
-696, users_in_queue, 9
-697, users_in_queue, 9
-698, users_in_queue, 9
-699, user_joined_queue, 69
-699, user_game_played, 60, false
-699, user_game_played, 62, false
-699, user_game_played, 64, false
-699, user_game_played, 66, false
-699, user_game_played, 68, false
-699, user_game_played, 61, true
-699, user_game_played, 63, true
-699, user_game_played, 65, true
-699, user_game_played, 67, true
-699, user_game_played, 69, true
-699, game_created
-699, users_in_queue, 0
-700, users_in_queue, 0
-701, users_in_queue, 0
-702, users_in_queue, 0
-703, users_in_queue, 0
-704, users_in_queue, 0
-705, users_in_queue, 0
-706, users_in_queue, 0
-707, users_in_queue, 0
-708, users_in_queue, 0
-709, user_joined_queue, 70
-709, users_in_queue, 1
-710, users_in_queue, 1
-711, users_in_queue, 1
-712, users_in_queue, 1
-713, users_in_queue, 1
-714, users_in_queue, 1
-715, users_in_queue, 1
-716, users_in_queue, 1
-717, users_in_queue, 1
-718, users_in_queue, 1
-719, user_joined_queue, 71
-719, users_in_queue, 2
-720, users_in_queue, 2
-721, users_in_queue, 2
-722, users_in_queue, 2
-723, users_in_queue, 2
-724, users_in_queue, 2
-725, users_in_queue, 2
-726, users_in_queue, 2
-727, users_in_queue, 2
-728, users_in_queue, 2
-729, user_joined_queue, 72
-729, users_in_queue, 3
-730, users_in_queue, 3
-731, users_in_queue, 3
-732, users_in_queue, 3
-733, users_in_queue, 3
-734, users_in_queue, 3
-735, users_in_queue, 3
-736, users_in_queue, 3
-737, users_in_queue, 3
-738, users_in_queue, 3
-739, user_joined_queue, 73
-739, users_in_queue, 4
-740, users_in_queue, 4
-741, users_in_queue, 4
-742, users_in_queue, 4
-743, users_in_queue, 4
-744, users_in_queue, 4
-745, users_in_queue, 4
-746, users_in_queue, 4
-747, users_in_queue, 4
-748, users_in_queue, 4
-749, user_joined_queue, 74
-749, users_in_queue, 5
-750, users_in_queue, 5
-751, users_in_queue, 5
-752, users_in_queue, 5
-753, users_in_queue, 5
-754, users_in_queue, 5
-755, users_in_queue, 5
-756, users_in_queue, 5
-757, users_in_queue, 5
-758, users_in_queue, 5
-759, user_joined_queue, 75
-759, users_in_queue, 6
-760, users_in_queue, 6
-761, users_in_queue, 6
-762, users_in_queue, 6
-763, users_in_queue, 6
-764, users_in_queue, 6
-765, users_in_queue, 6
-766, users_in_queue, 6
-767, users_in_queue, 6
-768, users_in_queue, 6
-769, user_joined_queue, 76
-769, users_in_queue, 7
-770, users_in_queue, 7
-771, users_in_queue, 7
-772, users_in_queue, 7
-773, users_in_queue, 7
-774, users_in_queue, 7
-775, users_in_queue, 7
-776, users_in_queue, 7
-777, users_in_queue, 7
-778, users_in_queue, 7
-779, user_joined_queue, 77
-779, users_in_queue, 8
-780, users_in_queue, 8
-781, users_in_queue, 8
-782, users_in_queue, 8
-783, users_in_queue, 8
-784, users_in_queue, 8
-785, users_in_queue, 8
-786, users_in_queue, 8
-787, users_in_queue, 8
-788, users_in_queue, 8
-789, user_joined_queue, 78
-789, users_in_queue, 9
-790, users_in_queue, 9
-791, users_in_queue, 9
-792, users_in_queue, 9
-793, users_in_queue, 9
-794, users_in_queue, 9
-795, users_in_queue, 9
-796, users_in_queue, 9
-797, users_in_queue, 9
-798, users_in_queue, 9
-799, user_joined_queue, 79
-799, user_game_played, 70, false
-799, user_game_played, 72, false
-799, user_game_played, 74, false
-799, user_game_played, 76, false
-799, user_game_played, 78, false
-799, user_game_played, 71, true
-799, user_game_played, 73, true
-799, user_game_played, 75, true
-799, user_game_played, 77, true
-799, user_game_played, 79, true
-799, game_created
-799, users_in_queue, 0
-800, users_in_queue, 0
-801, users_in_queue, 0
-802, users_in_queue, 0
-803, users_in_queue, 0
-804, users_in_queue, 0
-805, users_in_queue, 0
-806, users_in_queue, 0
-807, users_in_queue, 0
-808, users_in_queue, 0
-809, user_joined_queue, 80
-809, users_in_queue, 1
-810, users_in_queue, 1
-811, users_in_queue, 1
-812, users_in_queue, 1
-813, users_in_queue, 1
-814, users_in_queue, 1
-815, users_in_queue, 1
-816, users_in_queue, 1
-817, users_in_queue, 1
-818, users_in_queue, 1
-819, user_joined_queue, 81
-819, users_in_queue, 2
-820, users_in_queue, 2
-821, users_in_queue, 2
-822, users_in_queue, 2
-823, users_in_queue, 2
-824, users_in_queue, 2
-825, users_in_queue, 2
-826, users_in_queue, 2
-827, users_in_queue, 2
-828, users_in_queue, 2
-829, user_joined_queue, 82
-829, users_in_queue, 3
-830, users_in_queue, 3
-831, users_in_queue, 3
-832, users_in_queue, 3
-833, users_in_queue, 3
-834, users_in_queue, 3
-835, users_in_queue, 3
-836, users_in_queue, 3
-837, users_in_queue, 3
-838, users_in_queue, 3
-839, user_joined_queue, 83
-839, users_in_queue, 4
-840, users_in_queue, 4
-841, users_in_queue, 4
-842, users_in_queue, 4
-843, users_in_queue, 4
-844, users_in_queue, 4
-845, users_in_queue, 4
-846, users_in_queue, 4
-847, users_in_queue, 4
-848, users_in_queue, 4
-849, user_joined_queue, 84
-849, users_in_queue, 5
-850, users_in_queue, 5
-851, users_in_queue, 5
-852, users_in_queue, 5
-853, users_in_queue, 5
-854, users_in_queue, 5
-855, users_in_queue, 5
-856, users_in_queue, 5
-857, users_in_queue, 5
-858, users_in_queue, 5
-859, user_joined_queue, 85
-859, users_in_queue, 6
-860, users_in_queue, 6
-861, users_in_queue, 6
-862, users_in_queue, 6
-863, users_in_queue, 6
-864, users_in_queue, 6
-865, users_in_queue, 6
-866, users_in_queue, 6
-867, users_in_queue, 6
-868, users_in_queue, 6
-869, user_joined_queue, 86
-869, users_in_queue, 7
-870, users_in_queue, 7
-871, users_in_queue, 7
-872, users_in_queue, 7
-873, users_in_queue, 7
-874, users_in_queue, 7
-875, users_in_queue, 7
-876, users_in_queue, 7
-877, users_in_queue, 7
-878, users_in_queue, 7
-879, user_joined_queue, 87
-879, users_in_queue, 8
-880, users_in_queue, 8
-881, users_in_queue, 8
-882, users_in_queue, 8
-883, users_in_queue, 8
-884, users_in_queue, 8
-885, users_in_queue, 8
-886, users_in_queue, 8
-887, users_in_queue, 8
-888, users_in_queue, 8
-889, user_joined_queue, 88
-889, users_in_queue, 9
-890, users_in_queue, 9
-891, users_in_queue, 9
-892, users_in_queue, 9
-893, users_in_queue, 9
-894, users_in_queue, 9
-895, users_in_queue, 9
-896, users_in_queue, 9
-897, users_in_queue, 9
-898, users_in_queue, 9
-899, user_joined_queue, 89
-899, user_game_played, 80, false
-899, user_game_played, 82, false
-899, user_game_played, 84, false
-899, user_game_played, 86, false
-899, user_game_played, 88, false
-899, user_game_played, 81, true
-899, user_game_played, 83, true
-899, user_game_played, 85, true
-899, user_game_played, 87, true
-899, user_game_played, 89, true
-899, game_created
-899, users_in_queue, 0
-900, users_in_queue, 0
-901, users_in_queue, 0
-902, users_in_queue, 0
-903, users_in_queue, 0
-904, users_in_queue, 0
-905, users_in_queue, 0
-906, users_in_queue, 0
-907, users_in_queue, 0
-908, users_in_queue, 0
-909, user_joined_queue, 90
-909, users_in_queue, 1
-910, users_in_queue, 1
-911, users_in_queue, 1
-912, users_in_queue, 1
-913, users_in_queue, 1
-914, users_in_queue, 1
-915, users_in_queue, 1
-916, users_in_queue, 1
-917, users_in_queue, 1
-918, users_in_queue, 1
-919, user_joined_queue, 91
-919, users_in_queue, 2
-920, users_in_queue, 2
-921, users_in_queue, 2
-922, users_in_queue, 2
-923, users_in_queue, 2
-924, users_in_queue, 2
-925, users_in_queue, 2
-926, users_in_queue, 2
-927, users_in_queue, 2
-928, users_in_queue, 2
-929, user_joined_queue, 92
-929, users_in_queue, 3
-930, users_in_queue, 3
-931, users_in_queue, 3
-932, users_in_queue, 3
-933, users_in_queue, 3
-934, users_in_queue, 3
-935, users_in_queue, 3
-936, users_in_queue, 3
-937, users_in_queue, 3
-938, users_in_queue, 3
-939, user_joined_queue, 93
-939, users_in_queue, 4
-940, users_in_queue, 4
-941, users_in_queue, 4
-942, users_in_queue, 4
-943, users_in_queue, 4
-944, users_in_queue, 4
-945, users_in_queue, 4
-946, users_in_queue, 4
-947, users_in_queue, 4
-948, users_in_queue, 4
-949, user_joined_queue, 94
-949, users_in_queue, 5
-950, users_in_queue, 5
-951, users_in_queue, 5
-952, users_in_queue, 5
-953, users_in_queue, 5
-954, users_in_queue, 5
-955, users_in_queue, 5
-956, users_in_queue, 5
-957, users_in_queue, 5
-958, users_in_queue, 5
-959, user_joined_queue, 95
-959, users_in_queue, 6
-960, users_in_queue, 6
-961, users_in_queue, 6
-962, users_in_queue, 6
-963, users_in_queue, 6
-964, users_in_queue, 6
-965, users_in_queue, 6
-966, users_in_queue, 6
-967, users_in_queue, 6
-968, users_in_queue, 6
-969, user_joined_queue, 96
-969, users_in_queue, 7
-970, users_in_queue, 7
-971, users_in_queue, 7
-972, users_in_queue, 7
-973, users_in_queue, 7
-974, users_in_queue, 7
-975, users_in_queue, 7
-976, users_in_queue, 7
-977, users_in_queue, 7
-978, users_in_queue, 7
-979, user_joined_queue, 97
-979, users_in_queue, 8
-980, users_in_queue, 8
-981, users_in_queue, 8
-982, users_in_queue, 8
-983, users_in_queue, 8
-984, users_in_queue, 8
-985, users_in_queue, 8
-986, users_in_queue, 8
-987, users_in_queue, 8
-988, users_in_queue, 8
-989, user_joined_queue, 98
-989, users_in_queue, 9
-990, users_in_queue, 9
-991, users_in_queue, 9
-992, users_in_queue, 9
-993, users_in_queue, 9
-994, users_in_queue, 9
-995, users_in_queue, 9
-996, users_in_queue, 9
-997, users_in_queue, 9
-998, users_in_queue, 9
-999, user_joined_queue, 99
-999, user_game_played, 90, false
-999, user_game_played, 92, false
-999, user_game_played, 94, false
-999, user_game_played, 96, false
-999, user_game_played, 98, false
-999, user_game_played, 91, true
-999, user_game_played, 93, true
-999, user_game_played, 95, true
-999, user_game_played, 97, true
-999, user_game_played, 99, true
-999, game_created
-999, users_in_queue, 0
+0,users_in_queue,0
+1,users_in_queue,0
+2,users_in_queue,0
+3,users_in_queue,0
+4,users_in_queue,0
+5,users_in_queue,0
+6,users_in_queue,0
+7,users_in_queue,0
+8,users_in_queue,0
+9,user_joined_queue, 0
+9,users_in_queue,1
+10,users_in_queue,1
+11,users_in_queue,1
+12,users_in_queue,1
+13,users_in_queue,1
+14,users_in_queue,1
+15,users_in_queue,1
+16,users_in_queue,1
+17,users_in_queue,1
+18,users_in_queue,1
+19,user_joined_queue, 1
+19,users_in_queue,2
+20,users_in_queue,2
+21,users_in_queue,2
+22,users_in_queue,2
+23,users_in_queue,2
+24,users_in_queue,2
+25,users_in_queue,2
+26,users_in_queue,2
+27,users_in_queue,2
+28,users_in_queue,2
+29,user_joined_queue, 2
+29,users_in_queue,3
+30,users_in_queue,3
+31,users_in_queue,3
+32,users_in_queue,3
+33,users_in_queue,3
+34,users_in_queue,3
+35,users_in_queue,3
+36,users_in_queue,3
+37,users_in_queue,3
+38,users_in_queue,3
+39,user_joined_queue, 3
+39,users_in_queue,4
+40,users_in_queue,4
+41,users_in_queue,4
+42,users_in_queue,4
+43,users_in_queue,4
+44,users_in_queue,4
+45,users_in_queue,4
+46,users_in_queue,4
+47,users_in_queue,4
+48,users_in_queue,4
+49,user_joined_queue, 4
+49,users_in_queue,5
+50,users_in_queue,5
+51,users_in_queue,5
+52,users_in_queue,5
+53,users_in_queue,5
+54,users_in_queue,5
+55,users_in_queue,5
+56,users_in_queue,5
+57,users_in_queue,5
+58,users_in_queue,5
+59,user_joined_queue, 5
+59,users_in_queue,6
+60,users_in_queue,6
+61,users_in_queue,6
+62,users_in_queue,6
+63,users_in_queue,6
+64,users_in_queue,6
+65,users_in_queue,6
+66,users_in_queue,6
+67,users_in_queue,6
+68,users_in_queue,6
+69,user_joined_queue, 6
+69,users_in_queue,7
+70,users_in_queue,7
+71,users_in_queue,7
+72,users_in_queue,7
+73,users_in_queue,7
+74,users_in_queue,7
+75,users_in_queue,7
+76,users_in_queue,7
+77,users_in_queue,7
+78,users_in_queue,7
+79,user_joined_queue, 7
+79,users_in_queue,8
+80,users_in_queue,8
+81,users_in_queue,8
+82,users_in_queue,8
+83,users_in_queue,8
+84,users_in_queue,8
+85,users_in_queue,8
+86,users_in_queue,8
+87,users_in_queue,8
+88,users_in_queue,8
+89,user_joined_queue, 8
+89,users_in_queue,9
+90,users_in_queue,9
+91,users_in_queue,9
+92,users_in_queue,9
+93,users_in_queue,9
+94,users_in_queue,9
+95,users_in_queue,9
+96,users_in_queue,9
+97,users_in_queue,9
+98,users_in_queue,9
+99,user_joined_queue, 9
+99,user_game_played,0,false
+99,user_game_played,2,false
+99,user_game_played,4,false
+99,user_game_played,6,false
+99,user_game_played,8,false
+99,user_game_played,1,true
+99,user_game_played,3,true
+99,user_game_played,5,true
+99,user_game_played,7,true
+99,user_game_played,9,true
+99,game_created
+99,users_in_queue,0
+100,users_in_queue,0
+101,users_in_queue,0
+102,users_in_queue,0
+103,users_in_queue,0
+104,users_in_queue,0
+105,users_in_queue,0
+106,users_in_queue,0
+107,users_in_queue,0
+108,users_in_queue,0
+109,user_joined_queue, 10
+109,users_in_queue,1
+110,users_in_queue,1
+111,users_in_queue,1
+112,users_in_queue,1
+113,users_in_queue,1
+114,users_in_queue,1
+115,users_in_queue,1
+116,users_in_queue,1
+117,users_in_queue,1
+118,users_in_queue,1
+119,user_joined_queue, 11
+119,users_in_queue,2
+120,users_in_queue,2
+121,users_in_queue,2
+122,users_in_queue,2
+123,users_in_queue,2
+124,users_in_queue,2
+125,users_in_queue,2
+126,users_in_queue,2
+127,users_in_queue,2
+128,users_in_queue,2
+129,user_joined_queue, 12
+129,users_in_queue,3
+130,users_in_queue,3
+131,users_in_queue,3
+132,users_in_queue,3
+133,users_in_queue,3
+134,users_in_queue,3
+135,users_in_queue,3
+136,users_in_queue,3
+137,users_in_queue,3
+138,users_in_queue,3
+139,user_joined_queue, 13
+139,users_in_queue,4
+140,users_in_queue,4
+141,users_in_queue,4
+142,users_in_queue,4
+143,users_in_queue,4
+144,users_in_queue,4
+145,users_in_queue,4
+146,users_in_queue,4
+147,users_in_queue,4
+148,users_in_queue,4
+149,user_joined_queue, 14
+149,users_in_queue,5
+150,users_in_queue,5
+151,users_in_queue,5
+152,users_in_queue,5
+153,users_in_queue,5
+154,users_in_queue,5
+155,users_in_queue,5
+156,users_in_queue,5
+157,users_in_queue,5
+158,users_in_queue,5
+159,user_joined_queue, 15
+159,users_in_queue,6
+160,users_in_queue,6
+161,users_in_queue,6
+162,users_in_queue,6
+163,users_in_queue,6
+164,users_in_queue,6
+165,users_in_queue,6
+166,users_in_queue,6
+167,users_in_queue,6
+168,users_in_queue,6
+169,user_joined_queue, 16
+169,users_in_queue,7
+170,users_in_queue,7
+171,users_in_queue,7
+172,users_in_queue,7
+173,users_in_queue,7
+174,users_in_queue,7
+175,users_in_queue,7
+176,users_in_queue,7
+177,users_in_queue,7
+178,users_in_queue,7
+179,user_joined_queue, 17
+179,users_in_queue,8
+180,users_in_queue,8
+181,users_in_queue,8
+182,users_in_queue,8
+183,users_in_queue,8
+184,users_in_queue,8
+185,users_in_queue,8
+186,users_in_queue,8
+187,users_in_queue,8
+188,users_in_queue,8
+189,user_joined_queue, 18
+189,users_in_queue,9
+190,users_in_queue,9
+191,users_in_queue,9
+192,users_in_queue,9
+193,users_in_queue,9
+194,users_in_queue,9
+195,users_in_queue,9
+196,users_in_queue,9
+197,users_in_queue,9
+198,users_in_queue,9
+199,user_joined_queue, 19
+199,user_game_played,10,false
+199,user_game_played,12,false
+199,user_game_played,14,false
+199,user_game_played,16,false
+199,user_game_played,18,false
+199,user_game_played,11,true
+199,user_game_played,13,true
+199,user_game_played,15,true
+199,user_game_played,17,true
+199,user_game_played,19,true
+199,game_created
+199,users_in_queue,0
+200,users_in_queue,0
+201,users_in_queue,0
+202,users_in_queue,0
+203,users_in_queue,0
+204,users_in_queue,0
+205,users_in_queue,0
+206,users_in_queue,0
+207,users_in_queue,0
+208,users_in_queue,0
+209,user_joined_queue, 20
+209,users_in_queue,1
+210,users_in_queue,1
+211,users_in_queue,1
+212,users_in_queue,1
+213,users_in_queue,1
+214,users_in_queue,1
+215,users_in_queue,1
+216,users_in_queue,1
+217,users_in_queue,1
+218,users_in_queue,1
+219,user_joined_queue, 21
+219,users_in_queue,2
+220,users_in_queue,2
+221,users_in_queue,2
+222,users_in_queue,2
+223,users_in_queue,2
+224,users_in_queue,2
+225,users_in_queue,2
+226,users_in_queue,2
+227,users_in_queue,2
+228,users_in_queue,2
+229,user_joined_queue, 22
+229,users_in_queue,3
+230,users_in_queue,3
+231,users_in_queue,3
+232,users_in_queue,3
+233,users_in_queue,3
+234,users_in_queue,3
+235,users_in_queue,3
+236,users_in_queue,3
+237,users_in_queue,3
+238,users_in_queue,3
+239,user_joined_queue, 23
+239,users_in_queue,4
+240,users_in_queue,4
+241,users_in_queue,4
+242,users_in_queue,4
+243,users_in_queue,4
+244,users_in_queue,4
+245,users_in_queue,4
+246,users_in_queue,4
+247,users_in_queue,4
+248,users_in_queue,4
+249,user_joined_queue, 24
+249,users_in_queue,5
+250,users_in_queue,5
+251,users_in_queue,5
+252,users_in_queue,5
+253,users_in_queue,5
+254,users_in_queue,5
+255,users_in_queue,5
+256,users_in_queue,5
+257,users_in_queue,5
+258,users_in_queue,5
+259,user_joined_queue, 25
+259,users_in_queue,6
+260,users_in_queue,6
+261,users_in_queue,6
+262,users_in_queue,6
+263,users_in_queue,6
+264,users_in_queue,6
+265,users_in_queue,6
+266,users_in_queue,6
+267,users_in_queue,6
+268,users_in_queue,6
+269,user_joined_queue, 26
+269,users_in_queue,7
+270,users_in_queue,7
+271,users_in_queue,7
+272,users_in_queue,7
+273,users_in_queue,7
+274,users_in_queue,7
+275,users_in_queue,7
+276,users_in_queue,7
+277,users_in_queue,7
+278,users_in_queue,7
+279,user_joined_queue, 27
+279,users_in_queue,8
+280,users_in_queue,8
+281,users_in_queue,8
+282,users_in_queue,8
+283,users_in_queue,8
+284,users_in_queue,8
+285,users_in_queue,8
+286,users_in_queue,8
+287,users_in_queue,8
+288,users_in_queue,8
+289,user_joined_queue, 28
+289,users_in_queue,9
+290,users_in_queue,9
+291,users_in_queue,9
+292,users_in_queue,9
+293,users_in_queue,9
+294,users_in_queue,9
+295,users_in_queue,9
+296,users_in_queue,9
+297,users_in_queue,9
+298,users_in_queue,9
+299,user_joined_queue, 29
+299,user_game_played,20,false
+299,user_game_played,22,false
+299,user_game_played,24,false
+299,user_game_played,26,false
+299,user_game_played,28,false
+299,user_game_played,21,true
+299,user_game_played,23,true
+299,user_game_played,25,true
+299,user_game_played,27,true
+299,user_game_played,29,true
+299,game_created
+299,users_in_queue,0
+300,users_in_queue,0
+301,users_in_queue,0
+302,users_in_queue,0
+303,users_in_queue,0
+304,users_in_queue,0
+305,users_in_queue,0
+306,users_in_queue,0
+307,users_in_queue,0
+308,users_in_queue,0
+309,user_joined_queue, 30
+309,users_in_queue,1
+310,users_in_queue,1
+311,users_in_queue,1
+312,users_in_queue,1
+313,users_in_queue,1
+314,users_in_queue,1
+315,users_in_queue,1
+316,users_in_queue,1
+317,users_in_queue,1
+318,users_in_queue,1
+319,user_joined_queue, 31
+319,users_in_queue,2
+320,users_in_queue,2
+321,users_in_queue,2
+322,users_in_queue,2
+323,users_in_queue,2
+324,users_in_queue,2
+325,users_in_queue,2
+326,users_in_queue,2
+327,users_in_queue,2
+328,users_in_queue,2
+329,user_joined_queue, 32
+329,users_in_queue,3
+330,users_in_queue,3
+331,users_in_queue,3
+332,users_in_queue,3
+333,users_in_queue,3
+334,users_in_queue,3
+335,users_in_queue,3
+336,users_in_queue,3
+337,users_in_queue,3
+338,users_in_queue,3
+339,user_joined_queue, 33
+339,users_in_queue,4
+340,users_in_queue,4
+341,users_in_queue,4
+342,users_in_queue,4
+343,users_in_queue,4
+344,users_in_queue,4
+345,users_in_queue,4
+346,users_in_queue,4
+347,users_in_queue,4
+348,users_in_queue,4
+349,user_joined_queue, 34
+349,users_in_queue,5
+350,users_in_queue,5
+351,users_in_queue,5
+352,users_in_queue,5
+353,users_in_queue,5
+354,users_in_queue,5
+355,users_in_queue,5
+356,users_in_queue,5
+357,users_in_queue,5
+358,users_in_queue,5
+359,user_joined_queue, 35
+359,users_in_queue,6
+360,users_in_queue,6
+361,users_in_queue,6
+362,users_in_queue,6
+363,users_in_queue,6
+364,users_in_queue,6
+365,users_in_queue,6
+366,users_in_queue,6
+367,users_in_queue,6
+368,users_in_queue,6
+369,user_joined_queue, 36
+369,users_in_queue,7
+370,users_in_queue,7
+371,users_in_queue,7
+372,users_in_queue,7
+373,users_in_queue,7
+374,users_in_queue,7
+375,users_in_queue,7
+376,users_in_queue,7
+377,users_in_queue,7
+378,users_in_queue,7
+379,user_joined_queue, 37
+379,users_in_queue,8
+380,users_in_queue,8
+381,users_in_queue,8
+382,users_in_queue,8
+383,users_in_queue,8
+384,users_in_queue,8
+385,users_in_queue,8
+386,users_in_queue,8
+387,users_in_queue,8
+388,users_in_queue,8
+389,user_joined_queue, 38
+389,users_in_queue,9
+390,users_in_queue,9
+391,users_in_queue,9
+392,users_in_queue,9
+393,users_in_queue,9
+394,users_in_queue,9
+395,users_in_queue,9
+396,users_in_queue,9
+397,users_in_queue,9
+398,users_in_queue,9
+399,user_joined_queue, 39
+399,user_game_played,30,false
+399,user_game_played,32,false
+399,user_game_played,34,false
+399,user_game_played,36,false
+399,user_game_played,38,false
+399,user_game_played,31,true
+399,user_game_played,33,true
+399,user_game_played,35,true
+399,user_game_played,37,true
+399,user_game_played,39,true
+399,game_created
+399,users_in_queue,0
+400,users_in_queue,0
+401,users_in_queue,0
+402,users_in_queue,0
+403,users_in_queue,0
+404,users_in_queue,0
+405,users_in_queue,0
+406,users_in_queue,0
+407,users_in_queue,0
+408,users_in_queue,0
+409,user_joined_queue, 40
+409,users_in_queue,1
+410,users_in_queue,1
+411,users_in_queue,1
+412,users_in_queue,1
+413,users_in_queue,1
+414,users_in_queue,1
+415,users_in_queue,1
+416,users_in_queue,1
+417,users_in_queue,1
+418,users_in_queue,1
+419,user_joined_queue, 41
+419,users_in_queue,2
+420,users_in_queue,2
+421,users_in_queue,2
+422,users_in_queue,2
+423,users_in_queue,2
+424,users_in_queue,2
+425,users_in_queue,2
+426,users_in_queue,2
+427,users_in_queue,2
+428,users_in_queue,2
+429,user_joined_queue, 42
+429,users_in_queue,3
+430,users_in_queue,3
+431,users_in_queue,3
+432,users_in_queue,3
+433,users_in_queue,3
+434,users_in_queue,3
+435,users_in_queue,3
+436,users_in_queue,3
+437,users_in_queue,3
+438,users_in_queue,3
+439,user_joined_queue, 43
+439,users_in_queue,4
+440,users_in_queue,4
+441,users_in_queue,4
+442,users_in_queue,4
+443,users_in_queue,4
+444,users_in_queue,4
+445,users_in_queue,4
+446,users_in_queue,4
+447,users_in_queue,4
+448,users_in_queue,4
+449,user_joined_queue, 44
+449,users_in_queue,5
+450,users_in_queue,5
+451,users_in_queue,5
+452,users_in_queue,5
+453,users_in_queue,5
+454,users_in_queue,5
+455,users_in_queue,5
+456,users_in_queue,5
+457,users_in_queue,5
+458,users_in_queue,5
+459,user_joined_queue, 45
+459,users_in_queue,6
+460,users_in_queue,6
+461,users_in_queue,6
+462,users_in_queue,6
+463,users_in_queue,6
+464,users_in_queue,6
+465,users_in_queue,6
+466,users_in_queue,6
+467,users_in_queue,6
+468,users_in_queue,6
+469,user_joined_queue, 46
+469,users_in_queue,7
+470,users_in_queue,7
+471,users_in_queue,7
+472,users_in_queue,7
+473,users_in_queue,7
+474,users_in_queue,7
+475,users_in_queue,7
+476,users_in_queue,7
+477,users_in_queue,7
+478,users_in_queue,7
+479,user_joined_queue, 47
+479,users_in_queue,8
+480,users_in_queue,8
+481,users_in_queue,8
+482,users_in_queue,8
+483,users_in_queue,8
+484,users_in_queue,8
+485,users_in_queue,8
+486,users_in_queue,8
+487,users_in_queue,8
+488,users_in_queue,8
+489,user_joined_queue, 48
+489,users_in_queue,9
+490,users_in_queue,9
+491,users_in_queue,9
+492,users_in_queue,9
+493,users_in_queue,9
+494,users_in_queue,9
+495,users_in_queue,9
+496,users_in_queue,9
+497,users_in_queue,9
+498,users_in_queue,9
+499,user_joined_queue, 49
+499,user_game_played,40,false
+499,user_game_played,42,false
+499,user_game_played,44,false
+499,user_game_played,46,false
+499,user_game_played,48,false
+499,user_game_played,41,true
+499,user_game_played,43,true
+499,user_game_played,45,true
+499,user_game_played,47,true
+499,user_game_played,49,true
+499,game_created
+499,users_in_queue,0
+500,users_in_queue,0
+501,users_in_queue,0
+502,users_in_queue,0
+503,users_in_queue,0
+504,users_in_queue,0
+505,users_in_queue,0
+506,users_in_queue,0
+507,users_in_queue,0
+508,users_in_queue,0
+509,user_joined_queue, 50
+509,users_in_queue,1
+510,users_in_queue,1
+511,users_in_queue,1
+512,users_in_queue,1
+513,users_in_queue,1
+514,users_in_queue,1
+515,users_in_queue,1
+516,users_in_queue,1
+517,users_in_queue,1
+518,users_in_queue,1
+519,user_joined_queue, 51
+519,users_in_queue,2
+520,users_in_queue,2
+521,users_in_queue,2
+522,users_in_queue,2
+523,users_in_queue,2
+524,users_in_queue,2
+525,users_in_queue,2
+526,users_in_queue,2
+527,users_in_queue,2
+528,users_in_queue,2
+529,user_joined_queue, 52
+529,users_in_queue,3
+530,users_in_queue,3
+531,users_in_queue,3
+532,users_in_queue,3
+533,users_in_queue,3
+534,users_in_queue,3
+535,users_in_queue,3
+536,users_in_queue,3
+537,users_in_queue,3
+538,users_in_queue,3
+539,user_joined_queue, 53
+539,users_in_queue,4
+540,users_in_queue,4
+541,users_in_queue,4
+542,users_in_queue,4
+543,users_in_queue,4
+544,users_in_queue,4
+545,users_in_queue,4
+546,users_in_queue,4
+547,users_in_queue,4
+548,users_in_queue,4
+549,user_joined_queue, 54
+549,users_in_queue,5
+550,users_in_queue,5
+551,users_in_queue,5
+552,users_in_queue,5
+553,users_in_queue,5
+554,users_in_queue,5
+555,users_in_queue,5
+556,users_in_queue,5
+557,users_in_queue,5
+558,users_in_queue,5
+559,user_joined_queue, 55
+559,users_in_queue,6
+560,users_in_queue,6
+561,users_in_queue,6
+562,users_in_queue,6
+563,users_in_queue,6
+564,users_in_queue,6
+565,users_in_queue,6
+566,users_in_queue,6
+567,users_in_queue,6
+568,users_in_queue,6
+569,user_joined_queue, 56
+569,users_in_queue,7
+570,users_in_queue,7
+571,users_in_queue,7
+572,users_in_queue,7
+573,users_in_queue,7
+574,users_in_queue,7
+575,users_in_queue,7
+576,users_in_queue,7
+577,users_in_queue,7
+578,users_in_queue,7
+579,user_joined_queue, 57
+579,users_in_queue,8
+580,users_in_queue,8
+581,users_in_queue,8
+582,users_in_queue,8
+583,users_in_queue,8
+584,users_in_queue,8
+585,users_in_queue,8
+586,users_in_queue,8
+587,users_in_queue,8
+588,users_in_queue,8
+589,user_joined_queue, 58
+589,users_in_queue,9
+590,users_in_queue,9
+591,users_in_queue,9
+592,users_in_queue,9
+593,users_in_queue,9
+594,users_in_queue,9
+595,users_in_queue,9
+596,users_in_queue,9
+597,users_in_queue,9
+598,users_in_queue,9
+599,user_joined_queue, 59
+599,user_game_played,50,false
+599,user_game_played,52,false
+599,user_game_played,54,false
+599,user_game_played,56,false
+599,user_game_played,58,false
+599,user_game_played,51,true
+599,user_game_played,53,true
+599,user_game_played,55,true
+599,user_game_played,57,true
+599,user_game_played,59,true
+599,game_created
+599,users_in_queue,0
+600,users_in_queue,0
+601,users_in_queue,0
+602,users_in_queue,0
+603,users_in_queue,0
+604,users_in_queue,0
+605,users_in_queue,0
+606,users_in_queue,0
+607,users_in_queue,0
+608,users_in_queue,0
+609,user_joined_queue, 60
+609,users_in_queue,1
+610,users_in_queue,1
+611,users_in_queue,1
+612,users_in_queue,1
+613,users_in_queue,1
+614,users_in_queue,1
+615,users_in_queue,1
+616,users_in_queue,1
+617,users_in_queue,1
+618,users_in_queue,1
+619,user_joined_queue, 61
+619,users_in_queue,2
+620,users_in_queue,2
+621,users_in_queue,2
+622,users_in_queue,2
+623,users_in_queue,2
+624,users_in_queue,2
+625,users_in_queue,2
+626,users_in_queue,2
+627,users_in_queue,2
+628,users_in_queue,2
+629,user_joined_queue, 62
+629,users_in_queue,3
+630,users_in_queue,3
+631,users_in_queue,3
+632,users_in_queue,3
+633,users_in_queue,3
+634,users_in_queue,3
+635,users_in_queue,3
+636,users_in_queue,3
+637,users_in_queue,3
+638,users_in_queue,3
+639,user_joined_queue, 63
+639,users_in_queue,4
+640,users_in_queue,4
+641,users_in_queue,4
+642,users_in_queue,4
+643,users_in_queue,4
+644,users_in_queue,4
+645,users_in_queue,4
+646,users_in_queue,4
+647,users_in_queue,4
+648,users_in_queue,4
+649,user_joined_queue, 64
+649,users_in_queue,5
+650,users_in_queue,5
+651,users_in_queue,5
+652,users_in_queue,5
+653,users_in_queue,5
+654,users_in_queue,5
+655,users_in_queue,5
+656,users_in_queue,5
+657,users_in_queue,5
+658,users_in_queue,5
+659,user_joined_queue, 65
+659,users_in_queue,6
+660,users_in_queue,6
+661,users_in_queue,6
+662,users_in_queue,6
+663,users_in_queue,6
+664,users_in_queue,6
+665,users_in_queue,6
+666,users_in_queue,6
+667,users_in_queue,6
+668,users_in_queue,6
+669,user_joined_queue, 66
+669,users_in_queue,7
+670,users_in_queue,7
+671,users_in_queue,7
+672,users_in_queue,7
+673,users_in_queue,7
+674,users_in_queue,7
+675,users_in_queue,7
+676,users_in_queue,7
+677,users_in_queue,7
+678,users_in_queue,7
+679,user_joined_queue, 67
+679,users_in_queue,8
+680,users_in_queue,8
+681,users_in_queue,8
+682,users_in_queue,8
+683,users_in_queue,8
+684,users_in_queue,8
+685,users_in_queue,8
+686,users_in_queue,8
+687,users_in_queue,8
+688,users_in_queue,8
+689,user_joined_queue, 68
+689,users_in_queue,9
+690,users_in_queue,9
+691,users_in_queue,9
+692,users_in_queue,9
+693,users_in_queue,9
+694,users_in_queue,9
+695,users_in_queue,9
+696,users_in_queue,9
+697,users_in_queue,9
+698,users_in_queue,9
+699,user_joined_queue, 69
+699,user_game_played,60,false
+699,user_game_played,62,false
+699,user_game_played,64,false
+699,user_game_played,66,false
+699,user_game_played,68,false
+699,user_game_played,61,true
+699,user_game_played,63,true
+699,user_game_played,65,true
+699,user_game_played,67,true
+699,user_game_played,69,true
+699,game_created
+699,users_in_queue,0
+700,users_in_queue,0
+701,users_in_queue,0
+702,users_in_queue,0
+703,users_in_queue,0
+704,users_in_queue,0
+705,users_in_queue,0
+706,users_in_queue,0
+707,users_in_queue,0
+708,users_in_queue,0
+709,user_joined_queue, 70
+709,users_in_queue,1
+710,users_in_queue,1
+711,users_in_queue,1
+712,users_in_queue,1
+713,users_in_queue,1
+714,users_in_queue,1
+715,users_in_queue,1
+716,users_in_queue,1
+717,users_in_queue,1
+718,users_in_queue,1
+719,user_joined_queue, 71
+719,users_in_queue,2
+720,users_in_queue,2
+721,users_in_queue,2
+722,users_in_queue,2
+723,users_in_queue,2
+724,users_in_queue,2
+725,users_in_queue,2
+726,users_in_queue,2
+727,users_in_queue,2
+728,users_in_queue,2
+729,user_joined_queue, 72
+729,users_in_queue,3
+730,users_in_queue,3
+731,users_in_queue,3
+732,users_in_queue,3
+733,users_in_queue,3
+734,users_in_queue,3
+735,users_in_queue,3
+736,users_in_queue,3
+737,users_in_queue,3
+738,users_in_queue,3
+739,user_joined_queue, 73
+739,users_in_queue,4
+740,users_in_queue,4
+741,users_in_queue,4
+742,users_in_queue,4
+743,users_in_queue,4
+744,users_in_queue,4
+745,users_in_queue,4
+746,users_in_queue,4
+747,users_in_queue,4
+748,users_in_queue,4
+749,user_joined_queue, 74
+749,users_in_queue,5
+750,users_in_queue,5
+751,users_in_queue,5
+752,users_in_queue,5
+753,users_in_queue,5
+754,users_in_queue,5
+755,users_in_queue,5
+756,users_in_queue,5
+757,users_in_queue,5
+758,users_in_queue,5
+759,user_joined_queue, 75
+759,users_in_queue,6
+760,users_in_queue,6
+761,users_in_queue,6
+762,users_in_queue,6
+763,users_in_queue,6
+764,users_in_queue,6
+765,users_in_queue,6
+766,users_in_queue,6
+767,users_in_queue,6
+768,users_in_queue,6
+769,user_joined_queue, 76
+769,users_in_queue,7
+770,users_in_queue,7
+771,users_in_queue,7
+772,users_in_queue,7
+773,users_in_queue,7
+774,users_in_queue,7
+775,users_in_queue,7
+776,users_in_queue,7
+777,users_in_queue,7
+778,users_in_queue,7
+779,user_joined_queue, 77
+779,users_in_queue,8
+780,users_in_queue,8
+781,users_in_queue,8
+782,users_in_queue,8
+783,users_in_queue,8
+784,users_in_queue,8
+785,users_in_queue,8
+786,users_in_queue,8
+787,users_in_queue,8
+788,users_in_queue,8
+789,user_joined_queue, 78
+789,users_in_queue,9
+790,users_in_queue,9
+791,users_in_queue,9
+792,users_in_queue,9
+793,users_in_queue,9
+794,users_in_queue,9
+795,users_in_queue,9
+796,users_in_queue,9
+797,users_in_queue,9
+798,users_in_queue,9
+799,user_joined_queue, 79
+799,user_game_played,70,false
+799,user_game_played,72,false
+799,user_game_played,74,false
+799,user_game_played,76,false
+799,user_game_played,78,false
+799,user_game_played,71,true
+799,user_game_played,73,true
+799,user_game_played,75,true
+799,user_game_played,77,true
+799,user_game_played,79,true
+799,game_created
+799,users_in_queue,0
+800,users_in_queue,0
+801,users_in_queue,0
+802,users_in_queue,0
+803,users_in_queue,0
+804,users_in_queue,0
+805,users_in_queue,0
+806,users_in_queue,0
+807,users_in_queue,0
+808,users_in_queue,0
+809,user_joined_queue, 80
+809,users_in_queue,1
+810,users_in_queue,1
+811,users_in_queue,1
+812,users_in_queue,1
+813,users_in_queue,1
+814,users_in_queue,1
+815,users_in_queue,1
+816,users_in_queue,1
+817,users_in_queue,1
+818,users_in_queue,1
+819,user_joined_queue, 81
+819,users_in_queue,2
+820,users_in_queue,2
+821,users_in_queue,2
+822,users_in_queue,2
+823,users_in_queue,2
+824,users_in_queue,2
+825,users_in_queue,2
+826,users_in_queue,2
+827,users_in_queue,2
+828,users_in_queue,2
+829,user_joined_queue, 82
+829,users_in_queue,3
+830,users_in_queue,3
+831,users_in_queue,3
+832,users_in_queue,3
+833,users_in_queue,3
+834,users_in_queue,3
+835,users_in_queue,3
+836,users_in_queue,3
+837,users_in_queue,3
+838,users_in_queue,3
+839,user_joined_queue, 83
+839,users_in_queue,4
+840,users_in_queue,4
+841,users_in_queue,4
+842,users_in_queue,4
+843,users_in_queue,4
+844,users_in_queue,4
+845,users_in_queue,4
+846,users_in_queue,4
+847,users_in_queue,4
+848,users_in_queue,4
+849,user_joined_queue, 84
+849,users_in_queue,5
+850,users_in_queue,5
+851,users_in_queue,5
+852,users_in_queue,5
+853,users_in_queue,5
+854,users_in_queue,5
+855,users_in_queue,5
+856,users_in_queue,5
+857,users_in_queue,5
+858,users_in_queue,5
+859,user_joined_queue, 85
+859,users_in_queue,6
+860,users_in_queue,6
+861,users_in_queue,6
+862,users_in_queue,6
+863,users_in_queue,6
+864,users_in_queue,6
+865,users_in_queue,6
+866,users_in_queue,6
+867,users_in_queue,6
+868,users_in_queue,6
+869,user_joined_queue, 86
+869,users_in_queue,7
+870,users_in_queue,7
+871,users_in_queue,7
+872,users_in_queue,7
+873,users_in_queue,7
+874,users_in_queue,7
+875,users_in_queue,7
+876,users_in_queue,7
+877,users_in_queue,7
+878,users_in_queue,7
+879,user_joined_queue, 87
+879,users_in_queue,8
+880,users_in_queue,8
+881,users_in_queue,8
+882,users_in_queue,8
+883,users_in_queue,8
+884,users_in_queue,8
+885,users_in_queue,8
+886,users_in_queue,8
+887,users_in_queue,8
+888,users_in_queue,8
+889,user_joined_queue, 88
+889,users_in_queue,9
+890,users_in_queue,9
+891,users_in_queue,9
+892,users_in_queue,9
+893,users_in_queue,9
+894,users_in_queue,9
+895,users_in_queue,9
+896,users_in_queue,9
+897,users_in_queue,9
+898,users_in_queue,9
+899,user_joined_queue, 89
+899,user_game_played,80,false
+899,user_game_played,82,false
+899,user_game_played,84,false
+899,user_game_played,86,false
+899,user_game_played,88,false
+899,user_game_played,81,true
+899,user_game_played,83,true
+899,user_game_played,85,true
+899,user_game_played,87,true
+899,user_game_played,89,true
+899,game_created
+899,users_in_queue,0
+900,users_in_queue,0
+901,users_in_queue,0
+902,users_in_queue,0
+903,users_in_queue,0
+904,users_in_queue,0
+905,users_in_queue,0
+906,users_in_queue,0
+907,users_in_queue,0
+908,users_in_queue,0
+909,user_joined_queue, 90
+909,users_in_queue,1
+910,users_in_queue,1
+911,users_in_queue,1
+912,users_in_queue,1
+913,users_in_queue,1
+914,users_in_queue,1
+915,users_in_queue,1
+916,users_in_queue,1
+917,users_in_queue,1
+918,users_in_queue,1
+919,user_joined_queue, 91
+919,users_in_queue,2
+920,users_in_queue,2
+921,users_in_queue,2
+922,users_in_queue,2
+923,users_in_queue,2
+924,users_in_queue,2
+925,users_in_queue,2
+926,users_in_queue,2
+927,users_in_queue,2
+928,users_in_queue,2
+929,user_joined_queue, 92
+929,users_in_queue,3
+930,users_in_queue,3
+931,users_in_queue,3
+932,users_in_queue,3
+933,users_in_queue,3
+934,users_in_queue,3
+935,users_in_queue,3
+936,users_in_queue,3
+937,users_in_queue,3
+938,users_in_queue,3
+939,user_joined_queue, 93
+939,users_in_queue,4
+940,users_in_queue,4
+941,users_in_queue,4
+942,users_in_queue,4
+943,users_in_queue,4
+944,users_in_queue,4
+945,users_in_queue,4
+946,users_in_queue,4
+947,users_in_queue,4
+948,users_in_queue,4
+949,user_joined_queue, 94
+949,users_in_queue,5
+950,users_in_queue,5
+951,users_in_queue,5
+952,users_in_queue,5
+953,users_in_queue,5
+954,users_in_queue,5
+955,users_in_queue,5
+956,users_in_queue,5
+957,users_in_queue,5
+958,users_in_queue,5
+959,user_joined_queue, 95
+959,users_in_queue,6
+960,users_in_queue,6
+961,users_in_queue,6
+962,users_in_queue,6
+963,users_in_queue,6
+964,users_in_queue,6
+965,users_in_queue,6
+966,users_in_queue,6
+967,users_in_queue,6
+968,users_in_queue,6
+969,user_joined_queue, 96
+969,users_in_queue,7
+970,users_in_queue,7
+971,users_in_queue,7
+972,users_in_queue,7
+973,users_in_queue,7
+974,users_in_queue,7
+975,users_in_queue,7
+976,users_in_queue,7
+977,users_in_queue,7
+978,users_in_queue,7
+979,user_joined_queue, 97
+979,users_in_queue,8
+980,users_in_queue,8
+981,users_in_queue,8
+982,users_in_queue,8
+983,users_in_queue,8
+984,users_in_queue,8
+985,users_in_queue,8
+986,users_in_queue,8
+987,users_in_queue,8
+988,users_in_queue,8
+989,user_joined_queue, 98
+989,users_in_queue,9
+990,users_in_queue,9
+991,users_in_queue,9
+992,users_in_queue,9
+993,users_in_queue,9
+994,users_in_queue,9
+995,users_in_queue,9
+996,users_in_queue,9
+997,users_in_queue,9
+998,users_in_queue,9
+999,user_joined_queue, 99
+999,user_game_played,90,false
+999,user_game_played,92,false
+999,user_game_played,94,false
+999,user_game_played,96,false
+999,user_game_played,98,false
+999,user_game_played,91,true
+999,user_game_played,93,true
+999,user_game_played,95,true
+999,user_game_played,97,true
+999,user_game_played,99,true
+999,game_created
+999,users_in_queue,0

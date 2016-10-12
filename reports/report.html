@@ -18,18 +18,19 @@
     var usersInQueueChart = new Chart(ctx, {
         type: 'line',
         data: {
-            datasets: [
-                {
-                    data: [1,2,3,4,5],
-                }
-            ]
+            datasets: [],
+            labels: []
         },
         options: {
-            legend: {
+            title: {
                 display: true,
-                labels: {
-                    fontColor: 'rgb(255, 99, 132)'
-                }
+                text: 'Users in queue'
+            },
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
             }
         }
     });
@@ -38,14 +39,14 @@
         delimiter: "",	// auto-detect
         newline: "",	// auto-detect
         header: false,
-        dynamicTyping: false,
+        dynamicTyping: true,
         preview: 0,
         encoding: "",
         worker: false,
         comments: false,
         step: undefined,
-        complete: function (data) {
-            loadData(data);
+        complete: function (results, file) {
+            loadData(results.data);
         },
         error: undefined,
         download: false,
@@ -71,27 +72,40 @@
     function filterData(data, dataset, key, dataIndex) {
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
+
             var tick = row[0];
             if (row [1] == key) {
-                dataset.data[tick] = data[dataIndex];
+                dataset.data[tick] = row[dataIndex];
             }
         }
     }
 
     function loadData(data) {
         var dataset = {
-            label: 'Dataset ' + usersInQueueChart.data.datasets.length,
-            borderColor: randomColor(0.4),
-            backgroundColor: randomColor(0.5),
-            pointBorderColor: randomColor(0.7),
-            pointBackgroundColor: randomColor(0.5),
+            label: 'Users is queue',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
             data: []
         };
-        console.log(dataset);
         filterData(data, dataset, "users_in_queue", 2);
-
-
+        console.log(dataset.data);
+        usersInQueueChart.data.datasets.push(dataset);
+        usersInQueueChart.update();
     }
 
 
