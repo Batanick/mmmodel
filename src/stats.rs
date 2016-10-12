@@ -2,8 +2,7 @@ use entities;
 
 pub enum Event {
     UserJoinedQueue(entities::UserId),
-    GameCreated(entities::Game),
-    GamePlayed(entities::Game),
+    GamesCreated(u32),
     UserPlayed(entities::UserId, bool),
     UsersInQueue(u32),
 }

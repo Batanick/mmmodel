@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 </head>
 <body>
-
-
-<p>Hello!</p>
 <input type="file" id="fileSelector" multiple/>
 
 <button id="submit" class="green" onclick="loadReport();">Parse</button>
-<canvas id="usersInQueue" width="400" height="400"></canvas>
+
+<div class="accordion">
+    <h3>Users is queue</h3>
+    <canvas id="usersInQueue"></canvas>
+</div>
+
+<div class="accordion">
+    <h3>Games created</h3>
+    <canvas id="gamesCreated"></canvas>
+</div>
+
 
 <script>
-    var ctx = document.getElementById('usersInQueue').getContext('2d');
-    var usersInQueueChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [],
-            labels: []
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Users in queue'
-            },
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
-        }
+    $(".accordion").accordion({
+        collapsible: true,
+        active: false
     });
+
+    var usersInQueueChart = createLinearDiagram('#usersInQueue');
+    var gamesCreatedChart = createLinearDiagram('#gamesCreated');
 
     var loadingConfig = {
         delimiter: "",	// auto-detect
@@ -57,8 +55,34 @@
         withCredentials: undefined
     };
 
+    function createLinearDiagram(id) {
+        return new Chart($(id), {
+            type: 'line',
+            data: {
+                datasets: [],
+                labels: []
+            },
+            options: {
+                title: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom'
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
     function loadReport() {
-        var files = document.getElementById('fileSelector').files;
+        var files = $('#fileSelector')[0].files;
         if (files.length == 0) {
             alert("No reports selected");
             return;
@@ -76,14 +100,13 @@
             var tick = row[0];
             if (row [1] == key) {
                 var dataObj = {x: tick, y: row[dataIndex]};
-                dataset.data.push(dataObj) ;
+                dataset.data.push(dataObj);
             }
         }
     }
 
-    function loadData(data) {
-        var dataset = {
-            label: 'Users is queue',
+    function createDataSet() {
+        return {
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
@@ -103,10 +126,19 @@
             pointHitRadius: 10,
             data: []
         };
-        filterData(data, dataset, "users_in_queue", 2);
-        console.log(dataset.data);
-        usersInQueueChart.data.datasets.push(dataset);
-        usersInQueueChart.update();
+    }
+
+    function loadDiagram(data, chart, key, dataIndex) {
+        var dataSet = createDataSet();
+        filterData(data, dataSet, key, dataIndex);
+
+        chart.data.datasets.push(dataSet);
+        chart.update();
+    }
+
+    function loadData(data) {
+        loadDiagram(data, usersInQueueChart, "users_in_queue", 2);
+        loadDiagram(data, gamesCreatedChart, "games_created", 2);
     }
 
 

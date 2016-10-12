@@ -10,7 +10,7 @@ use entities::*;
 
 fn main() {
     let ticks = 10000;
-    let users_to_gen = 100;
+    let users_to_gen = 123456;
 
     let mut model = Model {
         queue: Vec::new(),
@@ -54,6 +54,7 @@ impl Model {
                 log.push(Event::UserJoinedQueue(id));
             }
 
+            let mut games_created = 0;
             loop {
                 let result = self.algorithm.search(&mut self.queue);
                 match result {
@@ -68,12 +69,12 @@ impl Model {
                             for id in &game.team2 {
                                 log.push(Event::UserPlayed(id.clone(), result == 2));
                             }
+                            games_created += 1; 
                         }
-
-                        log.push(Event::GameCreated(game));
                     },
                 }
             }
+            log.push(Event::GamesCreated(games_created));
             
             log.push(Event::UsersInQueue(self.queue.len() as u32));
 
@@ -98,9 +99,8 @@ fn save_results(events: Vec<Vec<stats::Event>>) {
         let ref log = events[tick];
         for event in log {
             let event_log = match event {
-                &Event::UserJoinedQueue(id) => format!("user_joined_queue, {}", id),
-                &Event::GameCreated(_) => "game_created".to_owned(),
-                &Event::GamePlayed(_) => "game_played".to_owned(),
+                &Event::UserJoinedQueue(id) => format!("user_joined_queue,{}", id),
+                &Event::GamesCreated(count) => format!("games_created,{}", count),
                 &Event::UserPlayed(id, won) => format!("user_game_played,{},{}", id, won),
                 &Event::UsersInQueue(count) => format!("users_in_queue,{}",count),
             };
