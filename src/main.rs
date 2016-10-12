@@ -9,7 +9,7 @@ use stats::Event;
 use entities::*;
 
 fn main() {
-    let ticks = 1000;
+    let ticks = 10000;
     let users_to_gen = 100;
 
     let mut model = Model {

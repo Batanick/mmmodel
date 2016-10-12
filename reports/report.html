@@ -75,7 +75,8 @@
 
             var tick = row[0];
             if (row [1] == key) {
-                dataset.data[tick] = row[dataIndex];
+                var dataObj = {x: tick, y: row[dataIndex]};
+                dataset.data.push(dataObj) ;
             }
         }
     }
