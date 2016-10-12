@@ -6,6 +6,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+    <script src="js/Chart.Zoom.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 </head>
 <body>
@@ -52,7 +54,7 @@
         chunk: undefined,
         fastMode: undefined,
         beforeFirstChunk: undefined,
-        withCredentials: undefined
+        withCredentials: undefined,
     };
 
     function createLinearDiagram(id) {
@@ -76,6 +78,15 @@
                             beginAtZero: true
                         }
                     }]
+                }
+            },
+            zoom: {
+                enabled: true,
+                drag: true,
+                mode: 'x',
+                limits: {
+                    max: 10,
+                    min: 0.5
                 }
             }
         });

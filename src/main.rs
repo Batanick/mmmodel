@@ -10,7 +10,7 @@ use entities::*;
 
 fn main() {
     let ticks = 10000;
-    let users_to_gen = 123456;
+    let users_to_gen = 1056;
 
     let mut model = Model {
         queue: Vec::new(),
