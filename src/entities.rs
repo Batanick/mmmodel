@@ -1,5 +1,7 @@
 use rand::{thread_rng, Rng};
 
+use std::f32::consts::PI;
+
 pub type UserId = usize;
 
 pub struct UserData {
@@ -152,3 +154,50 @@ impl Algoritm for FIFOAlgorithm {
         AlgorithmResult::Found(Game::new(team1, team2))
     }
 }
+
+pub enum DistributionType {
+    Uniform,
+    Normal
+}
+
+pub struct RandomRangeGen {
+    min: f32,
+    max: f32,
+    distribution: DistributionType,
+}
+
+impl RandomRangeGen {
+    pub fn new(min: f32, max: f32, distribution: DistributionType) -> RandomRangeGen {
+        RandomRangeGen {
+            min: min,
+            max: max,
+            distribution: distribution,
+        }
+    }
+
+    pub fn generate(&self) -> f32 {
+        let rand = match self.distribution {
+            DistributionType::Uniform => thread_rng().next_f32(),
+            DistributionType::Normal => {
+                // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+                let u1 = thread_rng().next_f32();
+                let u2 = thread_rng().next_f32();
+                let mut result = (-2.0 * u1.ln()).sqrt() * ((2.0 * PI * u2).cos());
+
+                if result > 1.0 {
+                    result = 1.0;
+                }
+
+                if result < -1.0 {
+                    result = -1.0;
+                }
+
+                result
+            }
+        };
+
+        return ((self.max - self.min) * rand) + self.min;
+    }
+}
+
+
