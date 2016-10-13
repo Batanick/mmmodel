@@ -3,10 +3,26 @@
 extern crate rand;
 
 mod entities;
-mod stats;
 
-use stats::Event;
 use entities::*;
+
+use std::collections::HashMap;
+
+struct Event {
+    pub tick: u32,
+    pub key: &'static str,
+    pub value: f32,
+}
+
+impl Event {
+    pub fn new(tick: u32, key: &'static str, value: f32) -> Event {
+        Event {
+            tick: tick,
+            key: key,
+            value: value
+        }
+    }
+}
 
 fn main() {
     let ticks = 10000;
@@ -19,6 +35,7 @@ fn main() {
             team_size: 5,
         }),
         decider: Box::new(SkillLevelDecider {}),
+        properties: HashMap::new(),
     };
 
     let log = model.run(ticks, users_to_gen);
@@ -32,29 +49,29 @@ struct Model {
 
     algorithm: Box<Algoritm>,
     decider: Box<GameDecider>,
+
+    properties: HashMap<&'static str, f32>,
 }
 
 impl Model {
-    pub fn run(&mut self, ticks: i32, users: u32) -> Vec<Vec<stats::Event>> {
+    pub fn run(&mut self, ticks: u32, users: u32) -> Vec<Event> {
         let skill = 1500.0;
         let users_per_tick = (users as f32) / (ticks as f32);
 
         let mut users_to_gen: f32 = 0.0;
-        let mut events: Vec<Vec<stats::Event>> = Vec::with_capacity(ticks as usize);
-        for _ in 0..ticks {
-            let mut log = Vec::new();
-
+        let mut events = Vec::new();
+        for tick in 1..ticks+1 {
             users_to_gen += users_per_tick;
 
+            events.push(Event::new(tick, "users_joined_queue", users_to_gen.floor() as f32));
             while users_to_gen >= 1.0 {
                 users_to_gen -= 1.0;
 
                 let id = self.user_pool.generate(skill, skill);
                 self.queue.push(id);
-                log.push(Event::UserJoinedQueue(id));
             }
 
-            let mut games_created = 0;
+
             loop {
                 let result = self.algorithm.search(&mut self.queue);
                 match result {
@@ -62,23 +79,16 @@ impl Model {
                     AlgorithmResult::Found(game) => {
                         let result = self.decider.decide(&game);
 
-                        {
-                            for id in &game.team1 {
-                                log.push(Event::UserPlayed(id.clone(), result == 1));
-                            }
-                            for id in &game.team2 {
-                                log.push(Event::UserPlayed(id.clone(), result == 2));
-                            }
-                            games_created += 1; 
-                        }
+                        *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
                     },
                 }
             }
-            log.push(Event::GamesCreated(games_created));
-            
-            log.push(Event::UsersInQueue(self.queue.len() as u32));
 
-            events.push(log);
+            events.push(Event::new(tick, "users_in_queue", self.queue.len() as f32));
+
+            for (key, value) in &self.properties {
+                events.push(Event::new(tick, key, value.clone()));
+            }
         }
 
         println!("in queue:{}", self.queue.len());
@@ -87,7 +97,8 @@ impl Model {
     }
 }
 
-fn save_results(events: Vec<Vec<stats::Event>>) {
+fn save_results(mut events: Vec<Event>) {
+    events.sort_by(|a, b| a.tick.cmp(&b.tick));
     const REPORT_DIR: &'static str = "reports";
 
     std::fs::create_dir(REPORT_DIR).ok();
@@ -95,17 +106,7 @@ fn save_results(events: Vec<Vec<stats::Event>>) {
     use std::io::Write;
     let mut report = std::fs::File::create(REPORT_DIR.to_owned() + "/report.csv").unwrap();
 
-    for tick in 0..events.len() {
-        let ref log = events[tick];
-        for event in log {
-            let event_log = match event {
-                &Event::UserJoinedQueue(id) => format!("user_joined_queue,{}", id),
-                &Event::GamesCreated(count) => format!("games_created,{}", count),
-                &Event::UserPlayed(id, won) => format!("user_game_played,{},{}", id, won),
-                &Event::UsersInQueue(count) => format!("users_in_queue,{}",count),
-            };
-
-            report.write(format!("{},{}\n", tick, event_log).as_bytes()).unwrap();
-        }
+    for event in events {
+        report.write(format!("{},{},{}\n", event.tick, event.key, event.value).as_bytes()).unwrap();
     }
 }
