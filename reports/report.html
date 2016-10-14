@@ -23,6 +23,11 @@
     <canvas id="gamesCreated"></canvas>
 </div>
 
+<div class="accordion">
+    <h3>Skill level distribution</h3>
+    <canvas id="skillLevelDistr"></canvas>
+</div>
+
 
 <script>
     $(".accordion").accordion({
@@ -32,28 +37,6 @@
 
     var usersInQueueChart = createLinearDiagram('#usersInQueue');
     var gamesCreatedChart = createLinearDiagram('#gamesCreated');
-
-    var loadingConfig = {
-        delimiter: "",	// auto-detect
-        newline: "",	// auto-detect
-        header: false,
-        dynamicTyping: true,
-        preview: 0,
-        encoding: "",
-        worker: false,
-        comments: false,
-        step: undefined,
-        complete: function (results, file) {
-            loadData(results.data);
-        },
-        error: undefined,
-        download: false,
-        skipEmptyLines: false,
-        chunk: undefined,
-        fastMode: undefined,
-        beforeFirstChunk: undefined,
-        withCredentials: undefined,
-    };
 
     function createLinearDiagram(id) {
         return new Chart($(id), {
@@ -89,11 +72,16 @@
         }
 
         for (var i = 0; i < files.length; i++) {
-            Papa.parse(files[i], loadingConfig);
+            Papa.parse(files[i], {
+                complete: function (results, file) {
+                    loadData(results.data);
+                }
+            });
         }
     }
 
-    function filterData(data, dataset, key, dataIndex) {
+    function filterData(data, key, xIndex, dataIndex) {
+        dataset = createEmptyDataSet();
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
 
@@ -103,9 +91,11 @@
                 dataset.data.push(dataObj);
             }
         }
+
+        return dataset;
     }
 
-    function createDataSet() {
+    function createEmptyDataSet() {
         return {
             fill: false,
             lineTension: 0.1,
@@ -128,17 +118,14 @@
         };
     }
 
-    function loadDiagram(data, chart, key, dataIndex) {
-        var dataSet = createDataSet();
-        filterData(data, dataSet, key, dataIndex);
-
+    function loadDiagram(dataSet, chart) {
         chart.data.datasets.push(dataSet);
         chart.update();
     }
 
     function loadData(data) {
-        loadDiagram(data, usersInQueueChart, "users_in_queue", 2);
-        loadDiagram(data, gamesCreatedChart, "games_created", 2);
+        loadDiagram(filterData(data, "users_in_queue", 0, 2), usersInQueueChart);
+        loadDiagram(filterData(data, "games_created", 0, 2), gamesCreatedChart);
     }
 
 
