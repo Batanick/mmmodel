@@ -30,6 +30,9 @@
 
 
 <script>
+    var ticks = 86400;
+    var sample = 60 * 5;
+
     $(".accordion").accordion({
         collapsible: true,
         active: false
@@ -80,19 +83,44 @@
         }
     }
 
-    function filterData(data, key, xIndex, dataIndex) {
-        dataset = createEmptyDataSet();
-        for (var i = 0; i < data.length; i++) {
-            var row = data[i];
-
-            var tick = row[0];
-            if (row [1] == key) {
-                var dataObj = {x: tick, y: row[dataIndex]};
-                dataset.data.push(dataObj);
+    function filterData(data, key, xIndex, dataIndex, sample, samplerFn) {
+        if (sample == undefined) {
+            sample = 1;
+            samplerFn = function (values) {
+                if (values.length == 0) {
+                    return 0;
+                }
+                return values[0];
             }
         }
 
-        return dataset;
+        var dataSet = createEmptyDataSet();
+
+        var sampleCounter = 0;
+        var values = [];
+
+        for (var i = 0; i < data.length; i++) {
+            var row = data[i];
+            if (key != row[1]) {
+                continue;
+            }
+
+            var xValue = row[xIndex];
+            var yValue = row[dataIndex];
+
+            sampleCounter++;
+            values.push(yValue);
+
+            if (sampleCounter >= sample) {
+                var dataObj = {x: xValue - sample, y: samplerFn(values)};
+                dataSet.data.push(dataObj);
+
+                values = [];
+                sampleCounter = 0;
+            }
+        }
+
+        return dataSet;
     }
 
     function createEmptyDataSet() {
@@ -103,8 +131,7 @@
             borderColor: "rgba(75,192,192,1)",
             borderCapStyle: 'butt',
             borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
+            borderDashOffset: 0.0, borderJoinStyle: 'miter',
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
@@ -124,10 +151,18 @@
     }
 
     function loadData(data) {
-        loadDiagram(filterData(data, "users_in_queue", 0, 2), usersInQueueChart);
+        loadDiagram(filterData(data, "users_in_queue", 0, 2, sample, avg), usersInQueueChart);
         loadDiagram(filterData(data, "games_created", 0, 2), gamesCreatedChart);
     }
 
+    // samplers
+    function avg(values) {
+        var sum = 0;
+        for (var i = 0 ; i < values.length; i++) {
+            sum += values[i];
+        }
+        return Math.round( sum / values.length * 100);
+    }
 
 </script>
 </body>
