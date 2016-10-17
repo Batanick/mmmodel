@@ -192,7 +192,7 @@ impl RandomRangeGen {
                     result = -1.0;
                 }
 
-                result
+                (result + 1.0) * 0.5
             }
         };
 
