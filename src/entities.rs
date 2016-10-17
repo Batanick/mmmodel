@@ -177,26 +177,26 @@ impl RandomRangeGen {
 
     pub fn generate(&self) -> f32 {
         let rand = match self.distribution {
-            DistributionType::Uniform => thread_rng().next_f32(),
+            DistributionType::Uniform => (thread_rng().next_f32()),
             DistributionType::Normal => {
                 // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
                 let u1 = thread_rng().next_f32();
                 let u2 = thread_rng().next_f32();
                 let mut result = (-2.0 * u1.ln()).sqrt() * ((2.0 * PI * u2).cos());
 
-                if result > 1.0 {
+             /*   if result > 1.0 {
                     result = 1.0;
                 }
 
                 if result < -1.0 {
                     result = -1.0;
                 }
-
-                (result + 1.0) * 0.5
+*/
+                (result + 1.0) * 0.5 
             }
         };
 
-        return ((self.max - self.min) * rand) + self.min;
+        return ((self.max - self.min) * rand ) + self.min;
     }
 }
 

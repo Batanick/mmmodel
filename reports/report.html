@@ -30,7 +30,7 @@
 
 
 <script>
-    var ticks = 86400;
+    var ticks = 3600;
     var sample = 60 * 5;
 
     $(".accordion").accordion({
@@ -38,10 +38,11 @@
         active: false
     });
 
-    var usersInQueueChart = createLinearDiagram('#usersInQueue');
-    var gamesCreatedChart = createLinearDiagram('#gamesCreated');
+    var usersInQueueChart = createLinearDiagram('#usersInQueue', true);
+    var gamesCreatedChart = createLinearDiagram('#gamesCreated', true);
+    var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
 
-    function createLinearDiagram(id) {
+    function createLinearDiagram(id, showLines) {
         return new Chart($(id), {
             type: 'line',
             data: {
@@ -52,6 +53,7 @@
                 title: {
                     display: false
                 },
+                showLines: showLines,
                 scales: {
                     xAxes: [{
                         type: 'linear',
@@ -123,6 +125,39 @@
         return dataSet;
     }
 
+    function filterAsOccSum(data, key, dataIndex, sample) {
+        if (sample == undefined) {
+            sample = 1.0;
+        }
+
+        var rawData = [];
+        for (var i = 0; i < data.length; i++) {
+            var row = data[i];
+            if (key != row[1]) {
+                continue;
+            }
+
+            var index = Math.round(row[dataIndex] / sample);
+            if (rawData[index] == undefined) {
+                rawData[index] = 1;
+            } else {
+                rawData[index] = rawData[index] + 1;
+            }
+        }
+
+
+        var dataSet = createEmptyDataSet();
+        for (i = 0; i < rawData.length; i++) {
+            var xValue = i * sample;
+            var yValue = rawData[i];
+
+            var dataObj = {x: xValue, y: yValue};
+            dataSet.data.push(dataObj);
+        }
+
+        return dataSet;
+    }
+
     function createEmptyDataSet() {
         return {
             fill: false,
@@ -151,17 +186,18 @@
     }
 
     function loadData(data) {
-        loadDiagram(filterData(data, "users_in_queue", 0, 2, sample, avg), usersInQueueChart);
+        loadDiagram(filterData(data, "users_in_queue", 0, 2), usersInQueueChart);
         loadDiagram(filterData(data, "games_created", 0, 2), gamesCreatedChart);
+        loadDiagram(filterAsOccSum(data, "user_generated_skill", 2, 50), skillLevelDistr);
     }
 
     // samplers
     function avg(values) {
         var sum = 0;
-        for (var i = 0 ; i < values.length; i++) {
+        for (var i = 0; i < values.length; i++) {
             sum += values[i];
         }
-        return Math.round( sum / values.length * 100);
+        return Math.round(sum / values.length * 100);
     }
 
 </script>
