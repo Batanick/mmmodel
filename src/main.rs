@@ -120,8 +120,11 @@ impl Model {
                           let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
                           let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
 
-                          events.push(Event::new(tick, "game_created_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
-                          events.push(Event::new(tick, "game_created_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
+                          events.push(Event::new(tick, "game_created_avg_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
+                          events.push(Event::new(tick, "game_created_avg_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
+
+                          events.push(Event::new(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
+                          events.push(Event::new(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
 
 //                        let skill_max : f32 = skill_t1.iter().fold(0.0 / 0.0, |r, &v| cmp::max(r, v));
 
