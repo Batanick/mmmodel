@@ -1,6 +1,7 @@
 use rand::{thread_rng, Rng};
 
 use std::f32::consts::PI;
+use std::cell::Cell;
 
 pub type UserId = usize;
 
@@ -8,6 +9,8 @@ pub struct UserData {
     id: UserId,
     pub skill: f32,
     pub real_skill: f32,
+
+    join_time: Cell<u32>,
 }
 
 impl UserData {
@@ -16,7 +19,16 @@ impl UserData {
             id: id,
             skill: initial_skill,
             real_skill: real_skill,
+            join_time: Cell::new(0),
         }
+    }
+
+    pub fn set_join_time(&self, join_time : u32) {
+        self.join_time.set(join_time);
+    }
+
+    pub fn get_join_time(&self) -> u32{
+        self.join_time.get()
     }
 }
 

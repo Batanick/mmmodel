@@ -80,6 +80,7 @@ fn save_results(mut events: Vec<Event>) {
 
 struct Model {
     queue: Vec<UserId>,
+
     user_pool: UserPool,
 
     algorithm: Box<Algoritm>,
@@ -92,6 +93,7 @@ struct Model {
 }
 
 impl Model {
+
     pub fn run(&mut self, ticks: u32, users: u32) -> Vec<Event> {
         let users_per_tick = (users as f32) / (ticks as f32);
 
@@ -111,33 +113,33 @@ impl Model {
                 self.queue.push(id);
             }
 
-
             loop {
                 let result = self.algorithm.search(&mut self.queue);
                 match result {
                     AlgorithmResult::None => break,
                     AlgorithmResult::Found(game) => {
-                          let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
-                          let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
+                        let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
+                        let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
 
-                          events.push(Event::new(tick, "game_created_avg_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
-                          events.push(Event::new(tick, "game_created_avg_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
+                        events.push(Event::new(tick, "game_created_avg_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
+                        events.push(Event::new(tick, "game_created_avg_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
 
-                          events.push(Event::new(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
-                          events.push(Event::new(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
-
-//                        let skill_max : f32 = skill_t1.iter().fold(0.0 / 0.0, |r, &v| cmp::max(r, v));
-
-                        //events.push(Event::new(tick, "game_created_real_skill_delta", (avg_real_skill_t1 - avg_real_skill_t2).abs()));
-
-
+                        events.push(Event::new(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
+                        events.push(Event::new(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
 
                         *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
                     },
                 }
             }
 
-            events.push(Event::new(tick, "users_in_queue", self.queue.len() as f32));
+            self.properties.insert("users_in_queue", self.queue.len() as f32);
+
+            let times_in_queue:Vec<u32> = self.queue.iter().map(|id| tick - self.user_pool.get_user(id).get_join_time()).collect();
+            let time_in_queue_max = times_in_queue.iter().fold(0, |max, v| if max < *v {*v} else {max});
+            self.properties.insert("time_in_queue_map", time_in_queue_max as f32);
+
+            let time_in_queue_sum:u32 = times_in_queue.iter().sum();
+            self.properties.insert("time_in_queue_avg", (time_in_queue_sum as f32) / (self.queue.len() as f32));
 
             for (key, value) in &self.properties {
                 events.push(Event::new(tick, key, value.clone()));
