@@ -118,6 +118,10 @@ impl Model {
                     AlgorithmResult::None => break,
                     AlgorithmResult::Found(game) => {
 //                        let result = self.decider.decide(&game);
+                        let avg_skill_t1 = game.team1.iter().fold(0.0, |sum, id| sum + self.user_pool.get_user(id).real_skill) / (game.team1.len() as f32) ;
+                        let avg_skill_t2 = game.team2.iter().fold(0.0, |sum, id| sum + self.user_pool.get_user(id).real_skill) / (game.team2.len() as f32) ;;
+
+                        events.push(Event::new(tick, "game_created_skill_delta", (avg_skill_t1 - avg_skill_t2).abs()));
 
                         *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
                     },

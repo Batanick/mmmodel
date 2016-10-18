@@ -6,16 +6,16 @@ pub type UserId = usize;
 
 pub struct UserData {
     id: UserId,
-    pub score: f32,
-    pub real_score: f32,
+    pub skill: f32,
+    pub real_skill: f32,
 }
 
 impl UserData {
-    fn new(id: UserId, initial_score: f32, real_score: f32) -> UserData {
+    fn new(id: UserId, initial_skill: f32, real_skill: f32) -> UserData {
         UserData {
             id: id,
-            score: initial_score,
-            real_score: real_score,
+            skill: initial_skill,
+            real_skill: real_skill,
         }
     }
 }
@@ -31,14 +31,14 @@ impl UserPool {
         }
     }
 
-    pub fn generate(&mut self, initial_score: f32, real_score: f32) -> UserId {
+    pub fn generate(&mut self, initial_skill: f32, real_skill: f32) -> UserId {
         let id = self.users.len();
-        self.users.push(UserData::new(id, initial_score, real_score));
+        self.users.push(UserData::new(id, initial_skill, real_skill));
         id
     }
 
-    pub fn get_user(&self, id: UserId) -> &UserData {
-        &self.users[id]
+    pub fn get_user(&self, id: &UserId) -> &UserData {
+        &self.users[*id]
     }
 }
 
@@ -184,14 +184,14 @@ impl RandomRangeGen {
                 let u2 = thread_rng().next_f32();
                 let mut result = (-2.0 * u1.ln()).sqrt() * ((2.0 * PI * u2).cos());
 
-             /*   if result > 1.0 {
+                if result > 1.0 {
                     result = 1.0;
                 }
 
                 if result < -1.0 {
                     result = -1.0;
                 }
-*/
+
                 (result + 1.0) * 0.5 
             }
         };
