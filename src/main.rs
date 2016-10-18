@@ -117,11 +117,17 @@ impl Model {
                 match result {
                     AlgorithmResult::None => break,
                     AlgorithmResult::Found(game) => {
-//                        let result = self.decider.decide(&game);
-                        let avg_skill_t1 = game.team1.iter().fold(0.0, |sum, id| sum + self.user_pool.get_user(id).real_skill) / (game.team1.len() as f32) ;
-                        let avg_skill_t2 = game.team2.iter().fold(0.0, |sum, id| sum + self.user_pool.get_user(id).real_skill) / (game.team2.len() as f32) ;;
+                          let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
+                          let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
 
-                        events.push(Event::new(tick, "game_created_skill_delta", (avg_skill_t1 - avg_skill_t2).abs()));
+                          events.push(Event::new(tick, "game_created_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
+                          events.push(Event::new(tick, "game_created_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
+
+//                        let skill_max : f32 = skill_t1.iter().fold(0.0 / 0.0, |r, &v| cmp::max(r, v));
+
+                        //events.push(Event::new(tick, "game_created_real_skill_delta", (avg_real_skill_t1 - avg_real_skill_t2).abs()));
+
+
 
                         *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
                     },
@@ -139,12 +145,39 @@ impl Model {
 
         events
     }
+
+    fn build_team_data(&self, ids: &Vec<usize>) -> (SkillValue, SkillValue) {
+        let skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).skill).collect();
+        let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).skill).collect();
+        (SkillValue::build(&skill_levels) , SkillValue::build(&real_skill_levels))
+    }
+
 }
 
 struct Event {
     pub tick: u32,
     pub key: &'static str,
     pub value: f32,
+}
+
+struct SkillValue {
+    avg: f32,
+    min: f32,
+    max: f32,
+}
+
+impl SkillValue {
+    fn build(data: &Vec<f32>) -> SkillValue {
+        let max = data.iter().fold(-1. / 0., |max, v| f32::max(max, *v));
+        let min = data.iter().fold(1. / 0., |min, v| f32::min(min, *v));
+        let sum:f32 = data.iter().sum();
+
+        SkillValue {
+            min: min,
+            max: max,
+            avg: sum / (data.len() as f32),
+        }
+    }
 }
 
 impl Event {

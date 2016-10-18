@@ -42,6 +42,12 @@ impl UserPool {
     }
 }
 
+pub struct Stats {
+    pub min: f32,
+    pub max: f32,
+    pub avg: f32,
+}
+
 pub struct Game {
     pub team1: Vec<UserId>,
     pub team2: Vec<UserId>,
