@@ -114,7 +114,7 @@ impl Model {
             }
 
             loop {
-                let result = self.algorithm.search(&mut self.queue);
+                let result = self.algorithm.search(&mut self.queue, &self.user_pool);
                 match result {
                     AlgorithmResult::None => break,
                     AlgorithmResult::Found(game) => {
@@ -149,8 +149,6 @@ impl Model {
                 events.push(Event::new(tick, key, value.clone()));
             }
         }
-
-        println!("in queue:{}", self.queue.len());
 
         events
     }

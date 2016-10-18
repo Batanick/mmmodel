@@ -113,7 +113,7 @@ impl GameDecider for SkillLevelDecider {
 }
 
 pub trait Algoritm {
-    fn search(&self, queue: &mut Vec<UserId>) -> AlgorithmResult;
+    fn search(&self, queue: &mut Vec<UserId>, pool: &UserPool) -> AlgorithmResult;
 }
 
 pub struct SimpleUserGenerator {
@@ -134,7 +134,7 @@ pub struct RandomPeekAlgorithm {
 }
 
 impl Algoritm for RandomPeekAlgorithm {
-    fn search(&self, queue: &mut Vec<UserId>) -> AlgorithmResult {
+    fn search(&self, queue: &mut Vec<UserId>, _: &UserPool) -> AlgorithmResult {
         if queue.len() < (self.team_size * 2) {
             return AlgorithmResult::None;
         }
@@ -151,12 +151,46 @@ impl Algoritm for RandomPeekAlgorithm {
     }
 }
 
+pub struct SkillLevelAlgorithm {
+    pub team_size: usize,
+    pub size_factor: f32,
+}
+
+impl Algoritm for SkillLevelAlgorithm {
+    fn search(&self, queue: &mut Vec<UserId>, pool: &UserPool) -> AlgorithmResult {
+        if (queue.len() as f32) < ((self.team_size as f32) * self.size_factor * 2.0) {
+            return AlgorithmResult::None;
+        }
+
+        let mut id_skill:Vec<(UserId, f32)> = queue.iter().map(|id| (*id, pool.get_user(id).skill)).collect();
+        id_skill.sort_by(|a, b| a.0.cmp(&b.0));
+
+        let mut team1 = Vec::new();
+        let mut team2 = Vec::new();
+
+        let mut team1_sum = 0.0;
+        let mut team2_sum = 0.0;
+
+        while (team1.len() < self.team_size && team2.len() < self.team_size) {
+            let team1_active = team1.len() < team2.len();
+
+            let (active_team, opp_team): (&mut Vec<UserId>, &mut Vec<UserId>) = if team1_active {(&mut team1, &mut team2)} else {(&mut team1, &mut team2)};
+
+            let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
+            let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
+
+        }
+
+        AlgorithmResult::Found(Game::new(team1, team2))
+    }
+}
+
 pub struct FIFOAlgorithm {
     pub team_size: usize,
 }
 
 impl Algoritm for FIFOAlgorithm {
-    fn search(&self, queue: &mut Vec<UserId>) -> AlgorithmResult {
+    fn search(&self, queue: &mut Vec<UserId>, _: &UserPool) -> AlgorithmResult {
         if queue.len() < (self.team_size * 2) {
             return AlgorithmResult::None;
         }
@@ -164,6 +198,7 @@ impl Algoritm for FIFOAlgorithm {
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
 
+        // queue is ordered by join time
         for _ in 0..self.team_size {
             team1.push(queue.remove(0));
             team2.push(queue.remove(0));
