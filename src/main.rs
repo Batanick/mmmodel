@@ -136,10 +136,14 @@ impl Model {
 
             let times_in_queue:Vec<u32> = self.queue.iter().map(|id| tick - self.user_pool.get_user(id).get_join_time()).collect();
             let time_in_queue_max = times_in_queue.iter().fold(0, |max, v| if max < *v {*v} else {max});
-            self.properties.insert("time_in_queue_map", time_in_queue_max as f32);
+            self.properties.insert("time_in_queue_max", time_in_queue_max as f32);
 
-            let time_in_queue_sum:u32 = times_in_queue.iter().sum();
-            self.properties.insert("time_in_queue_avg", (time_in_queue_sum as f32) / (self.queue.len() as f32));
+            if self.queue.len() == 0 {
+                self.properties.insert("time_in_queue_avg", 0.0);
+            } else {
+                let time_in_queue_sum:u32 = times_in_queue.iter().sum();
+                self.properties.insert("time_in_queue_avg", (time_in_queue_sum as f32) / (self.queue.len() as f32));
+            }
 
             for (key, value) in &self.properties {
                 events.push(Event::new(tick, key, value.clone()));
