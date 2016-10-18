@@ -58,8 +58,9 @@
                         position: 'bottom'
                     }],
                     yAxes: [{
+                        type: 'linear',
                         ticks: {
-                            beginAtZero: true
+                            <!--beginAtZero: true-->
                         }
                     }]
                 }
@@ -146,13 +147,14 @@
     }
 
     function loadDiagram(dataSet, chart) {
+        console.log(dataSet);
         chart.data.datasets.push(dataSet);
         chart.update();
     }
 
     function loadData(data) {
-        loadDiagram(filterData(data, "users_in_queue", 0, 2, sample, avg), usersInQueueChart);
-        loadDiagram(filterData(data, "games_created", 0, 2), gamesCreatedChart);
+        loadDiagram(filterData(data, "users_in_queue", 0, 2), usersInQueueChart);
+        loadDiagram(filterData(data, "games_created", 0, 2, sample, delta), gamesCreatedChart);
     }
 
     // samplers
@@ -161,8 +163,18 @@
         for (var i = 0 ; i < values.length; i++) {
             sum += values[i];
         }
-        return Math.round( sum / values.length * 100);
+        return Math.round(sum / values.length);
     }
+
+    function delta(values) {
+        if (values.length <= 1) {
+            return 0;
+        }
+
+        var result = values[length - 1] - values[0];
+        return result;
+    }
+
 
 </script>
 </body>
