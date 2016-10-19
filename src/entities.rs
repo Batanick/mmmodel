@@ -162,16 +162,12 @@ impl Algoritm for SkillLevelAlgorithm {
             return AlgorithmResult::None;
         }
 
-        let mut id_skill:Vec<(UserId, f32)> = queue.iter().map(|id| (*id, pool.get_user(id).skill)).collect();
-        id_skill.sort_by(|a, b| a.0.cmp(&b.0));
+        let queue_avg = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).skill);
 
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
 
-        let mut team1_sum = 0.0;
-        let mut team2_sum = 0.0;
-
-        while (team1.len() < self.team_size && team2.len() < self.team_size) {
+        while team1.len() < self.team_size && team2.len() < self.team_size {
             let team1_active = team1.len() < team2.len();
 
             let (active_team, opp_team): (&mut Vec<UserId>, &mut Vec<UserId>) = if team1_active {(&mut team1, &mut team2)} else {(&mut team1, &mut team2)};
@@ -179,6 +175,23 @@ impl Algoritm for SkillLevelAlgorithm {
             let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
             let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
 
+            let delta = opponent_team_skill - active_team_skill;
+            let avg_skill =
+                if active_team.len() == 0 && opp_team.len() == 0
+                    {queue_avg}
+                else
+                    {(opponent_team_skill + active_team_skill) / ((active_team.len() + opp_team.len()) as f32)};
+
+            let desired_skill = avg_skill + delta;
+
+            let (index, _) = queue.iter().enumerate()
+                .map(|(index, id)| (index, (pool.get_user(id).skill - desired_skill).abs()))
+                .fold((usize::max_value(), 1.0/0.0), |i, v| if v.1 > i.1 {i} else {(v.0, v.1)} );
+
+            assert!(index != usize::max_value());
+
+            let candidate = queue.remove(index);
+            active_team.push(candidate)
         }
 
         AlgorithmResult::Found(Game::new(team1, team2))
