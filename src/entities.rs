@@ -60,6 +60,7 @@ pub struct Stats {
     pub avg: f32,
 }
 
+#[derive(PartialEq)]
 pub struct Game {
     pub team1: Vec<UserId>,
     pub team2: Vec<UserId>,
@@ -74,6 +75,7 @@ impl Game {
     }
 }
 
+#[derive(PartialEq)]
 pub enum AlgorithmResult {
     None,
     Found(Game),
@@ -264,6 +266,38 @@ impl RandomRangeGen {
 
         return ((self.max - self.min) * rand ) + self.min;
     }
+}
+
+// ============================ TESTS ============================
+
+#[test]
+fn test_skill_empty_queue() {
+    let algorithm = SkillLevelAlgorithm {
+        team_size : 5,
+        size_factor : 2.0,
+    };
+
+    let mut pool = UserPool::new();
+    let mut queue = Vec::new();
+
+    assert!(algorithm.search(&mut queue, &pool) == AlgorithmResult::None);
+}
+
+#[test]
+fn test_skill_small_queue() {
+    let algorithm = SkillLevelAlgorithm {
+        team_size : 5,
+        size_factor : 2.0,
+    };
+
+    let mut pool = UserPool::new();
+    let mut queue = Vec::new();
+
+    for _ in 0..15 {
+        queue.push(pool.generate(500.0, 500.0))
+    }
+
+    assert!(algorithm.search(&mut queue, &pool) == AlgorithmResult::None);
 }
 
 
