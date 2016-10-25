@@ -58,7 +58,7 @@ fn main() {
         .unwrap_or((String::from("report_") + &thread_rng().next_u32().to_string()));
 
     let mut model = Model {
-        name: name,
+        name: name.clone(),
         queue: Vec::new(),
         user_pool: UserPool::new(),
         algorithm: Box::new(FIFOAlgorithm {
@@ -72,17 +72,17 @@ fn main() {
 
     let log = model.run(ticks, users_to_gen);
 
-    save_results(log);
+    save_results(&name, log);
 }
 
-fn save_results(events: Vec<Event>) {
+fn save_results(name: &str, events: Vec<Event>) {
     //    events.sort_by(|a, b| a.tick.cmp(&b.tick));
     const REPORT_DIR: &'static str = "reports";
 
     std::fs::create_dir(REPORT_DIR).ok();
 
     use std::io::Write;
-    let mut report = std::fs::File::create(REPORT_DIR.to_owned() + "/report.csv").unwrap();
+    let mut report = std::fs::File::create(REPORT_DIR.to_owned() + "/" + name + ".csv").unwrap();
 
     for event in events {
         match event {
