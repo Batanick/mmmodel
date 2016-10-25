@@ -24,7 +24,7 @@
 </div>
 
 <div class="accordion">
-    <h3>Skill level distribution</h3>
+    <h3>Real skill level distribution</h3>
     <canvas id="skillLevelDistr"></canvas>
 </div>
 
@@ -194,12 +194,14 @@
     }
 
     function createEmptyDataSet(label) {
+        var mainColor = color(label);
+
         return {
             label: label,
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            borderColor: mainColor,
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0, borderJoinStyle: 'miter',
@@ -217,7 +219,6 @@
     }
 
     function loadDiagram(dataSet, chart) {
-        console.log(dataSet);
         chart.data.datasets.push(dataSet);
         chart.update();
     }
@@ -256,6 +257,19 @@
         }
 
         return result;
+    }
+
+    function color(str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        var r = (hash & 0xFF0000) >> 16;
+        var g = (hash & 0x00FF00) >> 8;
+        var b = hash & 0x0000FF;
+
+        return "rgba(" + r + "," + g + "," + b + ",1.0)";
     }
 
 </script>
