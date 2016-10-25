@@ -29,10 +29,18 @@
 </div>
 
 
-<script>
-    var ticks = 3600;
-    var sample = 60 * 5;
+<div class="accordion">
+    <h3>Time in queue</h3>
+    <canvas id="timeInQueue"></canvas>
+</div>
 
+<div class="accordion">
+    <h3>Game created skill delta</h3>
+    <canvas id="gameCreatedSkill"></canvas>
+</div>
+
+
+<script>
     $(".accordion").accordion({
         collapsible: true,
         active: false
@@ -40,7 +48,10 @@
 
     var usersInQueueChart = createLinearDiagram('#usersInQueue', true);
     var gamesCreatedChart = createLinearDiagram('#gamesCreated', true);
+
     var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
+
+    var timeInQueueChart = createLinearDiagram('#timeInQueue', true);
 
     function createLinearDiagram(id, showLines) {
         return new Chart($(id), {
@@ -86,7 +97,7 @@
         }
     }
 
-    function filterData(data, key, xIndex, dataIndex, sample, samplerFn) {
+    function filterData(label, data, key, xIndex, dataIndex, sample, samplerFn) {
         if (sample == undefined) {
             sample = 1;
             samplerFn = function (values) {
@@ -97,7 +108,7 @@
             }
         }
 
-        var dataSet = createEmptyDataSet();
+        var dataSet = createEmptyDataSet(label);
 
         var sampleCounter = 0;
         var values = [];
@@ -126,7 +137,23 @@
         return dataSet;
     }
 
-    function filterAsOccSum(data, key, dataIndex, sample) {
+    function findParam(name, data) {
+        for (var i = 0; i < data.length; i++) {
+            var row = data[i];
+
+            if (row[1] == name) {
+                return row[2];
+            }
+
+            if (row[0] > 0) {
+                console.log("Unable to find param: " + name );
+            }
+        }
+
+        return undefined;
+    }
+
+    function filterAsOccSum(label, data, key, dataIndex, sample) {
         if (sample == undefined) {
             sample = 1.0;
         }
@@ -147,7 +174,7 @@
         }
 
 
-        var dataSet = createEmptyDataSet();
+        var dataSet = createEmptyDataSet(label);
         for (i = 0; i < rawData.length; i++) {
             var xValue = i * sample;
             var yValue = rawData[i];
@@ -159,8 +186,9 @@
         return dataSet;
     }
 
-    function createEmptyDataSet() {
+    function createEmptyDataSet(label) {
         return {
+            label: label,
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
@@ -188,9 +216,17 @@
     }
 
     function loadData(data) {
-        loadDiagram(filterData(data, "users_in_queue", 0, 2), usersInQueueChart);
-        loadDiagram(filterData(data, "games_created", 0, 2, sample, delta), gamesCreatedChart);
-        loadDiagram(filterAsOccSum(data, "user_generated_skill", 2, 50), skillLevelDistr);
+        var name = findParam("name", data);
+        console.log("Loading data:" + name);
+
+        loadDiagram(filterData(name, data, "users_in_queue", 0, 2), usersInQueueChart);
+        loadDiagram(filterData(name, data, "games_created", 0, 2), gamesCreatedChart);
+
+        loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 2, 20), skillLevelDistr);
+
+        loadDiagram(filterData(name + " (avg)", data, "time_in_queue_avg", 0, 2), timeInQueueChart);
+        loadDiagram(filterData(name + " (max)", data, "time_in_queue_max", 0, 2), timeInQueueChart);
+
     }
 
     // samplers
