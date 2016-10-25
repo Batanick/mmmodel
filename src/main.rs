@@ -29,7 +29,8 @@ fn main() {
         )
         .arg(Arg::with_name("name")
             .short("n")
-            .help("Name of the graph")
+            .takes_value(true)
+            .help("Name of the simulation")
         )
         .arg(Arg::with_name("skill")
             .short("s")
@@ -54,7 +55,7 @@ fn main() {
 
     let name = params.value_of("name")
         .map(|str| String::from(str))
-        .unwrap_or((String::from("undefined_") + &thread_rng().next_u32().to_string()));
+        .unwrap_or((String::from("report_") + &thread_rng().next_u32().to_string()));
 
     let mut model = Model {
         name: name,
@@ -111,7 +112,7 @@ impl Model {
     pub fn run(&mut self, ticks: u32, users: u32) -> Vec<Event> {
         let mut events = Vec::new();
 
-        println!("Simulating: {}", self.name);
+        println!("Simulating: {}, ticks: {}", self.name, ticks);
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);
@@ -167,6 +168,10 @@ impl Model {
             for (key, value) in &self.properties {
                 events.push(Event::TimedFloat(tick, key, value.clone()));
             }
+
+            if tick % (ticks / 10) == 0 {
+                println!("{}", tick);
+            }
         }
 
         events
@@ -174,7 +179,8 @@ impl Model {
 
     fn build_team_data(&self, ids: &Vec<usize>) -> (SkillValue, SkillValue) {
         let skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).skill).collect();
-        let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).skill).collect();
+        let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).real_skill).collect();
+
         (SkillValue::build(&skill_levels), SkillValue::build(&real_skill_levels))
     }
 }

@@ -39,6 +39,10 @@
     <canvas id="gameCreatedSkill"></canvas>
 </div>
 
+<div class="accordion">
+    <h3>Game created real skill delta</h3>
+    <canvas id="gameCreatedRealSkill"></canvas>
+</div>
 
 <script>
     $(".accordion").accordion({
@@ -52,6 +56,9 @@
     var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
 
     var timeInQueueChart = createLinearDiagram('#timeInQueue', true);
+
+    var gameCreatedSkillChart = createLinearDiagram('#gameCreatedSkill', true);
+    var gameCreatedRealSkillChart = createLinearDiagram('#gameCreatedRealSkill', true);
 
     function createLinearDiagram(id, showLines) {
         return new Chart($(id), {
@@ -73,7 +80,7 @@
                     yAxes: [{
                         type: 'linear',
                         ticks: {
-                            <!--beginAtZero: true-->
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -141,12 +148,12 @@
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
 
-            if (row[1] == name) {
-                return row[2];
+            if (row[0] == name) {
+                return row[1];
             }
 
             if (row[0] > 0) {
-                console.log("Unable to find param: " + name );
+                console.log("Unable to find param: " + name);
             }
         }
 
@@ -161,7 +168,7 @@
         var rawData = [];
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
-            if (key != row[1]) {
+            if (key != row[0]) {
                 continue;
             }
 
@@ -222,11 +229,16 @@
         loadDiagram(filterData(name, data, "users_in_queue", 0, 2), usersInQueueChart);
         loadDiagram(filterData(name, data, "games_created", 0, 2), gamesCreatedChart);
 
-        loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 2, 20), skillLevelDistr);
+        loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 1, 20), skillLevelDistr);
 
         loadDiagram(filterData(name + " (avg)", data, "time_in_queue_avg", 0, 2), timeInQueueChart);
         loadDiagram(filterData(name + " (max)", data, "time_in_queue_max", 0, 2), timeInQueueChart);
 
+        loadDiagram(filterData(name + " (avg)", data, "game_created_avg_skill_delta", 0, 2), gameCreatedSkillChart);
+        loadDiagram(filterData(name + " (max)", data, "game_created_max_skill_delta", 0, 2), gameCreatedSkillChart);
+
+        loadDiagram(filterData(name + " (avg)", data, "game_created_avg_rskill_delta", 0, 2), gameCreatedRealSkillChart);
+        loadDiagram(filterData(name + " (max)", data, "game_created_max_rskill_delta", 0, 2), gameCreatedRealSkillChart);
     }
 
     // samplers
@@ -243,10 +255,8 @@
             return 0;
         }
 
-        var result = values[length - 1] - values[0];
         return result;
     }
-
 
 </script>
 </body>
