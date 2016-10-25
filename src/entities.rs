@@ -193,6 +193,8 @@ impl Algoritm for SkillLevelAlgorithm {
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
+            println!("required:{}, found:{}", desired_skill, pool.get_user(&candidate).skill);
+
             active_team.push(candidate)
         }
 
@@ -346,6 +348,7 @@ fn test_clustered_queue() {
         queue.push(pool.generate(10000.0, 10000.0))
     }
 
+    thread_rng().shuffle(&mut queue);
     let result = algorithm.search(&mut queue, &pool);
 
     println!("{:?}", queue);
@@ -355,8 +358,8 @@ fn test_clustered_queue() {
     let mut avg_counter = 0;
     for id in queue {
         match pool.get_user(&id).skill {
-            10000.0 => {high_counter += 1}
-            500.0 => {avg_counter += 1}
+            10000.0 => { high_counter += 1 }
+            500.0 => { avg_counter += 1 }
             _ => panic!()
         }
     }
@@ -368,6 +371,58 @@ fn test_clustered_queue() {
             println!("{:?}", game);
             assert!(game.team1.len() == 5);
             assert!(game.team2.len() == 5);
+        }
+        _ => panic!("Incorrect result")
+    }
+}
+
+
+#[test]
+fn test_skill_level_sum() {
+    let algorithm = SkillLevelAlgorithm {
+        team_size: 5,
+        size_factor: 1.0,
+    };
+
+    let mut pool = UserPool::new();
+    let mut queue = Vec::new();
+
+    for _ in 0..5 {
+        queue.push(pool.generate(450.0, 450.0))
+    }
+
+    for _ in 0..5 {
+        queue.push(pool.generate(550.0, 550.0))
+    }
+
+    for _ in 0..9 {
+        queue.push(pool.generate(10000.0, 10000.0))
+    }
+
+    thread_rng().shuffle(&mut queue);
+    let result = algorithm.search(&mut queue, &pool);
+
+    println!("Queue: {:?}", queue);
+    assert!(queue.len() == 9);
+
+    let mut high_counter = 0;
+    for id in queue {
+        match pool.get_user(&id).skill {
+            10000.0 => { high_counter += 1 }
+            _ => panic!()
+        }
+    }
+    assert!(high_counter == 9);
+
+    match result {
+        AlgorithmResult::Found(game) => {
+            println!("{:?}", game);
+            assert!(game.team1.len() == 5);
+            assert!(game.team2.len() == 5);
+
+            let team1_sum = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).skill);
+            let team2_sum = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).skill);
+            assert!((team1_sum - team2_sum).abs() == 100.0);
         }
         _ => panic!("Incorrect result")
     }
