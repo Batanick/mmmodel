@@ -165,7 +165,8 @@ impl Algoritm for SkillLevelAlgorithm {
             return AlgorithmResult::None;
         }
 
-        let queue_avg = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).skill);
+        let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).skill);
+        let queue_avg = queue_sum / (queue.len() as f32);
 
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
@@ -276,7 +277,7 @@ fn test_skill_empty_queue() {
         size_factor: 2.0,
     };
 
-    let mut pool = UserPool::new();
+    let pool = UserPool::new();
     let mut queue = Vec::new();
 
     assert!(algorithm.search(&mut queue, &pool) == AlgorithmResult::None);
@@ -337,7 +338,7 @@ fn test_clustered_queue() {
     let mut pool = UserPool::new();
     let mut queue = Vec::new();
 
-    for _ in 0..10 {
+    for _ in 0..15 {
         queue.push(pool.generate(500.0, 500.0))
     }
 
@@ -348,7 +349,19 @@ fn test_clustered_queue() {
     let result = algorithm.search(&mut queue, &pool);
 
     println!("{:?}", queue);
-    assert!(queue.len() == 10);
+    assert!(queue.len() == 15);
+
+    let mut high_counter = 0;
+    let mut avg_counter = 0;
+    for id in queue {
+        match pool.get_user(&id).skill {
+            10000.0 => {high_counter += 1}
+            500.0 => {avg_counter += 1}
+            _ => panic!()
+        }
+    }
+    assert!(high_counter == 10);
+    assert!(avg_counter == 5);
 
     match result {
         AlgorithmResult::Found(game) => {
