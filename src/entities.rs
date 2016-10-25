@@ -23,11 +23,11 @@ impl UserData {
         }
     }
 
-    pub fn set_join_time(&self, join_time : u32) {
+    pub fn set_join_time(&self, join_time: u32) {
         self.join_time.set(join_time);
     }
 
-    pub fn get_join_time(&self) -> u32{
+    pub fn get_join_time(&self) -> u32 {
         self.join_time.get()
     }
 }
@@ -61,6 +61,7 @@ pub struct Stats {
 }
 
 #[derive(PartialEq)]
+#[derive(Debug)]
 pub struct Game {
     pub team1: Vec<UserId>,
     pub team2: Vec<UserId>,
@@ -169,26 +170,24 @@ impl Algoritm for SkillLevelAlgorithm {
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
 
-        while team1.len() < self.team_size && team2.len() < self.team_size {
+        while team1.len() < self.team_size || team2.len() < self.team_size {
             let team1_active = team1.len() < team2.len();
 
-            let (active_team, opp_team): (&mut Vec<UserId>, &mut Vec<UserId>) = if team1_active {(&mut team1, &mut team2)} else {(&mut team1, &mut team2)};
+            let (active_team, opp_team): (&mut Vec<UserId>, &mut Vec<UserId>) = if team1_active { (&mut team1, &mut team2) } else { (&mut team2, &mut team1) };
 
             let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
             let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
 
             let delta = opponent_team_skill - active_team_skill;
             let avg_skill =
-                if active_team.len() == 0 && opp_team.len() == 0
-                    {queue_avg}
-                else
-                    {(opponent_team_skill + active_team_skill) / ((active_team.len() + opp_team.len()) as f32)};
+            if active_team.len() == 0 && opp_team.len() == 0
+                { queue_avg } else { (opponent_team_skill + active_team_skill) / ((active_team.len() + opp_team.len()) as f32) };
 
             let desired_skill = avg_skill + delta;
 
             let (index, _) = queue.iter().enumerate()
                 .map(|(index, id)| (index, (pool.get_user(id).skill - desired_skill).abs()))
-                .fold((usize::max_value(), 1.0/0.0), |i, v| if v.1 > i.1 {i} else {(v.0, v.1)} );
+                .fold((usize::max_value(), 1.0 / 0.0), |i, v| if v.1 > i.1 { i } else { (v.0, v.1) });
 
             assert!(index != usize::max_value());
 
@@ -260,11 +259,11 @@ impl RandomRangeGen {
                     result = -1.0;
                 }
 
-                (result + 1.0) * 0.5 
+                    (result + 1.0) * 0.5
             }
         };
 
-        return ((self.max - self.min) * rand ) + self.min;
+        return ((self.max - self.min) * rand) + self.min;
     }
 }
 
@@ -273,8 +272,8 @@ impl RandomRangeGen {
 #[test]
 fn test_skill_empty_queue() {
     let algorithm = SkillLevelAlgorithm {
-        team_size : 5,
-        size_factor : 2.0,
+        team_size: 5,
+        size_factor: 2.0,
     };
 
     let mut pool = UserPool::new();
@@ -286,8 +285,8 @@ fn test_skill_empty_queue() {
 #[test]
 fn test_skill_small_queue() {
     let algorithm = SkillLevelAlgorithm {
-        team_size : 5,
-        size_factor : 2.0,
+        team_size: 5,
+        size_factor: 2.0,
     };
 
     let mut pool = UserPool::new();
@@ -301,3 +300,62 @@ fn test_skill_small_queue() {
 }
 
 
+#[test]
+fn test_skill_found() {
+    let algorithm = SkillLevelAlgorithm {
+        team_size: 5,
+        size_factor: 2.0,
+    };
+
+    let mut pool = UserPool::new();
+    let mut queue = Vec::new();
+
+    for _ in 0..20 {
+        queue.push(pool.generate(500.0, 500.0))
+    }
+
+    let result = algorithm.search(&mut queue, &pool);
+
+    match result {
+        AlgorithmResult::Found(game) => {
+            assert!(game.team1.len() == 5);
+            assert!(game.team2.len() == 5);
+        }
+        _ => panic!("Incorrect result")
+    }
+
+    assert!(queue.len() == 10);
+}
+
+#[test]
+fn test_clustered_queue() {
+    let algorithm = SkillLevelAlgorithm {
+        team_size: 5,
+        size_factor: 2.0,
+    };
+
+    let mut pool = UserPool::new();
+    let mut queue = Vec::new();
+
+    for _ in 0..10 {
+        queue.push(pool.generate(500.0, 500.0))
+    }
+
+    for _ in 0..10 {
+        queue.push(pool.generate(10000.0, 10000.0))
+    }
+
+    let result = algorithm.search(&mut queue, &pool);
+
+    println!("{:?}", queue);
+    assert!(queue.len() == 10);
+
+    match result {
+        AlgorithmResult::Found(game) => {
+            println!("{:?}", game);
+            assert!(game.team1.len() == 5);
+            assert!(game.team2.len() == 5);
+        }
+        _ => panic!("Incorrect result")
+    }
+}
