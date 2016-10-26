@@ -30,18 +30,33 @@
 
 
 <div class="accordion">
-    <h3>Time in queue</h3>
+    <h3>Time in queue (sum)</h3>
     <canvas id="timeInQueue"></canvas>
 </div>
 
 <div class="accordion">
-    <h3>Game created skill delta</h3>
-    <canvas id="gameCreatedSkill"></canvas>
+    <h3>Time in queue (max)</h3>
+    <canvas id="timeInQueueMax"></canvas>
 </div>
 
 <div class="accordion">
-    <h3>Game created real skill delta</h3>
-    <canvas id="gameCreatedRealSkill"></canvas>
+    <h3>Game created average team skill delta</h3>
+    <canvas id="gameCreatedTeamSkill"></canvas>
+</div>
+
+<div class="accordion">
+    <h3>Game created max skill delta</h3>
+    <canvas id="gameCreatedMaxSkillDelta"></canvas>
+</div>
+
+<div class="accordion">
+    <h3>Game created team real skill delta</h3>
+    <canvas id="gameCreatedTeamRealSkill"></canvas>
+</div>
+
+<div class="accordion">
+    <h3>Game created max real skill delta</h3>
+    <canvas id="gameCreatedMaxRealSkillDelta"></canvas>
 </div>
 
 <script>
@@ -56,9 +71,13 @@
     var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
 
     var timeInQueueChart = createLinearDiagram('#timeInQueue', true, 100.0);
+    var timeInQueueMaxChart = createLinearDiagram('#timeInQueueMax', true, 100.0);
 
-    var gameCreatedSkillChart = createLinearDiagram('#gameCreatedSkill', true, 100.0);
-    var gameCreatedRealSkillChart = createLinearDiagram('#gameCreatedRealSkill', true, 100.0);
+    var gameCreatedTeamSkill = createLinearDiagram('#gameCreatedTeamSkill', true, 100.0);
+    var gameCreatedMaxSkillDelta = createLinearDiagram('#gameCreatedMaxSkillDelta', true, 100.0);
+
+    var gameCreatedTeamRealSkill = createLinearDiagram('#gameCreatedTeamRealSkill', true, 100.0);
+    var gameCreatedMaxRealSkillDelta = createLinearDiagram('#gameCreatedMaxRealSkillDelta', true, 100.0);
 
     function createLinearDiagram(id, showLines, suggestedMax) {
         return new Chart($(id), {
@@ -206,7 +225,7 @@
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0, borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
+            pointBorderColor: mainColor,
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
@@ -233,14 +252,14 @@
 
         loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 1, 20), skillLevelDistr);
 
-        loadDiagram(filterData(name + " (avg)", data, "time_in_queue_avg", 0, 2), timeInQueueChart);
-        loadDiagram(filterData(name + " (max)", data, "time_in_queue_max", 0, 2), timeInQueueChart);
+        loadDiagram(filterData(name, data, "time_in_queue_avg", 0, 2), timeInQueueChart);
+        loadDiagram(filterData(name, data, "time_in_queue_max", 0, 2), timeInQueueMaxChart);
 
-        loadDiagram(filterData(name + " (avg)", data, "game_created_avg_skill_delta", 0, 2), gameCreatedSkillChart);
-        loadDiagram(filterData(name + " (max)", data, "game_created_max_skill_delta", 0, 2), gameCreatedSkillChart);
+        loadDiagram(filterData(name, data, "game_created_avg_skill_delta", 0, 2), gameCreatedTeamSkill);
+        loadDiagram(filterData(name, data, "game_created_max_skill_delta", 0, 2), gameCreatedMaxSkillDelta);
 
-        loadDiagram(filterData(name + " (avg)", data, "game_created_avg_rskill_delta", 0, 2), gameCreatedRealSkillChart);
-        loadDiagram(filterData(name + " (max)", data, "game_created_max_rskill_delta", 0, 2), gameCreatedRealSkillChart);
+        loadDiagram(filterData(name, data, "game_created_avg_rskill_delta", 0, 2), gameCreatedTeamRealSkill);
+        loadDiagram(filterData(name, data, "game_created_max_rskill_delta", 0, 2), gameCreatedMaxRealSkillDelta);
     }
 
     // samplers
