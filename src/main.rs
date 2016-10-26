@@ -273,6 +273,9 @@ impl Model {
     }
 
     fn on_game_started(&mut self, tick: u32, game: Game) {
+        let winner = self.decider.decide(&game, &self.user_pool);
+        game.process(&self.user_pool, winner);
+
         let mut rng = thread_rng();
 
         for id in game.team1 {

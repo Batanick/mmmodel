@@ -117,14 +117,14 @@ pub enum AlgorithmResult {
 }
 
 pub trait GameDecider: Debug {
-    fn decide(&self, game: &Game, pool: &UserPool) -> i32;
+    fn decide(&self, game: &Game, pool: &UserPool) -> u32;
 }
 
 #[derive(Debug)]
 pub struct RealSkillLevelDecider {}
 
 impl GameDecider for RealSkillLevelDecider {
-    fn decide(&self, game: &Game, pool: &UserPool) -> i32 {
+    fn decide(&self, game: &Game, pool: &UserPool) -> u32 {
         let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
         let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
 
@@ -461,3 +461,4 @@ fn test_skill_level_sum() {
         _ => panic!("Incorrect result")
     }
 }
+
