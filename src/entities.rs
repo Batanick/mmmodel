@@ -7,11 +7,12 @@ use std::fmt::Debug;
 
 pub type UserId = usize;
 
+#[derive(Debug)]
 pub struct UserData {
-    id: UserId,
-    pub skill: f32,
-    real_skill: Cell<f32>,
+    pub id: UserId,
+    pub real_skill: f32,
 
+    skill: Cell<f32>,
     join_time: Cell<u32>,
 }
 
@@ -19,8 +20,8 @@ impl UserData {
     fn new(id: UserId, initial_skill: f32, real_skill: f32) -> UserData {
         UserData {
             id: id,
-            skill: initial_skill,
-            real_skill: Cell::new(real_skill),
+            skill: Cell::new(initial_skill),
+            real_skill: real_skill,
             join_time: Cell::new(0),
         }
     }
@@ -33,15 +34,16 @@ impl UserData {
         self.join_time.get()
     }
 
-    pub fn update_skill(&self, delta : f32) {
-        self.real_skill.set(self.real_skill.get() + delta);
+    pub fn update_skill(&self, delta: f32) {
+        self.skill.set(self.skill.get() + delta);
     }
 
-    pub fn get_real_skill(&self) -> f32 {
-        self.real_skill.get()
+    pub fn get_skill(&self) -> f32 {
+        self.skill.get()
     }
 }
 
+#[derive(Debug)]
 pub struct UserPool {
     users: Vec<UserData>,
 }
@@ -86,8 +88,8 @@ impl Game {
             _ => panic!()
         };
 
-        let winners_avg = winners.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).skill) / (winners.len() as f32);
-        let losers_avg = losers.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).skill) / (losers.len() as f32);
+        let winners_avg = winners.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).get_skill()) / (winners.len() as f32);
+        let losers_avg = losers.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).get_skill()) / (losers.len() as f32);
 
         let r_win = 10.0_f32.powf(winners_avg / 400.0);
         let r_lose = 10.0_f32.powf(losers_avg / 400.0);
@@ -125,8 +127,8 @@ pub struct RealSkillLevelDecider {}
 
 impl GameDecider for RealSkillLevelDecider {
     fn decide(&self, game: &Game, pool: &UserPool) -> u32 {
-        let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
-        let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
+        let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
+        let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
 
         if skill1 == skill2 {
             if thread_rng().gen() {
@@ -196,7 +198,7 @@ impl Algoritm for SkillLevelAlgorithm {
             return AlgorithmResult::None;
         }
 
-        let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).skill);
+        let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
         let queue_avg = queue_sum / (queue.len() as f32);
 
         let mut team1 = Vec::new();
@@ -207,8 +209,8 @@ impl Algoritm for SkillLevelAlgorithm {
 
             let (active_team, opp_team): (&mut Vec<UserId>, &mut Vec<UserId>) = if team1_active { (&mut team1, &mut team2) } else { (&mut team2, &mut team1) };
 
-            let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
-            let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).skill);
+            let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).get_skill());
+            let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).get_skill());
 
             let delta = opponent_team_skill - active_team_skill;
             let avg_skill =
@@ -218,13 +220,13 @@ impl Algoritm for SkillLevelAlgorithm {
             let desired_skill = avg_skill + delta;
 
             let (index, _) = queue.iter().enumerate()
-                .map(|(index, id)| (index, (pool.get_user(id).skill - desired_skill).abs()))
+                .map(|(index, id)| (index, (pool.get_user(id).get_skill() - desired_skill).abs()))
                 .fold((usize::max_value(), 1.0 / 0.0), |i, v| if v.1 > i.1 { i } else { (v.0, v.1) });
 
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
-            //            println!("required:{}, found:{}", desired_skill, pool.get_user(&candidate).skill);
+            //            println!("required:{}, found:{}", desired_skill, pool.get_user(&candidate).get_skill());
 
             active_team.push(candidate)
         }
@@ -391,7 +393,7 @@ fn test_clustered_queue() {
     let mut high_counter = 0;
     let mut avg_counter = 0;
     for id in queue {
-        match pool.get_user(&id).skill {
+        match pool.get_user(&id).get_skill() {
             10000.0 => { high_counter += 1 }
             500.0 => { avg_counter += 1 }
             _ => panic!()
@@ -409,7 +411,6 @@ fn test_clustered_queue() {
         _ => panic!("Incorrect result")
     }
 }
-
 
 #[test]
 fn test_skill_level_sum() {
@@ -441,7 +442,7 @@ fn test_skill_level_sum() {
 
     let mut high_counter = 0;
     for id in queue {
-        match pool.get_user(&id).skill {
+        match pool.get_user(&id).get_skill() {
             10000.0 => { high_counter += 1 }
             _ => panic!()
         }
@@ -454,11 +455,66 @@ fn test_skill_level_sum() {
             assert!(game.team1.len() == 5);
             assert!(game.team2.len() == 5);
 
-            let team1_sum = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).skill);
-            let team2_sum = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).skill);
+            let team1_sum = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).get_skill());
+            let team2_sum = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(&id).get_skill());
             assert!((team1_sum - team2_sum).abs() == 100.0);
         }
         _ => panic!("Incorrect result")
     }
 }
+
+#[test]
+fn rating_update() {
+    let mut pool = UserPool::new();
+
+    let user1 = pool.generate(2400.0, 0.0);
+    let user2 = pool.generate(2000.0, 0.0);
+
+    let game = Game::new(vec!(user1), vec!(user2));
+
+    game.process(&pool, 1);
+
+    assert!((pool.get_user(&user1).get_skill() - 2403.0).abs() < 0.1);
+    assert!((pool.get_user(&user2).get_skill() - 1997.0).abs() < 0.1);
+}
+
+#[test]
+fn rating_update2() {
+    let mut pool = UserPool::new();
+
+    let user1 = pool.generate(2400.0, 0.0);
+    let user2 = pool.generate(2000.0, 0.0);
+
+    let game = Game::new(vec!(user1), vec!(user2));
+
+    game.process(&pool, 2);
+
+    assert!((pool.get_user(&user1).get_skill() - 2371.0).abs() < 0.1);
+    assert!((pool.get_user(&user2).get_skill() - 2029.0).abs() < 0.1);
+}
+
+#[test]
+fn team_rating_update() {
+    let mut pool = UserPool::new();
+
+    let user1 = pool.generate(2800.0, 0.0);
+    let user2 = pool.generate(2000.0, 0.0);
+
+    let user3 = pool.generate(1000.0, 0.0);
+    let user4 = pool.generate(3000.0, 0.0);
+
+    println!("{:?}", pool);
+
+    let game = Game::new(vec!(user1, user2), vec!(user3, user4));
+
+    game.process(&pool, 2);
+
+    println!("{:?}", pool);
+
+    assert!((pool.get_user(&user1).get_skill() - 2771.0).abs() < 0.1);
+    assert!((pool.get_user(&user2).get_skill() - 1971.0).abs() < 0.1);
+    assert!((pool.get_user(&user3).get_skill() - 1029.0).abs() < 0.1);
+    assert!((pool.get_user(&user4).get_skill() - 3029.0).abs() < 0.1);
+}
+
 

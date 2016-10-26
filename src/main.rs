@@ -266,8 +266,8 @@ impl Model {
     }
 
     fn build_team_data(&self, ids: &Vec<usize>) -> (SkillValue, SkillValue) {
-        let skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).skill).collect();
-        let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).get_real_skill()).collect();
+        let skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).get_skill()).collect();
+        let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).real_skill).collect();
 
         (SkillValue::build(&skill_levels), SkillValue::build(&real_skill_levels))
     }
