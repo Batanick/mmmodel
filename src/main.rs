@@ -50,6 +50,15 @@ fn main() {
             .help("Minimum value of the skill level")
             .default_value("800"))
 
+        .arg(Arg::with_name("game_length")
+            .long("game_length")
+            .help("The amount of time before user reenter queue")
+            .default_value("300"))
+        .arg(Arg::with_name("continuous_play_prob")
+            .long("continuous_play_prob")
+            .help("The probability that after a game user will join the queue")
+            .default_value("0.0"))
+
         .arg(Arg::with_name("algorithm")
             .short("a")
             .long("alg")
@@ -72,7 +81,11 @@ fn main() {
     let ticks = params.value_of("time").unwrap().parse::<u32>().unwrap();
     let users_to_gen = params.value_of("users").unwrap().parse::<u32>().unwrap();
     let search_delay = params.value_of("search_delay").unwrap().parse::<u32>().unwrap();
+
     let default_skill_level = params.value_of("skill").unwrap().parse::<f32>().unwrap();
+    let continuous_play_prob = params.value_of("continuous_play_prob").unwrap().parse::<f32>().unwrap();
+    let game_length = params.value_of("game_length").unwrap().parse::<u32>().unwrap();
+
     let real_skill_min = params.value_of("real_skill_min").unwrap().parse::<f32>().unwrap();
     let real_skill_max = params.value_of("real_skill_max").unwrap().parse::<f32>().unwrap();
 
@@ -103,8 +116,14 @@ fn main() {
         user_pool: UserPool::new(),
         algorithm: algorithm,
         decider: Box::new(RealSkillLevelDecider {}),
+
         properties: HashMap::new(),
+        delayed_enter: HashMap::new(),
+
         default_skill: default_skill_level,
+        continuous_play_prob: continuous_play_prob,
+        game_length: game_length,
+
         real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
 
@@ -143,8 +162,12 @@ struct Model {
     decider: Box<GameDecider>,
 
     default_skill: f32,
+    game_length: u32,
+    continuous_play_prob: f32,
+
     real_skill_gen: RandomRangeGen,
 
+    delayed_enter: HashMap<u32, Vec<UserId>>,
     properties: HashMap<&'static str, f32>,
 }
 
@@ -159,12 +182,29 @@ impl Model {
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);
+        println!("Each tick {} new users will join the queue", users_per_tick);
+        println!("Game length: {}, after game join queue probability after: {}", self.game_length, self.continuous_play_prob);
+
+
         let mut users_to_gen: f32 = 0.0;
         let mut last_search: u32 = 0;
+
         for tick in 1..ticks + 1 {
             users_to_gen += users_per_tick;
 
-            events.push(Event::TimedFloat(tick, "users_joined_queue", users_to_gen.floor() as f32));
+            let users_to_reuse = self.delayed_enter.remove(&tick);
+            let mut users_rejoin = 0;
+            match users_to_reuse {
+                Some(users) => {
+                    users_rejoin = users.len();
+                    for id in users {
+                        self.join_queue(id, tick)
+                    }
+                }
+                _ => {}
+            }
+
+            events.push(Event::TimedFloat(tick, "users_joined_queue", (users_to_gen.floor() as f32) + (users_rejoin as f32)));
             while users_to_gen >= 1.0 {
                 users_to_gen -= 1.0;
 
@@ -173,8 +213,7 @@ impl Model {
 
                 events.push(Event::Float("user_generated_skill", real_skill));
 
-                self.user_pool.get_user(&id).set_join_time(tick);
-                self.queue.push(id);
+                self.join_queue(id, tick);
             }
 
             if (last_search + search_delay) <= tick {
@@ -193,6 +232,8 @@ impl Model {
                             events.push(Event::TimedFloat(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
 
                             *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
+
+                            self.on_game_started(tick, game);
                         },
                     }
                 }
@@ -229,6 +270,26 @@ impl Model {
         let real_skill_levels = ids.iter().map(|id| self.user_pool.get_user(id).real_skill).collect();
 
         (SkillValue::build(&skill_levels), SkillValue::build(&real_skill_levels))
+    }
+
+    fn on_game_started(&mut self, tick: u32, game: Game) {
+        let mut rng = thread_rng();
+
+        for id in game.team1 {
+            if rng.next_f32() < self.continuous_play_prob {
+                self.delayed_enter.entry(tick + self.game_length).or_insert(Vec::new()).push(id);
+            }
+        }
+        for id in game.team2 {
+            if rng.next_f32() < self.continuous_play_prob {
+                self.delayed_enter.entry(tick + self.game_length).or_insert(Vec::new()).push(id);
+            }
+        }
+    }
+
+    fn join_queue(&mut self, id: UserId, tick: u32) {
+        self.user_pool.get_user(&id).set_join_time(tick);
+        self.queue.push(id);
     }
 }
 
