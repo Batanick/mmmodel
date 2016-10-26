@@ -92,19 +92,19 @@ fn main() {
     };
 
     let mut model = Model {
-    name: name.clone(),
-    queue: Vec::new(),
-    user_pool: UserPool::new(),
-    algorithm: algorithm,
-    decider: Box::new(RealSkillLevelDecider {}),
-    properties: HashMap::new(),
-    default_skill: default_skill_level,
-    real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
+        name: name.clone(),
+        queue: Vec::new(),
+        user_pool: UserPool::new(),
+        algorithm: algorithm,
+        decider: Box::new(RealSkillLevelDecider {}),
+        properties: HashMap::new(),
+        default_skill: default_skill_level,
+        real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
 
     let log = model.run(ticks, users_to_gen);
 
-    save_results( & name, log);
+    save_results(&name, log);
 }
 
 fn save_results(name: &str, events: Vec<Event>) {
@@ -142,13 +142,12 @@ struct Model {
 
 impl Model {
     pub fn run(&mut self, ticks: u32, users: u32) -> Vec<Event> {
-        let mut events = Vec::new();
-
         println!("Simulating: {}, ticks: {}", self.name, ticks);
         println!("Algorithm: {:?}", self.algorithm);
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
 
+        let mut events = Vec::new();
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);

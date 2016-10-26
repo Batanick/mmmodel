@@ -50,17 +50,17 @@
         active: false
     });
 
-    var usersInQueueChart = createLinearDiagram('#usersInQueue', true);
+    var usersInQueueChart = createLinearDiagram('#usersInQueue', true, 50.0);
     var gamesCreatedChart = createLinearDiagram('#gamesCreated', true);
 
     var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
 
-    var timeInQueueChart = createLinearDiagram('#timeInQueue', true);
+    var timeInQueueChart = createLinearDiagram('#timeInQueue', true, 100.0);
 
-    var gameCreatedSkillChart = createLinearDiagram('#gameCreatedSkill', true);
-    var gameCreatedRealSkillChart = createLinearDiagram('#gameCreatedRealSkill', true);
+    var gameCreatedSkillChart = createLinearDiagram('#gameCreatedSkill', true, 100.0);
+    var gameCreatedRealSkillChart = createLinearDiagram('#gameCreatedRealSkill', true, 100.0);
 
-    function createLinearDiagram(id, showLines) {
+    function createLinearDiagram(id, showLines, suggestedMax) {
         return new Chart($(id), {
             type: 'line',
             data: {
@@ -80,7 +80,8 @@
                     yAxes: [{
                         type: 'linear',
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            suggestedMax: suggestedMax
                         }
                     }]
                 }
