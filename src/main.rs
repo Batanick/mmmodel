@@ -114,7 +114,8 @@ fn save_results(name: &str, events: Vec<Event>) {
     std::fs::create_dir(REPORT_DIR).ok();
 
     use std::io::Write;
-    let mut report = std::fs::File::create(REPORT_DIR.to_owned() + "/" + name + ".csv").unwrap();
+    let path = REPORT_DIR.to_owned() + "/" + name + ".csv";
+    let mut report = std::fs::File::create(&path).unwrap();
 
     for event in events {
         match event {
@@ -123,6 +124,7 @@ fn save_results(name: &str, events: Vec<Event>) {
             Event::TimedFloat(tick, name, value) => report.write(format!("{},{},{}\n", tick, name, value).as_bytes()).unwrap(),
         };
     }
+    println!("Report saved into: {}", path);
 }
 
 struct Model {
