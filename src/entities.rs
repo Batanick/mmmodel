@@ -10,7 +10,7 @@ pub type UserId = usize;
 pub struct UserData {
     id: UserId,
     pub skill: f32,
-    pub real_skill: f32,
+    real_skill: Cell<f32>,
 
     join_time: Cell<u32>,
 }
@@ -20,7 +20,7 @@ impl UserData {
         UserData {
             id: id,
             skill: initial_skill,
-            real_skill: real_skill,
+            real_skill: Cell::new(real_skill),
             join_time: Cell::new(0),
         }
     }
@@ -31,6 +31,14 @@ impl UserData {
 
     pub fn get_join_time(&self) -> u32 {
         self.join_time.get()
+    }
+
+    pub fn update_skill(&self, delta : f32) {
+        self.real_skill.set(self.real_skill.get() + delta);
+    }
+
+    pub fn get_real_skill(&self) -> f32 {
+        self.real_skill.get()
     }
 }
 
@@ -70,6 +78,36 @@ impl Game {
             team2: team2,
         }
     }
+
+    pub fn process(&self, user_pool: &UserPool, win_team: u32) {
+        let (winners, losers) = match win_team {
+            1 => (&self.team1, &self.team2),
+            2 => (&self.team2, &self.team1),
+            _ => panic!()
+        };
+
+        let winners_avg = winners.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).skill) / (winners.len() as f32);
+        let losers_avg = losers.iter().fold(0.0, |sum, id| sum + user_pool.get_user(id).skill) / (losers.len() as f32);
+
+        let r_win = 10.0_f32.powf(winners_avg / 400.0);
+        let r_lose = 10.0_f32.powf(losers_avg / 400.0);
+
+        let e_win = r_win / (r_win + r_lose);
+        let e_lose = r_lose / (r_win + r_lose);
+
+        static K_FACTOR: f32 = 32.0;
+
+        let winner_delta = K_FACTOR * (1.0 - e_win);
+        let loser_delta = K_FACTOR * (-e_lose);
+
+        for id in winners {
+            user_pool.get_user(id).update_skill(winner_delta);
+        }
+
+        for id in losers {
+            user_pool.get_user(id).update_skill(loser_delta);
+        }
+    }
 }
 
 #[derive(PartialEq)]
@@ -87,8 +125,8 @@ pub struct RealSkillLevelDecider {}
 
 impl GameDecider for RealSkillLevelDecider {
     fn decide(&self, game: &Game, pool: &UserPool) -> i32 {
-        let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
-        let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
+        let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
+        let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_real_skill());
 
         if skill1 == skill2 {
             if thread_rng().gen() {
