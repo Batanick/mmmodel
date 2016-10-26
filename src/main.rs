@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-extern crate rand;
+#[macro_use] extern crate rand;
 extern crate clap;
 
 mod entities;
@@ -45,6 +45,23 @@ fn main() {
             .help("Minimum value of the skill level")
             .default_value("800"))
 
+        .arg(Arg::with_name("algorithm")
+            .short("a")
+            .long("alg")
+            .help("Algorithm type")
+            .possible_values(&["fifo", "rnd", "skill"])
+            .default_value("rnd"))
+        .arg(Arg::with_name("team_size")
+            .long("team_size")
+            .takes_value(true)
+            .help("The size of the team")
+            .default_value("5"))
+        .arg(Arg::with_name("queue_factor")
+            .long("queue_factor")
+            .takes_value(true)
+            .help("Queue overloading factor")
+            .default_value("1.0"))
+
         .get_matches();
 
     let ticks = params.value_of("time").unwrap().parse::<u32>().unwrap();
@@ -57,22 +74,37 @@ fn main() {
         .map(|str| String::from(str))
         .unwrap_or((String::from("report_") + &thread_rng().next_u32().to_string()));
 
-    let mut model = Model {
-        name: name.clone(),
-        queue: Vec::new(),
-        user_pool: UserPool::new(),
-        algorithm: Box::new(FIFOAlgorithm {
-            team_size: 5,
+    let team_size = params.value_of("team_size").unwrap().parse::<usize>().unwrap();
+    let queue_factor = params.value_of("queue_factor").unwrap().parse::<f32>().unwrap();
+
+    let algorithm: Box<entities::Algoritm> = match params.value_of("algorithm").unwrap() {
+        "fifo" => Box::new(FIFOAlgorithm {
+            team_size: team_size,
         }),
-        decider: Box::new(SkillLevelDecider {}),
-        properties: HashMap::new(),
-        default_skill: default_skill_level,
-        real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
+        "rnd" => Box::new(RandomPeekAlgorithm {
+            team_size: team_size,
+        }),
+        "skill" => Box::new(SkillLevelAlgorithm {
+            size_factor: queue_factor,
+            team_size: team_size,
+        }),
+        _ => panic!()
+    };
+
+    let mut model = Model {
+    name: name.clone(),
+    queue: Vec::new(),
+    user_pool: UserPool::new(),
+    algorithm: algorithm,
+    decider: Box::new(SkillLevelDecider {}),
+    properties: HashMap::new(),
+    default_skill: default_skill_level,
+    real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
 
     let log = model.run(ticks, users_to_gen);
 
-    save_results(&name, log);
+    save_results( & name, log);
 }
 
 fn save_results(name: &str, events: Vec<Event>) {
@@ -113,6 +145,7 @@ impl Model {
         let mut events = Vec::new();
 
         println!("Simulating: {}, ticks: {}", self.name, ticks);
+        println!("Algorithm: {:?}", self.algorithm);
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);

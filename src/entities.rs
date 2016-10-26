@@ -3,6 +3,8 @@ use rand::{thread_rng, Rng};
 use std::f32::consts::PI;
 use std::cell::Cell;
 
+use std::fmt::Debug;
+
 pub type UserId = usize;
 
 pub struct UserData {
@@ -52,12 +54,6 @@ impl UserPool {
     pub fn get_user(&self, id: &UserId) -> &UserData {
         &self.users[*id]
     }
-}
-
-pub struct Stats {
-    pub min: f32,
-    pub max: f32,
-    pub avg: f32,
 }
 
 #[derive(PartialEq)]
@@ -115,7 +111,7 @@ impl GameDecider for SkillLevelDecider {
     }
 }
 
-pub trait Algoritm {
+pub trait Algoritm: Debug {
     fn search(&self, queue: &mut Vec<UserId>, pool: &UserPool) -> AlgorithmResult;
 }
 
@@ -132,8 +128,9 @@ pub fn peek_random<T>(vec: &mut Vec<T>) -> Option<T> {
     Option::Some(vec.remove(index))
 }
 
+#[derive(Debug)]
 pub struct RandomPeekAlgorithm {
-    team_size: usize,
+    pub team_size: usize,
 }
 
 impl Algoritm for RandomPeekAlgorithm {
@@ -154,6 +151,7 @@ impl Algoritm for RandomPeekAlgorithm {
     }
 }
 
+#[derive(Debug)]
 pub struct SkillLevelAlgorithm {
     pub team_size: usize,
     pub size_factor: f32,
@@ -193,7 +191,7 @@ impl Algoritm for SkillLevelAlgorithm {
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
-//            println!("required:{}, found:{}", desired_skill, pool.get_user(&candidate).skill);
+            //            println!("required:{}, found:{}", desired_skill, pool.get_user(&candidate).skill);
 
             active_team.push(candidate)
         }
@@ -202,6 +200,7 @@ impl Algoritm for SkillLevelAlgorithm {
     }
 }
 
+#[derive(Debug)]
 pub struct FIFOAlgorithm {
     pub team_size: usize,
 }
