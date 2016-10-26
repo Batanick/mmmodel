@@ -59,6 +59,12 @@ fn main() {
             .help("The probability that after a game user will join the queue")
             .default_value("0.0"))
 
+        .arg(Arg::with_name("user_gen_strat")
+            .long("user_gen_strat")
+            .help("User generation strategy")
+            .possible_values(&["uniform", "imm"])
+            .default_value("uniform"))
+
         .arg(Arg::with_name("algorithm")
             .short("a")
             .long("alg")
@@ -110,6 +116,12 @@ fn main() {
         _ => panic!()
     };
 
+    let user_gen_strat = match params.value_of("user_gen_strat").unwrap() {
+        "imm" => UserGenerationStrategy::Immediate,
+        "uniform" => UserGenerationStrategy::Uniform,
+        _ => panic!()
+    };
+
     let mut model = Model {
         name: name.clone(),
         queue: Vec::new(),
@@ -123,6 +135,7 @@ fn main() {
         default_skill: default_skill_level,
         continuous_play_prob: continuous_play_prob,
         game_length: game_length,
+        user_gen_strat: user_gen_strat,
 
         real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
@@ -164,6 +177,7 @@ struct Model {
     default_skill: f32,
     game_length: u32,
     continuous_play_prob: f32,
+    user_gen_strat: UserGenerationStrategy,
 
     real_skill_gen: RandomRangeGen,
 
@@ -177,20 +191,26 @@ impl Model {
         println!("Algorithm: {:?}, will run each {} ticks", self.algorithm, search_delay);
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
+        println!("User generation strategy: {:?}, total users to gen: {}", self.user_gen_strat, users);
+        println!("Game length: {}, after game join queue probability after: {}", self.game_length, self.continuous_play_prob);
 
         let mut events = Vec::new();
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);
-        println!("Each tick {} new users will join the queue", users_per_tick);
-        println!("Game length: {}, after game join queue probability after: {}", self.game_length, self.continuous_play_prob);
-
 
         let mut users_to_gen: f32 = 0.0;
         let mut last_search: u32 = 0;
 
         for tick in 1..ticks + 1 {
-            users_to_gen += users_per_tick;
+            match self.user_gen_strat {
+                UserGenerationStrategy::Immediate => {
+                    users_to_gen = if tick == 1 { users as f32 } else { 0.0 };
+                },
+                UserGenerationStrategy::Uniform => {
+                    users_to_gen += users_per_tick;
+                }
+            }
 
             let users_to_reuse = self.delayed_enter.remove(&tick);
             let mut users_rejoin = 0;
@@ -300,6 +320,12 @@ enum Event {
     TimedFloat(u32, &'static str, f32),
     Float(&'static str, f32),
     StrParam(&'static str, String)
+}
+
+#[derive(Debug)]
+enum UserGenerationStrategy {
+    Immediate,
+    Uniform
 }
 
 struct SkillValue {
