@@ -96,7 +96,7 @@ fn main() {
     queue: Vec::new(),
     user_pool: UserPool::new(),
     algorithm: algorithm,
-    decider: Box::new(SkillLevelDecider {}),
+    decider: Box::new(RealSkillLevelDecider {}),
     properties: HashMap::new(),
     default_skill: default_skill_level,
     real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
@@ -146,6 +146,9 @@ impl Model {
 
         println!("Simulating: {}, ticks: {}", self.name, ticks);
         println!("Algorithm: {:?}", self.algorithm);
+        println!("Game result decider: {:?}", self.decider);
+        println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
+
         events.push(Event::StrParam("name", self.name.clone()));
 
         let users_per_tick = (users as f32) / (ticks as f32);

@@ -78,22 +78,17 @@ pub enum AlgorithmResult {
     Found(Game),
 }
 
-pub trait GameDecider {
-    fn decide(&self, game: &Game) -> i32;
+pub trait GameDecider: Debug {
+    fn decide(&self, game: &Game, pool: &UserPool) -> i32;
 }
 
-pub struct SkillLevelDecider {}
+#[derive(Debug)]
+pub struct RealSkillLevelDecider {}
 
-impl GameDecider for SkillLevelDecider {
-    fn decide(&self, game: &Game) -> i32 {
-        let skill1 = game.team1.iter().fold(0, |mut sum, &x| {
-            sum += x;
-            sum
-        });
-        let skill2 = game.team2.iter().fold(0, |mut sum, &x| {
-            sum += x;
-            sum
-        });
+impl GameDecider for RealSkillLevelDecider {
+    fn decide(&self, game: &Game, pool: &UserPool) -> i32 {
+        let skill1 = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
+        let skill2 = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).real_skill);
 
         if skill1 == skill2 {
             if thread_rng().gen() {
@@ -224,11 +219,13 @@ impl Algoritm for FIFOAlgorithm {
     }
 }
 
+#[derive(Debug)]
 pub enum DistributionType {
     Uniform,
     Normal
 }
 
+#[derive(Debug)]
 pub struct RandomRangeGen {
     min: f32,
     max: f32,
