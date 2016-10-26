@@ -50,8 +50,8 @@ fn main() {
             .help("Minimum value of the skill level")
             .default_value("800"))
 
-        .arg(Arg::with_name("game_length")
-            .long("game_length")
+        .arg(Arg::with_name("max_game_length")
+            .long("max_game_length")
             .help("The amount of time before user reenter queue")
             .default_value("300"))
         .arg(Arg::with_name("continuous_play_prob")
@@ -90,7 +90,7 @@ fn main() {
 
     let default_skill_level = params.value_of("skill").unwrap().parse::<f32>().unwrap();
     let continuous_play_prob = params.value_of("continuous_play_prob").unwrap().parse::<f32>().unwrap();
-    let game_length = params.value_of("game_length").unwrap().parse::<u32>().unwrap();
+    let max_game_length = params.value_of("max_game_length").unwrap().parse::<u32>().unwrap();
 
     let real_skill_min = params.value_of("real_skill_min").unwrap().parse::<f32>().unwrap();
     let real_skill_max = params.value_of("real_skill_max").unwrap().parse::<f32>().unwrap();
@@ -134,7 +134,7 @@ fn main() {
 
         default_skill: default_skill_level,
         continuous_play_prob: continuous_play_prob,
-        game_length: game_length,
+        max_game_length: max_game_length,
         user_gen_strat: user_gen_strat,
 
         real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
@@ -175,7 +175,7 @@ struct Model {
     decider: Box<GameDecider>,
 
     default_skill: f32,
-    game_length: u32,
+    max_game_length: u32,
     continuous_play_prob: f32,
     user_gen_strat: UserGenerationStrategy,
 
@@ -192,7 +192,7 @@ impl Model {
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
         println!("User generation strategy: {:?}, total users to gen: {}", self.user_gen_strat, users);
-        println!("Game length: {}, after game join queue probability after: {}", self.game_length, self.continuous_play_prob);
+        println!("Maximum Game length: {}, after game join queue probability after: {}", self.max_game_length, self.continuous_play_prob);
 
         let mut events = Vec::new();
         events.push(Event::StrParam("name", self.name.clone()));
@@ -261,6 +261,7 @@ impl Model {
             }
 
             self.properties.insert("users_in_queue", self.queue.len() as f32);
+            self.properties.insert("avg_skill_error", self.user_pool.get_avg_skill_error());
 
             let times_in_queue: Vec<u32> = self.queue.iter().map(|id| tick - self.user_pool.get_user(id).get_join_time()).collect();
             let time_in_queue_max = times_in_queue.iter().fold(0, |max, v| if max < *v { *v } else { max });
@@ -293,19 +294,21 @@ impl Model {
     }
 
     fn on_game_started(&mut self, tick: u32, game: Game) {
-        let winner = self.decider.decide(&game, &self.user_pool);
-        game.process(&self.user_pool, winner);
-
         let mut rng = thread_rng();
+
+        let winner = self.decider.decide(&game, &self.user_pool);
+        let game_length = thread_rng().gen_range(0, self.max_game_length);
+
+        game.process(&self.user_pool, winner);
 
         for id in game.team1 {
             if rng.next_f32() < self.continuous_play_prob {
-                self.delayed_enter.entry(tick + self.game_length).or_insert(Vec::new()).push(id);
+                self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
             }
         }
         for id in game.team2 {
             if rng.next_f32() < self.continuous_play_prob {
-                self.delayed_enter.entry(tick + self.game_length).or_insert(Vec::new()).push(id);
+                self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
             }
         }
     }

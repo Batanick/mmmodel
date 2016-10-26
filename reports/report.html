@@ -59,6 +59,12 @@
     <canvas id="gameCreatedMaxRealSkillDelta"></canvas>
 </div>
 
+<div class="accordion">
+    <h3>Average skill level error of all users</h3>
+    <canvas id="avgSkillError"></canvas>
+</div>
+
+
 <script>
     $(".accordion").accordion({
         collapsible: true,
@@ -78,6 +84,8 @@
 
     var gameCreatedTeamRealSkill = createLinearDiagram('#gameCreatedTeamRealSkill', true, 100.0);
     var gameCreatedMaxRealSkillDelta = createLinearDiagram('#gameCreatedMaxRealSkillDelta', true, 100.0);
+
+    var avgSkillError = createLinearDiagram('#avgSkillError', true, 100.0);
 
     function createLinearDiagram(id, showLines, suggestedMax) {
         return new Chart($(id), {
@@ -260,6 +268,7 @@
 
         loadDiagram(filterData(name, data, "game_created_avg_rskill_delta", 0, 2), gameCreatedTeamRealSkill);
         loadDiagram(filterData(name, data, "game_created_max_rskill_delta", 0, 2), gameCreatedMaxRealSkillDelta);
+        loadDiagram(filterData(name, data, "avg_skill_error", 0, 2), avgSkillError);
     }
 
     // samplers

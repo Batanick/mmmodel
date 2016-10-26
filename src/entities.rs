@@ -41,6 +41,7 @@ impl UserData {
     pub fn get_skill(&self) -> f32 {
         self.skill.get()
     }
+
 }
 
 #[derive(Debug)]
@@ -63,6 +64,11 @@ impl UserPool {
 
     pub fn get_user(&self, id: &UserId) -> &UserData {
         &self.users[*id]
+    }
+
+    pub fn get_avg_skill_error(&self) -> f32{
+        let sum = self.users.iter().fold(0.0, |sum, data| sum + (data.real_skill - data.get_skill()).abs());
+        sum / (self.users.len() as f32)
     }
 }
 
