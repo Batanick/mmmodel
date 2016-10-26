@@ -32,6 +32,11 @@ fn main() {
             .takes_value(true)
             .help("Name of the simulation")
         )
+        .arg(Arg::with_name("search_delay")
+            .takes_value(true)
+            .help("Delay between searches in ticks")
+            .default_value("10")
+        )
         .arg(Arg::with_name("skill")
             .short("s")
             .help("Default skill level assigned to the user")
@@ -66,6 +71,7 @@ fn main() {
 
     let ticks = params.value_of("time").unwrap().parse::<u32>().unwrap();
     let users_to_gen = params.value_of("users").unwrap().parse::<u32>().unwrap();
+    let search_delay = params.value_of("search_delay").unwrap().parse::<u32>().unwrap();
     let default_skill_level = params.value_of("skill").unwrap().parse::<f32>().unwrap();
     let real_skill_min = params.value_of("real_skill_min").unwrap().parse::<f32>().unwrap();
     let real_skill_max = params.value_of("real_skill_max").unwrap().parse::<f32>().unwrap();
@@ -102,7 +108,7 @@ fn main() {
         real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
 
-    let log = model.run(ticks, users_to_gen);
+    let log = model.run(ticks, users_to_gen, search_delay);
 
     save_results(&name, log);
 }
@@ -143,9 +149,9 @@ struct Model {
 }
 
 impl Model {
-    pub fn run(&mut self, ticks: u32, users: u32) -> Vec<Event> {
+    pub fn run(&mut self, ticks: u32, users: u32, search_delay: u32) -> Vec<Event> {
         println!("Simulating: {}, ticks: {}", self.name, ticks);
-        println!("Algorithm: {:?}", self.algorithm);
+        println!("Algorithm: {:?}, will run each {} ticks", self.algorithm, search_delay);
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
 
@@ -154,6 +160,7 @@ impl Model {
 
         let users_per_tick = (users as f32) / (ticks as f32);
         let mut users_to_gen: f32 = 0.0;
+        let mut last_search: u32 = 0;
         for tick in 1..ticks + 1 {
             users_to_gen += users_per_tick;
 
@@ -170,23 +177,26 @@ impl Model {
                 self.queue.push(id);
             }
 
-            loop {
-                let result = self.algorithm.search(&mut self.queue, &self.user_pool);
-                match result {
-                    AlgorithmResult::None => break,
-                    AlgorithmResult::Found(game) => {
-                        let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
-                        let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
+            if (last_search + search_delay) <= tick {
+                loop {
+                    let result = self.algorithm.search(&mut self.queue, &self.user_pool);
+                    match result {
+                        AlgorithmResult::None => break,
+                        AlgorithmResult::Found(game) => {
+                            let (skill_t1, rskill_t1) = self.build_team_data(&game.team1);
+                            let (skill_t2, rskill_t2) = self.build_team_data(&game.team2);
 
-                        events.push(Event::TimedFloat(tick, "game_created_avg_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
-                        events.push(Event::TimedFloat(tick, "game_created_avg_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
+                            events.push(Event::TimedFloat(tick, "game_created_avg_skill_delta", (skill_t1.avg - skill_t2.avg).abs()));
+                            events.push(Event::TimedFloat(tick, "game_created_avg_rskill_delta", (rskill_t1.avg - rskill_t2.avg).abs()));
 
-                        events.push(Event::TimedFloat(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
-                        events.push(Event::TimedFloat(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
+                            events.push(Event::TimedFloat(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
+                            events.push(Event::TimedFloat(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
 
-                        *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
-                    },
+                            *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
+                        },
+                    }
                 }
+                last_search = tick;
             }
 
             self.properties.insert("users_in_queue", self.queue.len() as f32);
