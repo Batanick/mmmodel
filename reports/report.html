@@ -142,6 +142,11 @@
     function filterData(label, data, key, xIndex, dataIndex) {
         var dataSet = createEmptyDataSet(label);
 
+        var min = 1.0/0.0;
+        var max = 0.0;
+        var sum = 0.0;
+        var count = 0;
+
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
             if (key != row[1]) {
@@ -149,13 +154,30 @@
             }
 
             var xValue = row[xIndex];
-            var yValue = row[dataIndex];
+            var yValue = parseFloat(row[dataIndex]);
 
             var dataObj = {x: xValue, y: yValue};
             dataSet.data.push(dataObj);
+
+            count += 1.0;
+            sum += yValue;
+            if (min == undefined || min > yValue) {
+                min = yValue;
+            }
+            if (max == undefined || max < yValue) {
+                max = yValue;
+            }
+
         }
 
+        var stats = "(min:" + fmt(min) + ",max:" + fmt(max) + ",avg:" + fmt(sum / count) + ")";
+        dataSet.label = label + stats;
+
         return dataSet;
+    }
+
+    function fmt(original) {
+        return Math.round(original * 100) / 100;
     }
 
     function findParam(name, data) {
