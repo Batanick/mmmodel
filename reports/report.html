@@ -99,9 +99,9 @@
                 datasets: [],
                 labels: []
             },
-            animation : false,
+            animation: false,
             options: {
-                animation : false,
+                animation: false,
                 title: {
                     display: false
                 },
@@ -139,21 +139,8 @@
         }
     }
 
-    function filterData(label, data, key, xIndex, dataIndex, sample, samplerFn) {
-        if (sample == undefined) {
-            sample = 1;
-            samplerFn = function (values) {
-                if (values.length == 0) {
-                    return 0;
-                }
-                return values[0];
-            }
-        }
-
+    function filterData(label, data, key, xIndex, dataIndex) {
         var dataSet = createEmptyDataSet(label);
-
-        var sampleCounter = 0;
-        var values = [];
 
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
@@ -164,16 +151,8 @@
             var xValue = row[xIndex];
             var yValue = row[dataIndex];
 
-            sampleCounter++;
-            values.push(yValue);
-
-            if (sampleCounter >= sample) {
-                var dataObj = {x: xValue - sample, y: samplerFn(values)};
-                dataSet.data.push(dataObj);
-
-                values = [];
-                sampleCounter = 0;
-            }
+            var dataObj = {x: xValue, y: yValue};
+            dataSet.data.push(dataObj);
         }
 
         return dataSet;
