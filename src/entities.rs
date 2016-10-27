@@ -395,46 +395,6 @@ fn test_skill_small_prefill() {
 }
 
 #[test]
-fn test_skill_small_prefill2() {
-    let algorithm = SkillLevelAlgorithm {
-        team_size: 5,
-        size_factor: 2.0,
-        prefill_factor: 0.4,
-    };
-
-    let mut pool = UserPool::new(false);
-    let mut queue = Vec::new();
-
-    for _ in 0..5 {
-        queue.push(pool.generate(10000.0, 10000.0));
-    }
-
-    for _ in 0..20 {
-        queue.push(pool.generate(500.0, 500.0))
-    }
-
-    let result = algorithm.search(&mut queue, &pool);
-    println!("{:?}", pool);
-    println!("{:?}", queue);
-    println!("{:?}", result);
-
-    assert_eq!(15, queue.len());
-
-    match result {
-        AlgorithmResult::Found(game) => {
-            assert!(game.team1.len() == 5);
-            assert!(game.team2.len() == 5);
-
-            let team1_sum = game.team1.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
-            let team2_sum = game.team2.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
-            assert_eq!(team1_sum, team2_sum);
-        }
-        _ => panic!("Incorrect result")
-    }
-}
-
-
-#[test]
 fn test_skill_found() {
     let algorithm = SkillLevelAlgorithm {
         team_size: 5,
