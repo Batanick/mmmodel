@@ -178,16 +178,16 @@ struct Model {
     queue: Vec<UserId>,
 
     user_pool: UserPool,
-    users_at_start: u32,
-    users_to_gen: u32,
 
     algorithm: Box<Algoritm>,
     decider: Box<GameDecider>,
 
-    default_skill: f32,
+    users_at_start: u32,
+    users_to_gen: u32,
     max_game_length: u32,
     continuous_play_prob: f32,
 
+    default_skill: f32,
     real_skill_gen: RandomRangeGen,
 
     delayed_enter: HashMap<u32, Vec<UserId>>,
@@ -208,17 +208,15 @@ impl Model {
 
         let users_per_tick = (self.users_to_gen as f32) / (ticks as f32);
 
-        let mut users_to_gen: f32 = self.users_to_gen as f32;
+        let mut users_to_gen: f32 = self.users_at_start as f32;
         let mut last_search: u32 = 0;
 
         for tick in 1..ticks + 1 {
             users_to_gen += users_per_tick;
 
             let users_to_reuse = self.delayed_enter.remove(&tick);
-            let mut users_rejoin = 0;
             match users_to_reuse {
                 Some(users) => {
-                    users_rejoin = users.len();
                     for id in users {
                         self.join_queue(id, tick)
                     }
@@ -324,6 +322,10 @@ impl Model {
 
     fn get_active_users(&self) -> u32 {
         let mut sum = self.queue.len() as u32;
+
+        for (_, users) in &self.delayed_enter {
+            sum += users.len() as u32;
+        }
 
         sum
     }
