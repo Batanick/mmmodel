@@ -81,6 +81,11 @@ fn main() {
             .takes_value(true)
             .help("Queue overloading factor")
             .default_value("1.0"))
+        .arg(Arg::with_name("prefill_factor")
+            .long("prefill_factor")
+            .takes_value(true)
+            .help("Amount of users to be added to the team on the first run of the search algorithm")
+            .default_value("0.0"))
 
         .get_matches();
 
@@ -101,6 +106,7 @@ fn main() {
 
     let team_size = params.value_of("team_size").unwrap().parse::<usize>().unwrap();
     let queue_factor = params.value_of("queue_factor").unwrap().parse::<f32>().unwrap();
+    let prefill_factor = params.value_of("prefill_factor").unwrap().parse::<f32>().unwrap();
 
     let algorithm: Box<entities::Algoritm> = match params.value_of("algorithm").unwrap() {
         "fifo" => Box::new(FIFOAlgorithm {
@@ -112,6 +118,7 @@ fn main() {
         "skill" => Box::new(SkillLevelAlgorithm {
             size_factor: queue_factor,
             team_size: team_size,
+            prefill_factor: prefill_factor,
         }),
         _ => panic!()
     };
