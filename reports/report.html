@@ -24,7 +24,7 @@
 </div>
 
 <div class="accordion">
-    <h3>Games created</h3>
+    <h3>Games created (total)</h3>
     <canvas id="gamesCreated"></canvas>
 </div>
 
@@ -73,7 +73,7 @@
 <script>
     $(".accordion").accordion({
         collapsible: true,
-        active: false
+        active: 0,
     });
 
     var usersInQueueChart = createLinearDiagram('#usersInQueue', true, 50.0);
@@ -85,11 +85,11 @@
     var timeInQueueChart = createLinearDiagram('#timeInQueue', true, 100.0);
     var timeInQueueMaxChart = createLinearDiagram('#timeInQueueMax', true, 100.0);
 
-    var gameCreatedTeamSkill = createLinearDiagram('#gameCreatedTeamSkill', true, 100.0);
-    var gameCreatedMaxSkillDelta = createLinearDiagram('#gameCreatedMaxSkillDelta', true, 100.0);
+    var gameCreatedTeamSkill = createLinearDiagram('#gameCreatedTeamSkill', true, 1000.0);
+    var gameCreatedMaxSkillDelta = createLinearDiagram('#gameCreatedMaxSkillDelta', true, 1000.0);
 
-    var gameCreatedTeamRealSkill = createLinearDiagram('#gameCreatedTeamRealSkill', true, 100.0);
-    var gameCreatedMaxRealSkillDelta = createLinearDiagram('#gameCreatedMaxRealSkillDelta', true, 100.0);
+    var gameCreatedTeamRealSkill = createLinearDiagram('#gameCreatedTeamRealSkill', true, 1000.0);
+    var gameCreatedMaxRealSkillDelta = createLinearDiagram('#gameCreatedMaxRealSkillDelta', true, 1000.0);
 
     var avgSkillError = createLinearDiagram('#avgSkillError', true, 100.0);
 
@@ -100,7 +100,9 @@
                 datasets: [],
                 labels: []
             },
+            animation : false,
             options: {
+                animation : false,
                 title: {
                     display: false
                 },
@@ -276,6 +278,8 @@
         loadDiagram(filterData(name, data, "game_created_avg_rskill_delta", 0, 2), gameCreatedTeamRealSkill);
         loadDiagram(filterData(name, data, "game_created_max_rskill_delta", 0, 2), gameCreatedMaxRealSkillDelta);
         loadDiagram(filterData(name, data, "avg_skill_error", 0, 2), avgSkillError);
+
+        console.log("Finishing load of:" + name);
     }
 
     // samplers
