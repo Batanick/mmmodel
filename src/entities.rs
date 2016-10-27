@@ -217,7 +217,12 @@ impl Algoritm for SkillLevelAlgorithm {
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
 
+        let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
+        let queue_avg = queue_sum / (queue.len() as f32);
+
         let to_add = (self.prefill_factor * (self.team_size as f32) * 2.0) as u32;
+
+
         if to_add > 0 {
             for _ in 0..to_add {
                 let team_to_add = if team1.len() > team2.len() { &mut team2 } else { &mut team1 };
@@ -233,12 +238,13 @@ impl Algoritm for SkillLevelAlgorithm {
             let active_team_skill = active_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).get_skill());
             let opponent_team_skill = opp_team.iter().fold(0.0, |sum, v| sum + pool.get_user(v).get_skill());
 
-            let delta = opponent_team_skill - active_team_skill;
+            let skil_delta = opponent_team_skill - active_team_skill;
+            let found = opp_team.len() + active_team.len();
 
-            let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
-            let queue_avg = queue_sum / (queue.len() as f32);
+            let found_sum = active_team.iter().chain(opp_team.iter()).fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
+            let found_avg = if (found) == 0 { queue_avg } else { found_sum / found as f32 };
 
-            let desired_skill = if active_team.len() != opp_team.len() { delta } else { delta + queue_avg };
+            let desired_skill = if active_team.len() != opp_team.len() { skil_delta } else { skil_delta + found_avg };
 
             let (index, _) = queue.iter().enumerate()
                 .map(|(index, id)| (index, (pool.get_user(id).get_skill() - desired_skill).abs()))
@@ -247,7 +253,6 @@ impl Algoritm for SkillLevelAlgorithm {
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
-            //            println!("required:{}, found:{}:{}", desired_skill, candidate, pool.get_user(&candidate).get_skill());
 
             active_team.push(candidate)
         }
@@ -337,7 +342,7 @@ fn test_skill_empty_queue() {
         prefill_factor: 0.0,
     };
 
-    let pool = UserPool::new();
+    let pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     assert!(algorithm.search(&mut queue, &pool) == AlgorithmResult::None);
@@ -351,7 +356,7 @@ fn test_skill_small_queue() {
         prefill_factor: 0.0,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     for _ in 0..15 {
@@ -369,7 +374,7 @@ fn test_skill_small_prefill() {
         prefill_factor: 0.1,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     queue.push(pool.generate(10000.0, 10000.0));
@@ -399,7 +404,7 @@ fn test_skill_small_prefill2() {
         prefill_factor: 0.4,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     for _ in 0..5 {
@@ -416,10 +421,6 @@ fn test_skill_small_prefill2() {
     println!("{:?}", result);
 
     assert_eq!(15, queue.len());
-    assert_eq!(10000.0, pool.get_user(queue.get(0).unwrap()).get_skill());
-    for i in 1..queue.len() {
-        assert_eq!(500.0, pool.get_user(queue.get(i).unwrap()).get_skill());
-    }
 
     match result {
         AlgorithmResult::Found(game) => {
@@ -443,7 +444,7 @@ fn test_skill_found() {
         prefill_factor: 0.0,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     for _ in 0..20 {
@@ -471,7 +472,7 @@ fn test_clustered_queue() {
         prefill_factor: 0.0,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     for _ in 0..15 {
@@ -510,7 +511,7 @@ fn test_skill_level_sum() {
         prefill_factor: 0.0,
     };
 
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
     let mut queue = Vec::new();
 
     for _ in 0..5 {
@@ -547,7 +548,7 @@ fn test_skill_level_sum() {
 
 #[test]
 fn rating_update() {
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
 
     let user1 = pool.generate(2400.0, 0.0);
     let user2 = pool.generate(2000.0, 0.0);
@@ -562,7 +563,7 @@ fn rating_update() {
 
 #[test]
 fn rating_update2() {
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
 
     let user1 = pool.generate(2400.0, 0.0);
     let user2 = pool.generate(2000.0, 0.0);
@@ -577,7 +578,7 @@ fn rating_update2() {
 
 #[test]
 fn team_rating_update() {
-    let mut pool = UserPool::new();
+    let mut pool = UserPool::new(false);
 
     let user1 = pool.generate(2800.0, 0.0);
     let user2 = pool.generate(2000.0, 0.0);

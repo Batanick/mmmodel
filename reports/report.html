@@ -35,7 +35,7 @@
 
 
 <div class="accordion">
-    <h3>Time in queue (sum)</h3>
+    <h3>Time in queue (avg)</h3>
     <canvas id="timeInQueue"></canvas>
 </div>
 
@@ -73,7 +73,7 @@
 <script>
     $(".accordion").accordion({
         collapsible: true,
-        active: 0,
+        active: false
     });
 
     var usersInQueueChart = createLinearDiagram('#usersInQueue', true, 50.0);
