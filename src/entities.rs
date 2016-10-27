@@ -14,15 +14,18 @@ pub struct UserData {
 
     skill: Cell<f32>,
     join_time: Cell<u32>,
+
+    use_real_skill: bool,
 }
 
 impl UserData {
-    fn new(id: UserId, initial_skill: f32, real_skill: f32) -> UserData {
+    fn new(id: UserId, initial_skill: f32, real_skill: f32, use_real_skill: bool) -> UserData {
         UserData {
             id: id,
             skill: Cell::new(initial_skill),
             real_skill: real_skill,
             join_time: Cell::new(0),
+            use_real_skill: use_real_skill,
         }
     }
 
@@ -35,29 +38,35 @@ impl UserData {
     }
 
     pub fn update_skill(&self, delta: f32) {
+        if self.use_real_skill {
+            return;
+        }
+
         self.skill.set(self.skill.get() + delta);
     }
 
     pub fn get_skill(&self) -> f32 {
-        self.skill.get()
+        if self.use_real_skill { self.real_skill } else { self.skill.get() }
     }
 }
 
 #[derive(Debug)]
 pub struct UserPool {
     users: Vec<UserData>,
+    pub use_real_skill: bool,
 }
 
 impl UserPool {
-    pub fn new() -> UserPool {
+    pub fn new(use_real_skill: bool) -> UserPool {
         UserPool {
             users: Vec::new(),
+            use_real_skill: use_real_skill,
         }
     }
 
     pub fn generate(&mut self, initial_skill: f32, real_skill: f32) -> UserId {
         let id = self.users.len();
-        self.users.push(UserData::new(id, initial_skill, real_skill));
+        self.users.push(UserData::new(id, initial_skill, real_skill, self.use_real_skill));
         id
     }
 
@@ -238,7 +247,7 @@ impl Algoritm for SkillLevelAlgorithm {
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
-//            println!("required:{}, found:{}:{}", desired_skill, candidate, pool.get_user(&candidate).get_skill());
+            //            println!("required:{}, found:{}:{}", desired_skill, candidate, pool.get_user(&candidate).get_skill());
 
             active_team.push(candidate)
         }

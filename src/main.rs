@@ -66,6 +66,10 @@ fn main() {
             .help("The probability that after a game user will join the queue")
             .default_value("0.0"))
 
+        .arg(Arg::with_name("use_real_skill")
+            .long("use_real_skill")
+            .help("Always use real skill level as skill level of the user"))
+
         .arg(Arg::with_name("algorithm")
             .short("a")
             .long("alg")
@@ -97,6 +101,7 @@ fn main() {
 
     let search_delay = params.value_of("search_delay").unwrap().parse::<u32>().unwrap();
 
+    let use_real_skill = params.is_present("use_real_skill");
     let default_skill_level = params.value_of("skill").unwrap().parse::<f32>().unwrap();
     let continuous_play_prob = params.value_of("continuous_play_prob").unwrap().parse::<f32>().unwrap();
     let max_game_length = params.value_of("max_game_length").unwrap().parse::<u32>().unwrap();
@@ -131,7 +136,7 @@ fn main() {
         name: name.clone(),
         queue: Vec::new(),
 
-        user_pool: UserPool::new(),
+        user_pool: UserPool::new(use_real_skill),
         users_at_start: users_at_start,
         users_to_gen: users_to_gen,
 
@@ -142,6 +147,7 @@ fn main() {
         delayed_enter: HashMap::new(),
 
         default_skill: default_skill_level,
+
         continuous_play_prob: continuous_play_prob,
         max_game_length: max_game_length,
 
@@ -197,7 +203,7 @@ struct Model {
 impl Model {
     pub fn run(&mut self, ticks: u32, search_delay: u32) -> Vec<Event> {
         println!("Simulating: {}, ticks: {}", self.name, ticks);
-        println!("Algorithm: {:?}, will run each {} ticks", self.algorithm, search_delay);
+        println!("Algorithm: {:?}, will run each {} ticks, use real skill:{}", self.algorithm, search_delay, self.user_pool.use_real_skill);
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
         println!("Users at the start of the simulation: {}, users to be generated during the simulation: {}", self.users_at_start, self.users_to_gen);
@@ -214,7 +220,6 @@ impl Model {
 
         // ================= MAIN LOOOOOOOOOP ============================
         for tick in 1..ticks + 1 {
-            
             // Users that finished their game must be added back to the queue
             let users_to_reuse = self.delayed_enter.remove(&tick);
             match users_to_reuse {
