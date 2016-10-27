@@ -138,7 +138,7 @@ fn main() {
         algorithm: algorithm,
         decider: Box::new(RealSkillLevelDecider {}),
 
-        properties: HashMap::new(),
+        stats: HashMap::new(),
         delayed_enter: HashMap::new(),
 
         default_skill: default_skill_level,
@@ -191,7 +191,7 @@ struct Model {
     real_skill_gen: RandomRangeGen,
 
     delayed_enter: HashMap<u32, Vec<UserId>>,
-    properties: HashMap<&'static str, f32>,
+    stats: HashMap<&'static str, f32>,
 }
 
 impl Model {
@@ -208,22 +208,28 @@ impl Model {
 
         let users_per_tick = (self.users_to_gen as f32) / (ticks as f32);
 
+        let mut rng = thread_rng();
         let mut users_to_gen: f32 = self.users_at_start as f32;
         let mut last_search: u32 = 0;
 
+        // ================= MAIN LOOOOOOOOOP ============================
         for tick in 1..ticks + 1 {
-            users_to_gen += users_per_tick;
-
+            
+            // Users that finished their game must be added back to the queue
             let users_to_reuse = self.delayed_enter.remove(&tick);
             match users_to_reuse {
                 Some(users) => {
                     for id in users {
-                        self.join_queue(id, tick)
+                        if rng.next_f32() < self.continuous_play_prob {
+                            self.join_queue(id, tick)
+                        }
                     }
                 }
                 _ => {}
             }
 
+            // generating new users if needed
+            users_to_gen += users_per_tick;
             while users_to_gen >= 1.0 {
                 users_to_gen -= 1.0;
 
@@ -236,6 +242,7 @@ impl Model {
             }
 
             if (last_search + search_delay) <= tick {
+                // trying to automatch until first failure 
                 loop {
                     let result = self.algorithm.search(&mut self.queue, &self.user_pool);
                     match result {
@@ -250,7 +257,7 @@ impl Model {
                             events.push(Event::TimedFloat(tick, "game_created_max_skill_delta", f32::max(skill_t1.max, skill_t2.max) - f32::min(skill_t1.min, skill_t2.min)));
                             events.push(Event::TimedFloat(tick, "game_created_max_rskill_delta", f32::max(rskill_t1.max, rskill_t2.max) - f32::min(rskill_t1.min, rskill_t2.min)));
 
-                            *(self.properties.entry("games_created").or_insert(0.0)) += 1.0;
+                            *(self.stats.entry("games_created").or_insert(0.0)) += 1.0;
 
                             self.on_game_started(tick, game);
                         },
@@ -259,27 +266,30 @@ impl Model {
                 last_search = tick;
             }
 
-            self.properties.insert("users_in_queue", self.queue.len() as f32);
-            self.properties.insert("avg_skill_error", self.user_pool.get_avg_skill_error());
+            // stats here 
+            self.stats.insert("users_in_queue", self.queue.len() as f32);
+            self.stats.insert("avg_skill_error", self.user_pool.get_avg_skill_error());
 
             let times_in_queue: Vec<u32> = self.queue.iter().map(|id| tick - self.user_pool.get_user(id).get_join_time()).collect();
             let time_in_queue_max = times_in_queue.iter().fold(0, |max, v| if max < *v { *v } else { max });
-            self.properties.insert("time_in_queue_max", time_in_queue_max as f32);
+            self.stats.insert("time_in_queue_max", time_in_queue_max as f32);
 
             let active_users = self.get_active_users();
-            self.properties.insert("active_users", active_users as f32);
+            self.stats.insert("active_users", active_users as f32);
 
             if self.queue.len() == 0 {
-                self.properties.insert("time_in_queue_avg", 0.0);
+                self.stats.insert("time_in_queue_avg", 0.0);
             } else {
                 let time_in_queue_sum: u32 = times_in_queue.iter().sum();
-                self.properties.insert("time_in_queue_avg", (time_in_queue_sum as f32) / (self.queue.len() as f32));
+                self.stats.insert("time_in_queue_avg", (time_in_queue_sum as f32) / (self.queue.len() as f32));
             }
 
-            for (key, value) in &self.properties {
+            // firing stat events
+            for (key, value) in &self.stats {
                 events.push(Event::TimedFloat(tick, key, value.clone()));
             }
 
+            // showing progress
             if tick % (ticks / 10) == 0 {
                 println!("{}", tick);
             }
@@ -296,22 +306,16 @@ impl Model {
     }
 
     fn on_game_started(&mut self, tick: u32, game: Game) {
-        let mut rng = thread_rng();
-
         let winner = self.decider.decide(&game, &self.user_pool);
         let game_length = thread_rng().gen_range(1, self.max_game_length);
 
         game.process(&self.user_pool, winner);
 
         for id in game.team1 {
-            if rng.next_f32() < self.continuous_play_prob {
-                self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
-            }
+            self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
         }
         for id in game.team2 {
-            if rng.next_f32() < self.continuous_play_prob {
-                self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
-            }
+            self.delayed_enter.entry(tick + game_length).or_insert(Vec::new()).push(id);
         }
     }
 
