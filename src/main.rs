@@ -40,6 +40,8 @@ fn main() {
             .help("Name of the simulation")
         )
         .arg(Arg::with_name("search_delay")
+            .short("d")
+            .long("search_delay")
             .takes_value(true)
             .help("Delay between searches in ticks")
             .default_value("10")

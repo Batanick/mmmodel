@@ -217,11 +217,7 @@ impl Algoritm for SkillLevelAlgorithm {
         let mut team1 = Vec::new();
         let mut team2 = Vec::new();
 
-        let queue_sum = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill());
-        let queue_avg = queue_sum / (queue.len() as f32);
-
         let to_add = (self.prefill_factor * (self.team_size as f32) * 2.0) as u32;
-
 
         if to_add > 0 {
             for _ in 0..to_add {
@@ -229,6 +225,8 @@ impl Algoritm for SkillLevelAlgorithm {
                 team_to_add.push(queue.remove(0));
             }
         }
+
+        let queue_avg = queue.iter().fold(0.0, |sum, id| sum + pool.get_user(id).get_skill()) / queue.len() as f32;
 
         while team1.len() < self.team_size || team2.len() < self.team_size {
             let team1_active = team1.len() < team2.len();
