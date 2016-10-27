@@ -238,7 +238,7 @@ impl Algoritm for SkillLevelAlgorithm {
             assert!(index != usize::max_value());
 
             let candidate = queue.remove(index);
-            println!("required:{}, found:{}:{}", desired_skill, candidate, pool.get_user(&candidate).get_skill());
+//            println!("required:{}, found:{}:{}", desired_skill, candidate, pool.get_user(&candidate).get_skill());
 
             active_team.push(candidate)
         }

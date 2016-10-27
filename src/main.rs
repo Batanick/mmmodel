@@ -22,11 +22,18 @@ fn main() {
             .help("A period of time to simulate in seconds")
             .default_value("86400")
         )
-        .arg(Arg::with_name("users")
+
+        .arg(Arg::with_name("users_at_start")
             .short("u")
             .help("Amount of users to be generated")
-            .default_value("1000")
+            .default_value("500")
         )
+        .arg(Arg::with_name("users_to_gen")
+            .short("g")
+            .help("Amount of users to be generated")
+            .default_value("500")
+        )
+
         .arg(Arg::with_name("name")
             .short("n")
             .takes_value(true)
@@ -59,12 +66,6 @@ fn main() {
             .help("The probability that after a game user will join the queue")
             .default_value("0.0"))
 
-        .arg(Arg::with_name("user_gen_strat")
-            .long("user_gen_strat")
-            .help("User generation strategy")
-            .possible_values(&["uniform", "imm"])
-            .default_value("uniform"))
-
         .arg(Arg::with_name("algorithm")
             .short("a")
             .long("alg")
@@ -90,7 +91,10 @@ fn main() {
         .get_matches();
 
     let ticks = params.value_of("time").unwrap().parse::<u32>().unwrap();
-    let users_to_gen = params.value_of("users").unwrap().parse::<u32>().unwrap();
+
+    let users_to_gen = params.value_of("users_to_gen").unwrap().parse::<u32>().unwrap();
+    let users_at_start = params.value_of("users_at_start").unwrap().parse::<u32>().unwrap();
+
     let search_delay = params.value_of("search_delay").unwrap().parse::<u32>().unwrap();
 
     let default_skill_level = params.value_of("skill").unwrap().parse::<f32>().unwrap();
@@ -123,16 +127,14 @@ fn main() {
         _ => panic!()
     };
 
-    let user_gen_strat = match params.value_of("user_gen_strat").unwrap() {
-        "imm" => UserGenerationStrategy::Immediate,
-        "uniform" => UserGenerationStrategy::Uniform,
-        _ => panic!()
-    };
-
     let mut model = Model {
         name: name.clone(),
         queue: Vec::new(),
+
         user_pool: UserPool::new(),
+        users_at_start: users_at_start,
+        users_to_gen: users_to_gen,
+
         algorithm: algorithm,
         decider: Box::new(RealSkillLevelDecider {}),
 
@@ -142,12 +144,11 @@ fn main() {
         default_skill: default_skill_level,
         continuous_play_prob: continuous_play_prob,
         max_game_length: max_game_length,
-        user_gen_strat: user_gen_strat,
 
         real_skill_gen: RandomRangeGen::new(real_skill_min, real_skill_max, DistributionType::Uniform),
     };
 
-    let log = model.run(ticks, users_to_gen, search_delay);
+    let log = model.run(ticks, search_delay);
 
     save_results(&name, log);
 }
@@ -177,6 +178,8 @@ struct Model {
     queue: Vec<UserId>,
 
     user_pool: UserPool,
+    users_at_start: u32,
+    users_to_gen: u32,
 
     algorithm: Box<Algoritm>,
     decider: Box<GameDecider>,
@@ -184,7 +187,6 @@ struct Model {
     default_skill: f32,
     max_game_length: u32,
     continuous_play_prob: f32,
-    user_gen_strat: UserGenerationStrategy,
 
     real_skill_gen: RandomRangeGen,
 
@@ -193,31 +195,24 @@ struct Model {
 }
 
 impl Model {
-    pub fn run(&mut self, ticks: u32, users: u32, search_delay: u32) -> Vec<Event> {
+    pub fn run(&mut self, ticks: u32, search_delay: u32) -> Vec<Event> {
         println!("Simulating: {}, ticks: {}", self.name, ticks);
         println!("Algorithm: {:?}, will run each {} ticks", self.algorithm, search_delay);
         println!("Game result decider: {:?}", self.decider);
         println!("Real skill level generation strategy: {:?}", self.real_skill_gen);
-        println!("User generation strategy: {:?}, total users to gen: {}", self.user_gen_strat, users);
+        println!("Users at the start of the simulation: {}, users to be generated during the simulation: {}", self.users_at_start, self.users_to_gen);
         println!("Maximum Game length: {}, after game join queue probability after: {}", self.max_game_length, self.continuous_play_prob);
 
         let mut events = Vec::new();
         events.push(Event::StrParam("name", self.name.clone()));
 
-        let users_per_tick = (users as f32) / (ticks as f32);
+        let users_per_tick = (self.users_to_gen as f32) / (ticks as f32);
 
-        let mut users_to_gen: f32 = 0.0;
+        let mut users_to_gen: f32 = self.users_to_gen as f32;
         let mut last_search: u32 = 0;
 
         for tick in 1..ticks + 1 {
-            match self.user_gen_strat {
-                UserGenerationStrategy::Immediate => {
-                    users_to_gen = if tick == 1 { users as f32 } else { 0.0 };
-                },
-                UserGenerationStrategy::Uniform => {
-                    users_to_gen += users_per_tick;
-                }
-            }
+            users_to_gen += users_per_tick;
 
             let users_to_reuse = self.delayed_enter.remove(&tick);
             let mut users_rejoin = 0;
@@ -231,7 +226,6 @@ impl Model {
                 _ => {}
             }
 
-            events.push(Event::TimedFloat(tick, "users_joined_queue", (users_to_gen.floor() as f32) + (users_rejoin as f32)));
             while users_to_gen >= 1.0 {
                 users_to_gen -= 1.0;
 
@@ -274,6 +268,9 @@ impl Model {
             let time_in_queue_max = times_in_queue.iter().fold(0, |max, v| if max < *v { *v } else { max });
             self.properties.insert("time_in_queue_max", time_in_queue_max as f32);
 
+            let active_users = self.get_active_users();
+            self.properties.insert("active_users", active_users as f32);
+
             if self.queue.len() == 0 {
                 self.properties.insert("time_in_queue_avg", 0.0);
             } else {
@@ -304,7 +301,7 @@ impl Model {
         let mut rng = thread_rng();
 
         let winner = self.decider.decide(&game, &self.user_pool);
-        let game_length = thread_rng().gen_range(0, self.max_game_length);
+        let game_length = thread_rng().gen_range(1, self.max_game_length);
 
         game.process(&self.user_pool, winner);
 
@@ -324,18 +321,18 @@ impl Model {
         self.user_pool.get_user(&id).set_join_time(tick);
         self.queue.push(id);
     }
+
+    fn get_active_users(&self) -> u32 {
+        let mut sum = self.queue.len() as u32;
+
+        sum
+    }
 }
 
 enum Event {
     TimedFloat(u32, &'static str, f32),
     Float(&'static str, f32),
     StrParam(&'static str, String)
-}
-
-#[derive(Debug)]
-enum UserGenerationStrategy {
-    Immediate,
-    Uniform
 }
 
 struct SkillValue {
