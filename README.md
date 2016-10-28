@@ -16,6 +16,7 @@ Right now supporting:
 5) PROFIT!!!
 
 # Command line arguments 
+```
 USAGE:
     mmmodel [FLAGS] [OPTIONS]
 
@@ -41,3 +42,4 @@ OPTIONS:
     -t <time>                                            A period of time to simulate in seconds [default: 86400] 
     -u <users_at_start>                                  Amount of users to be generated [default: 500] 
     -g <users_to_gen>                                    Amount of users to be generated [default: 500] 
+```
