@@ -9,11 +9,11 @@ Right now supporting:
 - Matchmaking skill level update (Elo)
 
 # Usage and parameters 
-1) Run executable, the report would be generated in reports folder
-2) Use view.html in the main project folder to load\analyse generated report
-3) Check the executable help (-h flag) for the list of possible options 
-4) ???
-5) PROFIT!!!
+1. Run executable, the report would be generated in reports folder
+2. Use view.html in the main project folder to load\analyse generated report
+3. Check the executable help (-h flag) for the list of possible options 
+4. ???
+5. PROFIT!!!
 
 # Command line arguments 
 ```
