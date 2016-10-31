@@ -213,6 +213,7 @@ impl Model {
 
         let mut events = Vec::new();
         events.push(Event::StrParam("name", self.name.clone()));
+        events.push(Event::StrParam("ticks", ticks.to_string()));
 
         let users_per_tick = (self.users_to_gen as f32) / (ticks as f32);
 
