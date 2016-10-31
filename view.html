@@ -5,8 +5,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>
 <input type="file" id="fileSelector" multiple/>
@@ -15,57 +16,57 @@
 
 <div class="accordion">
     <h3>Users is queue</h3>
-    <canvas id="usersInQueue"></canvas>
+    <div id="usersInQueue"></div>
 </div>
 
 <div class="accordion">
     <h3>Active users (queue + in game)</h3>
-    <canvas id="activeUsers"></canvas>
+    <div id="activeUsers"></div>
 </div>
 
 <div class="accordion">
     <h3>Games created (total)</h3>
-    <canvas id="gamesCreated"></canvas>
+    <div id="gamesCreated"></div>
 </div>
 
 <div class="accordion">
     <h3>Real skill level distribution</h3>
-    <canvas id="skillLevelDistr"></canvas>
+    <div id="skillLevelDistr"></div>
 </div>
 
 <div class="accordion">
     <h3>Time in queue (avg)</h3>
-    <canvas id="timeInQueue"></canvas>
+    <div id="timeInQueue"></div>
 </div>
 
 <div class="accordion">
     <h3>Time in queue (max)</h3>
-    <canvas id="timeInQueueMax"></canvas>
+    <div id="timeInQueueMax"></div>
 </div>
 
 <div class="accordion">
     <h3>Game created average team skill delta</h3>
-    <canvas id="gameCreatedTeamSkill"></canvas>
+    <div id="gameCreatedTeamSkill"></div>
 </div>
 
 <div class="accordion">
     <h3>Game created max skill delta</h3>
-    <canvas id="gameCreatedMaxSkillDelta"></canvas>
+    <div id="gameCreatedMaxSkillDelta"></div>
 </div>
 
 <div class="accordion">
     <h3>Game created team real skill delta</h3>
-    <canvas id="gameCreatedTeamRealSkill"></canvas>
+    <div id="gameCreatedTeamRealSkill"></div>
 </div>
 
 <div class="accordion">
     <h3>Game created min/max real skill delta</h3>
-    <canvas id="gameCreatedMaxRealSkillDelta"></canvas>
+    <div id="gameCreatedMaxRealSkillDelta"></div>
 </div>
 
 <div class="accordion">
     <h3>Average skill level error of all users</h3>
-    <canvas id="avgSkillError"></canvas>
+    <div id="avgSkillError"></div>
 </div>
 
 
@@ -75,52 +76,49 @@
         active: false
     });
 
-    var usersInQueueChart = createLinearDiagram('#usersInQueue', true, 50.0);
-    var activeUsersChart = createLinearDiagram('#activeUsers', true, 1000.0);
-    var gamesCreatedChart = createLinearDiagram('#gamesCreated', true);
+    var usersInQueueChart = undefined;
+    var activeUsersChart = undefined;
+    var gamesCreatedChart = undefined;
 
-    var skillLevelDistr = createLinearDiagram('#skillLevelDistr', true);
+    var skillLevelDistr = undefined;
 
-    var timeInQueueChart = createLinearDiagram('#timeInQueue', true, 100.0);
-    var timeInQueueMaxChart = createLinearDiagram('#timeInQueueMax', true, 100.0);
+    var timeInQueueChart = undefined;
+    var timeInQueueMaxChart = undefined;
 
-    var gameCreatedTeamSkill = createLinearDiagram('#gameCreatedTeamSkill', true, 1000.0);
-    var gameCreatedMaxSkillDelta = createLinearDiagram('#gameCreatedMaxSkillDelta', true, 1000.0);
+    var gameCreatedTeamSkill = undefined;
+    var gameCreatedMaxSkillDelta = undefined;
 
-    var gameCreatedTeamRealSkill = createLinearDiagram('#gameCreatedTeamRealSkill', true, 1000.0);
-    var gameCreatedMaxRealSkillDelta = createLinearDiagram('#gameCreatedMaxRealSkillDelta', true, 1000.0);
+    var gameCreatedTeamRealSkill = undefined;
+    var gameCreatedMaxRealSkillDelta = undefined;
 
-    var avgSkillError = createLinearDiagram('#avgSkillError', true, 100.0);
+    var avgSkillError = undefined;
+
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(onLoad);
+
+    function onLoad() {
+         usersInQueueChart = createLinearDiagram('usersInQueue', true, 50.0);
+         activeUsersChart = createLinearDiagram('activeUsers', true, 1000.0);
+         gamesCreatedChart = createLinearDiagram('gamesCreated', true);
+
+         skillLevelDistr = createLinearDiagram('skillLevelDistr', true);
+
+         timeInQueueChart = createLinearDiagram('timeInQueue', true, 100.0);
+         timeInQueueMaxChart = createLinearDiagram('timeInQueueMax', true, 100.0);
+
+         gameCreatedTeamSkill = createLinearDiagram('gameCreatedTeamSkill', true, 1000.0);
+         gameCreatedMaxSkillDelta = createLinearDiagram('gameCreatedMaxSkillDelta', true, 1000.0);
+
+         gameCreatedTeamRealSkill = createLinearDiagram('gameCreatedTeamRealSkill', true, 1000.0);
+         gameCreatedMaxRealSkillDelta = createLinearDiagram('gameCreatedMaxRealSkillDelta', true, 1000.0);
+
+         avgSkillError = createLinearDiagram('avgSkillError', true, 100.0);
+    }
 
     function createLinearDiagram(id, showLines, suggestedMax) {
-        return new Chart($(id), {
-            type: 'line',
-            data: {
-                datasets: [],
-                labels: []
-            },
-            animation: false,
-            options: {
-                animation: false,
-                title: {
-                    display: false
-                },
-                showLines: showLines,
-                scales: {
-                    xAxes: [{
-                        type: 'linear',
-                        position: 'bottom'
-                    }],
-                    yAxes: [{
-                        type: 'linear',
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMax: suggestedMax
-                        }
-                    }]
-                }
-            }
-        });
+        var chart = new google.visualization.LineChart(document.getElementById(id));
+
+        return chart;
     }
 
     function loadReport() {
@@ -139,10 +137,10 @@
         }
     }
 
-    function filterData(label, data, key, xIndex, dataIndex) {
+    function filterData(label, data, key) {
         var dataSet = createEmptyDataSet(label);
 
-        var min = 1.0/0.0;
+        var min = 1.0 / 0.0;
         var max = 0.0;
         var sum = 0.0;
         var count = 0;
@@ -153,11 +151,10 @@
                 continue;
             }
 
-            var xValue = row[xIndex];
-            var yValue = parseFloat(row[dataIndex]);
+            var xValue = parseInt(row[0]);
+            var yValue = parseFloat(row[2]);
 
-            var dataObj = {x: xValue, y: yValue};
-            dataSet.data.push(dataObj);
+            dataSet.addRow([xValue, yValue]);
 
             count += 1.0;
             sum += yValue;
@@ -171,7 +168,7 @@
         }
 
         var stats = "(min:" + fmt(min) + ",max:" + fmt(max) + ",avg:" + fmt(sum / count) + ")";
-        dataSet.label = label + stats;
+//        dataSet.label = label + stats;
 
         return dataSet;
     }
@@ -223,7 +220,7 @@
             var yValue = rawData[i];
 
             var dataObj = {x: xValue, y: yValue};
-            dataSet.data.push(dataObj);
+            dataSet.addRow([xValue, yValue]);
         }
 
         return dataSet;
@@ -232,52 +229,41 @@
     function createEmptyDataSet(label) {
         var mainColor = color(label);
 
-        return {
-            label: label,
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: mainColor,
-            borderColor: mainColor,
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0, borderJoinStyle: 'miter',
-            pointBorderColor: mainColor,
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: []
-        };
+        var data = new google.visualization.DataTable();
+        data.addColumn("number", "time");
+        data.addColumn("number", "value");
+
+        return data;
     }
 
     function loadDiagram(dataSet, chart) {
-        chart.data.datasets.push(dataSet);
-        chart.update();
+        var options = {
+            title: 'Title',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+        chart.draw(dataSet);
     }
 
     function loadData(data) {
         var name = findParam("name", data);
         console.log("Loading data:" + name);
 
-        loadDiagram(filterData(name, data, "users_in_queue", 0, 2), usersInQueueChart);
-        loadDiagram(filterData(name, data, "active_users", 0, 2), activeUsersChart);
-        loadDiagram(filterData(name, data, "games_created", 0, 2), gamesCreatedChart);
+        loadDiagram(filterData(name, data, "users_in_queue"), usersInQueueChart);
+        loadDiagram(filterData(name, data, "active_users"), activeUsersChart);
+        loadDiagram(filterData(name, data, "games_created"), gamesCreatedChart);
 
-        loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 1, 5), skillLevelDistr);
+        //        loadDiagram(filterAsOccSum(name, data, "user_generated_skill", 1, 5), skillLevelDistr);
 
-        loadDiagram(filterData(name, data, "time_in_queue_avg", 0, 2), timeInQueueChart);
-        loadDiagram(filterData(name, data, "time_in_queue_max", 0, 2), timeInQueueMaxChart);
+        loadDiagram(filterData(name, data, "time_in_queue_avg"), timeInQueueChart);
+        loadDiagram(filterData(name, data, "time_in_queue_max"), timeInQueueMaxChart);
 
-        loadDiagram(filterData(name, data, "game_created_avg_skill_delta", 0, 2), gameCreatedTeamSkill);
-        loadDiagram(filterData(name, data, "game_created_max_skill_delta", 0, 2), gameCreatedMaxSkillDelta);
+        loadDiagram(filterData(name, data, "game_created_avg_skill_delta"), gameCreatedTeamSkill);
+        loadDiagram(filterData(name, data, "game_created_max_skill_delta"), gameCreatedMaxSkillDelta);
 
-        loadDiagram(filterData(name, data, "game_created_avg_rskill_delta", 0, 2), gameCreatedTeamRealSkill);
-        loadDiagram(filterData(name, data, "game_created_max_rskill_delta", 0, 2), gameCreatedMaxRealSkillDelta);
-        loadDiagram(filterData(name, data, "avg_skill_error", 0, 2), avgSkillError);
+        loadDiagram(filterData(name, data, "game_created_avg_rskill_delta"), gameCreatedTeamRealSkill);
+        loadDiagram(filterData(name, data, "game_created_max_rskill_delta"), gameCreatedMaxRealSkillDelta);
+        loadDiagram(filterData(name, data, "avg_skill_error"), avgSkillError);
 
         console.log("Finishing load of:" + name);
     }
